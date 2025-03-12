@@ -1,11 +1,14 @@
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
+import Header from "../components/header/Header";
+
 const Login = () => {
   const navigation = useNavigate();
   const { id } = useParams();
 
   return (
     <div>
+      <Header />
       <h1>Login</h1>
       <p>Faça login para acessar o site.</p>
       <form>
