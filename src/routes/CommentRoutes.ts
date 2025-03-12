@@ -3,10 +3,10 @@ import { getAll, getCommentsById, createComments, /*updateComments*/ destroyComm
 
 const router = express.Router();
 
-router.get("/Order", getAll);
-router.get("/Order/:id", getCommentsById);
-router.post("/Order", createComments);
-//router.put("/Order", updateComments)
-router.delete("/Order/:id", destroyCommentsById)
+router.get("/comment", getAll);
+router.get("/comment/:id", getCommentsById);
+router.post("/comment", createComments);
+//router.put("/comment", updateComments)
+router.delete("/comment/:id", destroyCommentsById)
 
 export default router;
