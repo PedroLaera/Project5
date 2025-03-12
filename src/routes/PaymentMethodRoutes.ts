@@ -1,5 +1,5 @@
 import express from "express";
-import { getAll, getPaymentMethodById, createPaymentMethod, /*updatePayment*/ destroyPaymentMethodById } from "../controllers/PaymenteMethodController";
+import { getAll, getPaymentMethodById, createPaymentMethod, /*updatePaymentMethod*/ destroyPaymentMethodById } from "../controllers/PaymenteMethodController";
 
 const router = express.Router();
 
