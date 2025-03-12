@@ -1,9 +1,15 @@
 import express from "express";
 import sequelize from "./config/database";
 import userRoutes from "./routes/UserRoutes";
-import Category from "./models/CategoryModel";
+import ShippingMethodRoutes from "./routes/ShippingMethodRoutes";
+import ProductRoutes from "./routes/ProdutoctRoutes";
+import PaymentRoutes from "./routes/PaymentRoutes"
+import PaymentMethodRoutes from "./routes/PaymentMethodRoutes"
+import OrderRoutes from "./routes/OrderRoutes"
+import CommentRoutes from "./routes/CommentRoutes"
 import CategoryRoutes from "./routes/CategoryRoutes";
-//import collectionRoutes from "./routes/collectionRoutes";
+import AddressRoutes from "./routes/AddressRoutes"
+
 
 const app = express();
 const port = 3000;
@@ -15,7 +21,15 @@ app.get("/", (req, res) => {
 app.use(express.json());
 app.use(userRoutes);
 app.use(CategoryRoutes);
-//app.use(collectionRoutes);
+app.use(ShippingMethodRoutes);
+app.use(ProductRoutes);
+app.use(PaymentRoutes);
+app.use(PaymentMethodRoutes);
+app.use(OrderRoutes);
+app.use(CommentRoutes);
+app.use(AddressRoutes);
+
+
 
 sequelize
   .sync({ alter: true })
