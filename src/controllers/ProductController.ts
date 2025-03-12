@@ -42,28 +42,33 @@ export const createProdutcs = async (req: Request, res: Response) => {
 };
 
 
-/*export const updateProdutcs = async (req: Request<{ id: string }>, res: Response) => {
+export const updateProdutcs = async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const { name } = req.body;
+    const { name, Descricao, Preco, ID_categoria, Estoque } = req.body;
 
-    if (!name || name.trim() === "") {
+    if (!name || name.trim() === ""){
       return res.status(400).json({ error: "Digite um nome de Produto válido" });
     }
 
-    const category = await ProductModel.findByPk(req.params.id);
+    const Produtcs = await ProductModel.findByPk(req.params.id);
 
     if (!Produtcs) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    Produtcs.name = name;
+    if (name) Produtcs.name = name;
+    if (Descricao) Produtcs.description = Descricao;
+    if (Preco) Produtcs.price = Preco;
+    if (ID_categoria) Produtcs.categoryId = ID_categoria;
+    if (Estoque) Produtcs.stock = Estoque;
+
     await Produtcs.save();
 
     return res.status(200).json(Produtcs);
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
-};*/
+};
 
 
 export const destroyProdutcsById = async (req: Request<{ id: string }>, res: Response) => {

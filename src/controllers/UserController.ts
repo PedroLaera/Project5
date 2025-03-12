@@ -14,21 +14,38 @@ export const getUserById = async (req: Request<{ id: string }>,res: Response) =>
   return res.json(user);
 };
 
-export const createUser = async (req: Request, res: Response) =>{
-    try{
-        const { name } = req.body
+export const CreateUser = async (req: Request, res: Response) => {
+  try {
+      const { Nome, Email, Senha } = req.body; 
 
-        if(!name || name === ""){
-            return res.status(400)
-            .json({error: 'Escreva um nome valido'})
-        }
+      
+      if (!Nome || Nome.trim() === "") {
+          return res.status(400).json({ error: "Escreva um nome válido" });
+      }
 
-        const user = await UserModel.create({Nome: name})
-            return res.status(201).json({})
-    } catch (error){
-      res.status(500).json("erro interno no servido" + error)
-    }
-}
+      // Validação do e-mail
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!Email || !emailRegex.test(Email)) {
+          return res.status(400).json({ error: "Digite um e-mail válido" });
+      }
+
+      // Validação da senha 
+      const senhaRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+      if (!Senha || !senhaRegex.test(Senha)) {
+          return res.status(400).json({ error: "A senha deve ter no mínimo 8 caracteres e pelo menos 1 caractere especial" });
+      }
+
+      //const enderecoRegex = 
+
+      
+      const user = await UserModel.create({ Nome, Email, Senha });
+
+      return res.status(201).json(user); 
+  } catch (error: any) {
+      return res.status(500).json({ error: "Erro interno no servidor", details: error.message });
+  }
+};
+
 
 export const updaterUser = async(req: Request<{ id: string}>,res: Response) => {
     try {
