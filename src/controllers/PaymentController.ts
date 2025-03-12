@@ -11,7 +11,7 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 
-export const getCategoryById = async (req: Request<{ id: string }>, res: Response) => {
+export const getPaymentById = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const Payment = await PaymentModel.findByPk(req.params.id);
 
@@ -26,7 +26,7 @@ export const getCategoryById = async (req: Request<{ id: string }>, res: Respons
 };
 
 
-export const createCategory = async (req: Request, res: Response) => {
+export const createPayment = async (req: Request, res: Response) => {
   try {
     const { name } = req.body; 
 
@@ -66,7 +66,7 @@ export const createCategory = async (req: Request, res: Response) => {
 };*/
 
 
-export const destroyCategoryById = async (req: Request<{ id: string }>, res: Response) => {
+export const destroyPaymentById = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const Payment = await PaymentModel.findByPk(req.params.id);
 

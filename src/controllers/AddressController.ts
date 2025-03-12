@@ -11,7 +11,7 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 
-export const getCategoryById = async (req: Request<{ id: string }>, res: Response) => {
+export const getAddresById = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const Addres = await AddresModel.findByPk(req.params.id);
 
@@ -26,7 +26,7 @@ export const getCategoryById = async (req: Request<{ id: string }>, res: Respons
 };
 
 
-export const createCategory = async (req: Request, res: Response) => {
+export const createAddres = async (req: Request, res: Response) => {
   try {
     const { name } = req.body; 
 
@@ -42,7 +42,7 @@ export const createCategory = async (req: Request, res: Response) => {
 };
 
 
-/*export const updateCategory = async (req: Request<{ id: string }>, res: Response) => {
+/*export const updateAddres = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const { name } = req.body;
 
@@ -66,7 +66,7 @@ export const createCategory = async (req: Request, res: Response) => {
 };*/
 
 
-export const destroyCategoryById = async (req: Request<{ id: string }>, res: Response) => {
+export const destroyAddresById = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const Addres = await AddresModel.findByPk(req.params.id);
 

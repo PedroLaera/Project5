@@ -1,32 +1,32 @@
 import { Request, Response } from "express";
-import ProductModel from "../models/ProductModel";
+import CommentModel from "../models/CommentModel";
 
 export const getAll = async (req: Request, res: Response) => {
   try {
-    const Produtcs = await ProductModel.findAll();
-    res.status(200).json(Produtcs);
+    const Comments = await CommentModel.findAll();
+    res.status(200).json(Comments);
   } catch (error) {
     res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
 
 
-export const getProdutcsById = async (req: Request<{ id: string }>, res: Response) => {
+export const getCommentsById = async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const Produtcs = await ProductModel.findByPk(req.params.id);
+    const Comments = await CommentModel.findByPk(req.params.id);
 
-    if (!Produtcs) {
-      return res.status(404).json({ error: "Produto não encontrada" });
+    if (!Comments) {
+      return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    return res.status(200).json(Produtcs);
+    return res.status(200).json(Comments);
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
 
 
-export const createProdutcs = async (req: Request, res: Response) => {
+export const createComments = async (req: Request, res: Response) => {
   try {
     const { name } = req.body; 
 
@@ -34,47 +34,47 @@ export const createProdutcs = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Digite um nome de categoria válido" });
     }
 
-    const Produtcs = await ProductModel.create({ name });
-    return res.status(201).json(Produtcs);
+    const Comments = await CommentModel.create({ name });
+    return res.status(201).json(Comments);
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
 
 
-/*export const updateProdutcs = async (req: Request<{ id: string }>, res: Response) => {
+/*export const updateComments = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de Produto válido" });
+      return res.status(400).json({ error: "Digite um nome de categoria válido" });
     }
 
-    const category = await ProductModel.findByPk(req.params.id);
+    const category = await CommentModel.findByPk(req.params.id);
 
-    if (!Produtcs) {
+    if (!category) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    Produtcs.name = name;
-    await Produtcs.save();
+    category.name = name;
+    await category.save();
 
-    return res.status(200).json(Produtcs);
+    return res.status(200).json(category);
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };*/
 
 
-export const destroyProdutcsById = async (req: Request<{ id: string }>, res: Response) => {
+export const destroyCommentsById = async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const Produtcs = await ProductModel.findByPk(req.params.id);
+    const Comments = await CommentModel.findByPk(req.params.id);
 
-    if (!Produtcs) {
+    if (!Comments) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    await Produtcs.destroy();
+    await Comments.destroy();
     return res.status(200).json({ message: "Categoria deletada com sucesso" });
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });

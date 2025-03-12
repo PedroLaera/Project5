@@ -13,13 +13,13 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const GetOrderById = async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const category = await OrderModel.findByPk(req.params.id);
+    const Orders = await OrderModel.findByPk(req.params.id);
 
-    if (!category) {
+    if (!Orders) {
       return res.status(404).json({ error: "Produto não encontrada" });
     }
 
-    return res.status(200).json(category);
+    return res.status(200).json(Orders);
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
@@ -34,8 +34,8 @@ export const CreateOrder = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Digite um nome de categoria válido" });
     }
 
-    const category = await OrderModel.create({ name });
-    return res.status(201).json(category);
+    const Orders = await OrderModel.create({ name });
+    return res.status(201).json(Orders);
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
@@ -68,13 +68,13 @@ export const CreateOrder = async (req: Request, res: Response) => {
 
 export const destroyOrderById = async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const category = await OrderModel.findByPk(req.params.id);
+    const Orders = await OrderModel.findByPk(req.params.id);
 
-    if (!category) {
+    if (!Orders) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    await category.destroy();
+    await Orders.destroy();
     return res.status(200).json({ message: "Categoria deletada com sucesso" });
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
