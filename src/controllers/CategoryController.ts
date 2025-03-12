@@ -28,7 +28,7 @@ export const getCategoryById = async (req: Request<{ id: string }>, res: Respons
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body; // Pegamos o campo `name` do corpo da requisição
+    const { name } = req.body; 
 
     if (!name || name.trim() === "") {
       return res.status(400).json({ error: "Digite um nome de categoria válido" });
