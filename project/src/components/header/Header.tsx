@@ -10,12 +10,18 @@ const Header = () => {
 
       {/* Navigation Buttons */}
       <nav className="nav">
-        <Button variant="outline">Home</Button>
+        <Button variant="outline">
+          <Link to="/">Home</Link>
+        </Button>
         <Button variant="outline">
           <Link to="/Login">Fazer o login</Link>
         </Button>
-        <Button variant="outline">Services</Button>
-        <Button variant="outline">Contact</Button>
+        <Button variant="outline">
+          <Link to="/Shop">Shop</Link>
+        </Button>
+        <Button variant="outline">
+          <Link to="/About">Sobre</Link>
+        </Button>
       </nav>
     </header>
   );
