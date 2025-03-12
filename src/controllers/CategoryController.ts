@@ -49,4 +49,10 @@ export const updateCategory = async( req: Request<{id: string}>, res: Response) 
       categoria.name = name;
       await categoria.save()
     }  
+};
+
+export const destroyCategoryById = async (req: Request<{id: string}>, res: Response)=>{
+    try{
+      const
+    }
 }
