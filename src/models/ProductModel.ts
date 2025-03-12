@@ -53,7 +53,7 @@ Product.init(
   {
     sequelize,
     modelName: "Product",
-    tableName: "Produto", // Nome original da tabela no banco
+    tableName: "Produto", 
     timestamps: false,
   }
 );

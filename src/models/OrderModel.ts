@@ -14,70 +14,69 @@ export class Order extends Model {
   public discount?: number;
 }
 
-// Definição da tabela
 Order.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "ID_pedido", // nome original no banco
+      field: "ID_pedido", 
     },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: User,
-        key: "id", // Nome do campo na tabela User
+        key: "id", 
       },
       onDelete: "CASCADE",
-      field: "ID_usuario", // nome original no banco
+      field: "ID_usuario", 
     },
     orderDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      field: "Data_pedido", // nome original no banco
+      field: "Data_pedido",
     },
     totalAmount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-      field: "Total_pedido", // nome original no banco
+      field: "Total_pedido", 
     },
     shippingFee: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-      field: "Frete", // nome original no banco
+      field: "Frete", 
     },
     status: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      field: "Status", // nome original no banco
+      field: "Status", 
     },
     shippingMethodId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: ShippingMethod,
-        key: "id", // Nome do campo na tabela ShippingMethod
+        key: "id", 
       },
       onDelete: "CASCADE",
-      field: "ID_metodo_envio", // nome original no banco
+      field: "ID_metodo_envio",
     },
     discount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
-      field: "Desconto", // nome original no banco
+      field: "Desconto", 
     },
   },
   {
     sequelize,
     modelName: "Order",
-    tableName: "Pedido", // Nome original da tabela no banco
+    tableName: "Pedido", 
     timestamps: false,
   }
 );
 
-// Definir relações
+
 Order.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Order, { foreignKey: "userId" });
 

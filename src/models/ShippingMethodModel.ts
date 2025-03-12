@@ -13,7 +13,7 @@ ShippingMethod.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "ID_metodo_envio", // Mapeia para o nome da coluna no banco
+      field: "ID_metodo_envio", 
     },
     name: {
       type: DataTypes.STRING(255),
@@ -29,7 +29,7 @@ ShippingMethod.init(
   {
     sequelize,
     modelName: "ShippingMethod",
-    tableName: "MetodoEnvio", // Nome original da tabela no banco
+    tableName: "MetodoEnvio", 
     timestamps: false,
   }
 );

@@ -23,7 +23,7 @@ Category.init(
   {
     sequelize,
     modelName: "Category",
-    tableName: "Categoria", // Nome original da tabela no banco
+    tableName: "Categoria", 
     timestamps: false,
   }
 );

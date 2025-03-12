@@ -47,7 +47,7 @@ OrderProduct.init(
   {
     sequelize,
     modelName: "OrderProduct",
-    tableName: "PedidoProduto", // Nome original da tabela no banco
+    tableName: "PedidoProduto", 
     timestamps: false,
   }
 );
