@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/Address", getAll);
 router.get("/Address/:id", getAddresById);
 router.post("/Address", createAddres);
-//router.put("/Address", updateAddres)
+//router.put("/Address", updateAddres);
 router.delete("/Address/:id", destroyAddresById)
 
 export default router;
