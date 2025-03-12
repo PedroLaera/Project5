@@ -56,6 +56,8 @@ export const updateProdutcs = async (req: Request<{ id: string }>, res: Response
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
+// adicionar todos os campos que deseja editar//
+
     if (name) Produtcs.name = name;
     if (Descricao) Produtcs.description = Descricao;
     if (Preco) Produtcs.price = Preco;

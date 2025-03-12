@@ -48,7 +48,7 @@ User.init(
   {
     sequelize,
     modelName: "User",
-    tableName: "usuario", // Nome original da tabela no banco
+    tableName: "usuario", 
     timestamps: false,
   }
 );
