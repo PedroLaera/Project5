@@ -16,7 +16,7 @@ export const getAddresById = async (req: Request<{ id: string }>, res: Response)
     const Addres = await AddresModel.findByPk(req.params.id);
 
     if (!Addres) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Endereço não encontrada" });
     }
 
     return res.status(200).json(Addres);
@@ -31,7 +31,7 @@ export const createAddres = async (req: Request, res: Response) => {
     const { name } = req.body; 
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res.status(400).json({ error: "Digite um nome de Endereço válido" });
     }
 
     const Addres = await AddresModel.create({ name });
@@ -71,11 +71,11 @@ export const destroyAddresById = async (req: Request<{ id: string }>, res: Respo
     const Addres = await AddresModel.findByPk(req.params.id);
 
     if (!Addres) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Endereço não encontrada" });
     }
 
     await Addres.destroy();
-    return res.status(200).json({ message: "Categoria deletada com sucesso" });
+    return res.status(200).json({ message: "Endereço deletado com sucesso" });
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }

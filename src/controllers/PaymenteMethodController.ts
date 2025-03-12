@@ -16,7 +16,7 @@ export const getPaymentMethodById = async (req: Request<{ id: string }>, res: Re
     const PaymentMethod = await PaymentMethodModel.findByPk(req.params.id);
 
     if (!PaymentMethod) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Método De Pagamento não encontrada" });
     }
 
     return res.status(200).json(PaymentMethod);
@@ -31,7 +31,7 @@ export const createPaymentMethod = async (req: Request, res: Response) => {
     const { name } = req.body; 
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res.status(400).json({ error: "Digite um nome de Método De Pagamento  válido" });
     }
 
     const PaymentMethod = await PaymentMethodModel.create({ name });
@@ -71,11 +71,11 @@ export const destroyPaymentMethodById = async (req: Request<{ id: string }>, res
     const PaymentMethod = await PaymentMethodModel.findByPk(req.params.id);
 
     if (!PaymentMethod) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Método De Pagamento não encontrada" });
     }
 
     await PaymentMethod.destroy();
-    return res.status(200).json({ message: "Categoria deletada com sucesso" });
+    return res.status(200).json({ message: "Método De Pagamento deletado com sucesso" });
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }

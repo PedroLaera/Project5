@@ -16,7 +16,7 @@ export const getMethodById = async (req: Request<{ id: string }>, res: Response)
     const Method = await ShippingMethodModel.findByPk(req.params.id);
 
     if (!Method) {
-      return res.status(404).json({ error: "Método não encontrada" });
+      return res.status(404).json({ error: "Método De Entrega não encontrada" });
     }
 
     return res.status(200).json(Method);
@@ -31,7 +31,7 @@ export const createMethod = async (req: Request, res: Response) => {
     const { name } = req.body; 
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de Método válido" });
+      return res.status(400).json({ error: "Digite um nome de Método De Entrega válido" });
     }
 
     const Method = await ShippingMethodModel.create({ name });
@@ -42,18 +42,18 @@ export const createMethod = async (req: Request, res: Response) => {
 };
 
 
-export const updateMethod = async (req: Request<{ id: string }>, res: Response) => {
+/*export const updateMethod = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de Método válido" });
+      return res.status(400).json({ error: "Digite um nome de Método De Entrega válido" });
     }
 
     const Method = await ShippingMethodModel.findByPk(req.params.id);
 
     if (!Method) {
-      return res.status(404).json({ error: "Método não encontrada" });
+      return res.status(404).json({ error: "Método De Entrega não encontrada" });
     }
 
     Method.name = name;
@@ -63,7 +63,7 @@ export const updateMethod = async (req: Request<{ id: string }>, res: Response) 
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
-};
+};*/
 
 
 export const destroyMethodById = async (req: Request<{ id: string }>, res: Response) => {
@@ -71,11 +71,11 @@ export const destroyMethodById = async (req: Request<{ id: string }>, res: Respo
     const Method = await ShippingMethodModel.findByPk(req.params.id);
 
     if (!Method) {
-      return res.status(404).json({ error: "Método não encontrada" });
+      return res.status(404).json({ error: "Método De Entrega não encontrada" });
     }
 
     await Method.destroy();
-    return res.status(200).json({ message: "Método deletada com sucesso" });
+    return res.status(200).json({ message: "Método De Entrega deletada com sucesso" });
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }

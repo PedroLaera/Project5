@@ -16,7 +16,7 @@ export const getPaymentById = async (req: Request<{ id: string }>, res: Response
     const Payment = await PaymentModel.findByPk(req.params.id);
 
     if (!Payment) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Pagamento não encontrada" });
     }
 
     return res.status(200).json(Payment);
@@ -31,7 +31,7 @@ export const createPayment = async (req: Request, res: Response) => {
     const { name } = req.body; 
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res.status(400).json({ error: "Digite um nome de Pagamento válido" });
     }
 
     const Payment = await PaymentModel.create({ name });
@@ -42,7 +42,7 @@ export const createPayment = async (req: Request, res: Response) => {
 };
 
 
-/*export const updateCategory = async (req: Request<{ id: string }>, res: Response) => {
+/*export const updatePayment = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const { name } = req.body;
 
@@ -71,11 +71,11 @@ export const destroyPaymentById = async (req: Request<{ id: string }>, res: Resp
     const Payment = await PaymentModel.findByPk(req.params.id);
 
     if (!Payment) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Pagamento não encontrada" });
     }
 
     await Payment.destroy();
-    return res.status(200).json({ message: "Categoria deletada com sucesso" });
+    return res.status(200).json({ message: "Pagamento deletado com sucesso" });
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }

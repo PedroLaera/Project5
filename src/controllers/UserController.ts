@@ -8,18 +8,13 @@ export const getAll = async (req: Request, res: Response) => {
   res.send(users);
 };
 
-export const getUserById = async (
-  req: Request<{ id: string }>,
-  res: Response
-) => {
+export const getUserById = async (req: Request<{ id: string }>,res: Response) => {
   const user = await UserModel.findByPk(req.params.id);
 
   return res.json(user);
 };
 
-export const createUser = async (
-    req: Request, res: Response
-) =>{
+export const createUser = async (req: Request, res: Response) =>{
     try{
         const { name } = req.body
 
@@ -35,9 +30,7 @@ export const createUser = async (
     }
 }
 
-export const updaterUser = async(
-  req: Request<{ id: string}>,
-  res: Response) => {
+export const updaterUser = async(req: Request<{ id: string}>,res: Response) => {
     try {
       const { name } = req.body
 
@@ -61,8 +54,7 @@ export const updaterUser = async(
   }
 }
 
-export const DestroyUserById = async(
-    req: Request<{ id: string }>, res: Response) =>{
+export const DestroyUserById = async(req: Request<{ id: string }>, res: Response) =>{
         
       try {
           const user = await UserModel.findByPk(req.params.id)

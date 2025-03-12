@@ -16,7 +16,7 @@ export const getCommentsById = async (req: Request<{ id: string }>, res: Respons
     const Comments = await CommentModel.findByPk(req.params.id);
 
     if (!Comments) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Comentário não encontrada" });
     }
 
     return res.status(200).json(Comments);
@@ -31,7 +31,7 @@ export const createComments = async (req: Request, res: Response) => {
     const { name } = req.body; 
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res.status(400).json({ error: "Digite um nome de Comentário válido" });
     }
 
     const Comments = await CommentModel.create({ name });
@@ -71,11 +71,11 @@ export const destroyCommentsById = async (req: Request<{ id: string }>, res: Res
     const Comments = await CommentModel.findByPk(req.params.id);
 
     if (!Comments) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Comentário não encontrada" });
     }
 
     await Comments.destroy();
-    return res.status(200).json({ message: "Categoria deletada com sucesso" });
+    return res.status(200).json({ message: "Comentário deletado com sucesso" });
   } catch (error) {
     return res.status(500).json({ error: "Erro interno no servidor", details: error });
   }

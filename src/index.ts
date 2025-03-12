@@ -34,12 +34,12 @@ app.use(AddressRoutes);
 sequelize
   .sync({ alter: true })
   .then(() => {
-    console.log("database foi sincronizado com sucesso");
+    console.log("Database Foi Sincronizado Com Sucesso!!!");
   })
   .catch((error) => {
-    console.log("deu zica no bagulho", error);
+    console.log("A Base De Dados Não Foi Inicializada Com Sucesso!!!", error);
   });
 
 app.listen(port, () => {
-  console.log("Server is running on port ", port);
+  console.log("Servido Rodando Na Porta", port);
 });
