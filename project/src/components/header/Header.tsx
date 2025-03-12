@@ -6,7 +6,12 @@ const Header = () => {
   return (
     <header className="header">
       {/* Logo */}
-      <div className="logo">MyLogo</div>
+
+      <button>
+        <Link to="/">
+          <img src="/project/public/vite.svg" alt="home" />
+        </Link>
+      </button>
 
       {/* Navigation Buttons */}
       <nav className="nav">

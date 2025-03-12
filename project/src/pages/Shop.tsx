@@ -5,7 +5,7 @@ const Register = () => {
   return (
     <div>
       <Header />
-      <h1>Crie sua conta</h1>
+      <h1>Comece a comprar</h1>
       <button>
         <Link to="/">Comece sua compra</Link>
       </button>
