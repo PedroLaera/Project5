@@ -1,86 +1,78 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import { User } from "./UserModel";
-import { ShippingMethod } from "./ShippingMethodModel";
+import UserModel from "./UserModel"; 
+import ProductModel from "./ProductModel"; 
+import ShippingMethodModel from "./ShippingMethodModel"; 
 
-export class Order extends Model {
-  public id!: number;
-  public userId!: number;
+class OrderModel extends Model {
+  public ID_order!: number;
+  public ID_user!: number;
   public orderDate!: Date;
-  public totalAmount!: number;
-  public shippingFee!: number;
+  public totalOrder!: number;
+  public shipping!: number;
   public status!: string;
-  public shippingMethodId!: number;
-  public discount?: number;
+  public ID_shippingMethod!: number;
+  public discount!: number;
+  public quantity!: number;
+  public ID_product!: number;
 }
 
-Order.init(
+OrderModel.init(
   {
-    id: {
+    ID_order: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "ID_pedido", 
+      allowNull: false,
     },
-    userId: {
+    ID_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: User,
-        key: "id", 
-      },
-      onDelete: "CASCADE",
-      field: "ID_usuario", 
     },
     orderDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      field: "Data_pedido",
     },
-    totalAmount: {
-      type: DataTypes.DECIMAL(10, 2),
+    totalOrder: {
+      type: DataTypes.FLOAT,
       allowNull: false,
-      field: "Total_pedido", 
     },
-    shippingFee: {
-      type: DataTypes.DECIMAL(10, 2),
+    shipping: {
+      type: DataTypes.FLOAT,
       allowNull: false,
-      field: "Frete", 
     },
     status: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: false,
-      field: "Status", 
     },
-    shippingMethodId: {
+    ID_shippingMethod: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: ShippingMethod,
-        key: "id", 
-      },
-      onDelete: "CASCADE",
-      field: "ID_metodo_envio",
     },
     discount: {
-      type: DataTypes.DECIMAL(10, 2),
+      type: DataTypes.FLOAT,
       allowNull: true,
-      field: "Desconto", 
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    ID_product: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {
     sequelize,
     modelName: "Order",
-    tableName: "Pedido", 
+    tableName: "Order",
     timestamps: false,
   }
 );
 
+// 📌 Definição de relacionamentos
+OrderModel.belongsTo(UserModel, { foreignKey: "ID_user", as: "user" });
+OrderModel.belongsTo(ShippingMethodModel, { foreignKey: "ID_shippingMethod", as: "shippingMethod" });
+OrderModel.belongsTo(ProductModel, { foreignKey: "ID_product", as: "product" });
 
-Order.belongsTo(User, { foreignKey: "userId" });
-User.hasMany(Order, { foreignKey: "userId" });
-
-Order.belongsTo(ShippingMethod, { foreignKey: "shippingMethodId" });
-ShippingMethod.hasMany(Order, { foreignKey: "shippingMethodId" });
-
-export default Order;
+export default OrderModel;

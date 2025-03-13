@@ -1,58 +1,44 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import User from "./UserModel";
-import Product from "./ProductModel";
+import UserModel from "./UserModel"; 
+import ProductModel from "./ProductModel"; 
 
-export class Comment extends Model {
+class CommentModel extends Model {
   public ID_comment!: number;
+  public comment!: string;
+  public rating!: number;
+  public creationDate!: Date;
   public ID_user!: number;
   public ID_product!: number;
-  public Content!: string;
-  public Rating!: number;
-  public CreatedAt!: Date;
 }
 
-Comment.init(
+CommentModel.init(
   {
     ID_comment: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      allowNull: false,
+    },
+    comment: {
+      type: DataTypes.STRING(1000),
+      allowNull: false,
+    },
+    rating: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    creationDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
     },
     ID_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: User,
-        key: "ID_user",
-      },
-      onDelete: "CASCADE",
     },
     ID_product: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: Product,
-        key: "ID_product",
-      },
-      onDelete: "CASCADE",
-    },
-    Content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    Rating: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-      validate: {
-        min: 0,
-        max: 5,
-      },
-    },
-    CreatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
     },
   },
   {
@@ -63,10 +49,7 @@ Comment.init(
   }
 );
 
-User.hasMany(Comment, { foreignKey: "ID_user" });
-Comment.belongsTo(User, { foreignKey: "ID_user" });
+CommentModel.belongsTo(UserModel, { foreignKey: "ID_user", as: "user" });
+CommentModel.belongsTo(ProductModel, { foreignKey: "ID_product", as: "product" });
 
-Product.hasMany(Comment, { foreignKey: "ID_product" });
-Comment.belongsTo(Product, { foreignKey: "ID_product" });
-
-export default Comment;
+export default CommentModel;

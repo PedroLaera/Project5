@@ -1,68 +1,70 @@
-import {  DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import User from "./UserModel";
+import UserModel from "./UserModel"; 
+import OrderModel from "./OrderModel"; 
 
-export class Address extends Model {
-    public ID_address!: number;
-    public Number!: string;
-    public Complement?: string;
-    public Neighborhood!: string;
-    public City!: string;
-    public State!: string;
-    public ZIP!: string;
-    public ID_user!: number;
-  }
+class AddressModel extends Model {
+  public ID_address!: number;
+  public number!: string;
+  public complement!: string;
+  public neighborhood!: string;
+  public city!: string;
+  public state!: string;
+  public zipCode!: string;
+  public ID_user!: number;
+  public ID_order!: number;
+}
 
-  Address.init(
-    {
-      ID_address: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      Number: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-      },
-      Complement: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-      },
-      Neighborhood: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-      City: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-      State: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      ZIP: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-      },
-      ID_user: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: User,
-          key: "ID_user",
-        },
-        onDelete: "CASCADE",
-      },
+AddressModel.init(
+  {
+    ID_address: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
     },
-    {
-      sequelize,
-      modelName: "Address",
-      tableName: "Address",
-      timestamps: false,
-    }
-  );
-  
-  User.hasMany(Address, { foreignKey: "ID_user" });
-  Address.belongsTo(User, { foreignKey: "ID_user" });
-  
-  export default Address;
+    number: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    complement: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    neighborhood: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    city: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    state: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    zipCode: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    ID_user: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    ID_order: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+  },
+  {
+    sequelize,
+    modelName: "Address",
+    tableName: "Address",
+    timestamps: false,
+  }
+);
+
+AddressModel.belongsTo(UserModel, { foreignKey: "ID_user", as: "user" });
+AddressModel.belongsTo(OrderModel, { foreignKey: "ID_order", as: "order" });
+
+export default AddressModel;
