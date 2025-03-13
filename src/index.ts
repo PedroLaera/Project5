@@ -27,8 +27,8 @@ import CommentModel from './models/CommentModel';
 UserModel.hasMany(AddressModel, { foreignKey: 'id_user' });
 AddressModel.belongsTo(UserModel, { foreignKey: 'id_user' });
 
-UserModel.hasMany(OrderModel, { foreignKey: 'id_user' });
-OrderModel.belongsTo(UserModel, { foreignKey: 'id_user' });
+//UserModel.hasMany(OrderModel, { foreignKey: 'id_user' });
+//OrderModel.belongsTo(UserModel, { foreignKey: 'id_user' });
 
 UserModel.hasMany(CommentModel, { foreignKey: 'id_user' });
 CommentModel.belongsTo(UserModel, { foreignKey: 'id_user' });
@@ -47,6 +47,14 @@ ShippingMethodModel.hasMany(OrderModel, { foreignKey: 'ID_shippingMethod' });
 
 //CategoryModel.hasMany(SubCategoryModel, { foreignKey: 'id_category' });
 //SubCategoryModel.belongsTo(CategoryModel, { foreignKey: 'id_category' });
+
+OrderModel.belongsTo(PaymentModel, {foreignKey: 'id_order'});
+PaymentModel.hasMany(OrderModel, { foreignKey: 'id_order' });
+
+PaymentModel.belongsTo(PaymentMethodModel, {foreignKey: 'id_payment'});
+PaymentMethodModel.hasMany(PaymentModel,{ foreignKey: 'id_payment' })
+
+
 
 export {
   UserModel,

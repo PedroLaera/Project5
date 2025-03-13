@@ -1,23 +1,27 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import OrderModel from "./OrderModel";
+import OrderModel, { Order } from "./OrderModel";
 import PaymentMethodModel from "./PaymentMethodModel";
 
 class Payment extends Model {}
 
 Payment.init(
   {
-    ID_payment: {
+    id_payment: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       allowNull: false,
     },
-    ID_order: {
+    id_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    ID_paymentMethod: {
+      /*references: {
+        model: OrderModel,
+        key: 'id_order'
+    },*/
+  },
+    id_paymentMethod: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
