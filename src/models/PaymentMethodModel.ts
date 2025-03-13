@@ -1,19 +1,20 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-export class PaymentMethod extends Model {
-  public ID_payment_method!: number;
-  public Name!: string;
+class PaymentMethodModel extends Model {
+  public ID_paymentMethod!: number;
+  public name!: string;
 }
 
-PaymentMethod.init(
+PaymentMethodModel.init(
   {
-    ID_payment_method: {
+    ID_paymentMethod: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      allowNull: false,
     },
-    Name: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -26,4 +27,4 @@ PaymentMethod.init(
   }
 );
 
-export default PaymentMethod;
+export default PaymentMethodModel;

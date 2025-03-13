@@ -1,31 +1,30 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-export class Category extends Model {
-  public id!: number;
+class CategoryModel extends Model {
+  public ID_category!: number;
   public name!: string;
 }
 
-Category.init(
+CategoryModel.init(
   {
-    id: {
+    ID_category: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "ID_categoria",
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      field: "Nome",
     },
   },
   {
     sequelize,
     modelName: "Category",
-    tableName: "Categoria", 
+    tableName: "Category",
     timestamps: false,
   }
 );
 
-export default Category;
+export default CategoryModel;

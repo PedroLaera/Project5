@@ -1,37 +1,35 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-export class ShippingMethod extends Model {
-  public id!: number;
+class ShippingMethodModel extends Model {
+  public ID_shippingMethod!: number;
   public name!: string;
   public shippingCost!: number;
 }
 
-ShippingMethod.init(
+ShippingMethodModel.init(
   {
-    id: {
+    ID_shippingMethod: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "ID_metodo_envio", 
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      field: "Nome_metodo",
     },
     shippingCost: {
-      type: DataTypes.DECIMAL(10, 2),
+      type: DataTypes.FLOAT,
       allowNull: false,
-      field: "Valor_frete",
     },
   },
   {
     sequelize,
     modelName: "ShippingMethod",
-    tableName: "MetodoEnvio", 
+    tableName: "ShippingMethod",
     timestamps: false,
   }
 );
 
-export default ShippingMethod;
+export default ShippingMethodModel;

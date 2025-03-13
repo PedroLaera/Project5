@@ -1,62 +1,45 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import { Order } from "./OrderModel";
-import { Product } from "./ProductModel";
+import OrderModel from "./OrderModel";
+import ProductModel from "./ProductModel";
 
-export class OrderProduct extends Model {
-  public id!: number;
-  public orderId!: number;
-  public productId!: number;
+class OrderProductModel extends Model {
+  public ID_orderProduct!: number;
+  public ID_order!: number;
+  public ID_product!: number;
   public quantity!: number;
 }
 
-OrderProduct.init(
+OrderProductModel.init(
   {
-    id: {
+    ID_orderProduct: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "ID_pedido_produto",
+      allowNull: false,
     },
-    orderId: {
+    ID_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: Order,
-        key: "ID_pedido",
-      },
-      onDelete: "CASCADE",
-      field: "ID_pedido",
     },
-    productId: {
+    ID_product: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: Product,
-        key: "ID_produto",
-      },
-      onDelete: "CASCADE",
-      field: "ID_produto",
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "Quantidade",
     },
   },
   {
     sequelize,
     modelName: "OrderProduct",
-    tableName: "PedidoProduto", 
+    tableName: "OrderProduct",
     timestamps: false,
   }
 );
 
-// Definir relações
-Order.belongsToMany(Product, { through: OrderProduct, foreignKey: "orderId" });
-Product.belongsToMany(Order, {
-  through: OrderProduct,
-  foreignKey: "productId",
-});
+OrderProductModel.belongsTo(OrderModel, { foreignKey: "ID_order", as: "order" });
+OrderProductModel.belongsTo(ProductModel, { foreignKey: "ID_product", as: "product" });
 
-export default OrderProduct;
+export default OrderProductModel;

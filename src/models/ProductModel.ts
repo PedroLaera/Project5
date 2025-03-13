@@ -1,65 +1,55 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import { Category } from "./CategoryModel";
+import CategoryModel from "./CategoryModel"; 
+//import SubCategoryModel from "./SubCategoryModel"; 
 
-export class Product extends Model {
-  public id!: number;
+class ProductModel extends Model {
+  public ID_product!: number;
   public name!: string;
-  public description?: string;
+  public description!: string;
   public price!: number;
-  public categoryId!: number;
+  public ID_category!: number;
   public stock!: number;
 }
 
-Product.init(
+ProductModel.init(
   {
-    id: {
+    ID_product: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "ID_produto",
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      field: "Nome",
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: true,
-      field: "Descricao",
     },
     price: {
-      type: DataTypes.DECIMAL(10, 2),
+      type: DataTypes.FLOAT,
       allowNull: false,
-      field: "Preco",
     },
-    categoryId: {
+    ID_category: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: Category,
-        key: "ID_categoria",
-      },
-      onDelete: "CASCADE",
-      field: "ID_categoria",
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "Estoque",
     },
   },
   {
     sequelize,
     modelName: "Product",
-    tableName: "Produto", 
+    tableName: "Product",
     timestamps: false,
   }
 );
 
-// Definir relacionamento
-Product.belongsTo(Category, { foreignKey: "categoryId" });
-Category.hasMany(Product, { foreignKey: "categoryId" });
+ProductModel.belongsTo(CategoryModel, { foreignKey: "ID_category", as: "category" });
+//ProductModel.belongsTo(SubCategoryModel, { foreignKey: "ID_category", as: "subcategory" });
 
-export default Product;
+export default ProductModel;

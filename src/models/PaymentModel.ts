@@ -1,46 +1,37 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import Order from "./OrderModel";
-import PaymentMethod from "./PaymentMethodModel";
+import OrderModel from "./OrderModel";
+import PaymentMethodModel from "./PaymentMethodModel";
 
-export class Payment extends Model {
+class PaymentModel extends Model {
   public ID_payment!: number;
   public ID_order!: number;
-  public ID_payment_method!: number;
-  public AmountPaid!: number;
-  public PaymentDate!: Date;
+  public ID_paymentMethod!: number;
+  public amountPaid!: number;
+  public paymentDate!: Date;
 }
 
-Payment.init(
+PaymentModel.init(
   {
     ID_payment: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      allowNull: false,
     },
     ID_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: Order,
-        key: "ID_order",
-      },
-      onDelete: "CASCADE",
     },
-    ID_payment_method: {
+    ID_paymentMethod: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: PaymentMethod,
-        key: "ID_payment_method",
-      },
-      onDelete: "CASCADE",
     },
-    AmountPaid: {
-      type: DataTypes.DECIMAL(10, 2),
+    amountPaid: {
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
-    PaymentDate: {
+    paymentDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
@@ -53,11 +44,7 @@ Payment.init(
   }
 );
 
+PaymentModel.belongsTo(OrderModel, { foreignKey: "ID_order", as: "order" });
+PaymentModel.belongsTo(PaymentMethodModel, { foreignKey: "ID_paymentMethod", as: "paymentMethod" });
 
-Order.hasOne(Payment, { foreignKey: "ID_order" });
-Payment.belongsTo(Order, { foreignKey: "ID_order" });
-
-PaymentMethod.hasMany(Payment, { foreignKey: "ID_payment_method" });
-Payment.belongsTo(PaymentMethod, { foreignKey: "ID_payment_method" });
-
-export default Payment;
+export default PaymentModel;
