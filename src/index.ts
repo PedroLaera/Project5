@@ -51,8 +51,10 @@ ShippingMethodModel.hasMany(OrderModel, { foreignKey: 'ID_shippingMethod' });
 OrderModel.belongsTo(PaymentModel, {foreignKey: 'id_order'});
 PaymentModel.hasMany(OrderModel, { foreignKey: 'id_order' });
 
-PaymentModel.belongsTo(PaymentMethodModel, {foreignKey: 'id_payment'});
-PaymentMethodModel.hasMany(PaymentModel,{ foreignKey: 'id_payment' })
+//PaymentModel.belongsTo(PaymentMethodModel, {foreignKey: 'id_payment'});
+//PaymentMethodModel.hasMany(PaymentModel,{ foreignKey: 'id_payment' })
+
+
 
 
 
