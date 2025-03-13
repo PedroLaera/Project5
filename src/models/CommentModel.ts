@@ -3,53 +3,54 @@ import sequelize from "../config/database";
 import UserModel from "./UserModel"; 
 import ProductModel from "./ProductModel"; 
 
-class CommentModel extends Model {
-  public ID_comment!: number;
-  public comment!: string;
-  public rating!: number;
-  public creationDate!: Date;
-  public ID_user!: number;
-  public ID_product!: number;
-}
+class Comment extends Model {}
 
-CommentModel.init(
+Comment.init(
   {
-    ID_comment: {
+    id_comment: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
-      allowNull: false,
+      primaryKey: true
     },
-    comment: {
-      type: DataTypes.STRING(1000),
+    id_user: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: UserModel,
+        key: 'id_user'
+      }
+    },
+    id_product: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: ProductModel,
+        key: 'id_product'
+      }
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     rating: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
+      validate: {
+        min: 0,
+        max: 5
+      }
     },
-    creationDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    ID_user: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    ID_product: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    creation_date: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    }
   },
   {
     sequelize,
-    modelName: "Comment",
-    tableName: "Comment",
-    timestamps: false,
+    modelName: 'Comment',
+    tableName: 'Comment',
+    timestamps: false
   }
 );
 
-CommentModel.belongsTo(UserModel, { foreignKey: "ID_user", as: "user" });
-CommentModel.belongsTo(ProductModel, { foreignKey: "ID_product", as: "product" });
-
-export default CommentModel;
+export default Comment;

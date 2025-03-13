@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserModel, { User } from "../models/UserModel";
+import UserModel  from "../models/UserModel";
 import { error } from "console";
 
 
@@ -61,11 +61,11 @@ export const updaterUser = async(req: Request<{ id: string}>,res: Response) => {
               .json({error: 'User not found'})
       }
 
-      user.name = name;
+     /*user. = name;*/
       await user.save();
 
 
-      res.status(200).json(User)
+      res.status(200).json(UserModel)
     } catch (error){
     res.status(500).json("erro no servido" + error)
   }

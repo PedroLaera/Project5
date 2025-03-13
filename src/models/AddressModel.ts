@@ -3,19 +3,9 @@ import sequelize from "../config/database";
 import UserModel from "./UserModel"; 
 import OrderModel from "./OrderModel"; 
 
-class AddressModel extends Model {
-  public ID_address!: number;
-  public number!: string;
-  public complement!: string;
-  public neighborhood!: string;
-  public city!: string;
-  public state!: string;
-  public zipCode!: string;
-  public ID_user!: number;
-  public ID_order!: number;
-}
+class Address extends Model {}
 
-AddressModel.init(
+Address.init(
   {
     ID_address: {
       type: DataTypes.INTEGER,
@@ -47,7 +37,7 @@ AddressModel.init(
       type: DataTypes.STRING(20),
       allowNull: false,
     },
-    ID_user: {
+    id_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -64,7 +54,4 @@ AddressModel.init(
   }
 );
 
-AddressModel.belongsTo(UserModel, { foreignKey: "ID_user", as: "user" });
-AddressModel.belongsTo(OrderModel, { foreignKey: "ID_order", as: "order" });
-
-export default AddressModel;
+export default Address;

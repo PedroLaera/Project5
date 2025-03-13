@@ -1,78 +1,62 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
-import UserModel from "./UserModel"; 
-import ProductModel from "./ProductModel"; 
-import ShippingMethodModel from "./ShippingMethodModel"; 
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../config/database';
+import User from './UserModel';  
+import ShippingMethod from './ShippingMethodModel';  
 
-class OrderModel extends Model {
-  public ID_order!: number;
-  public ID_user!: number;
-  public orderDate!: Date;
-  public totalOrder!: number;
-  public shipping!: number;
-  public status!: string;
-  public ID_shippingMethod!: number;
-  public discount!: number;
-  public quantity!: number;
-  public ID_product!: number;
-}
+export class Order extends Model {}
 
-OrderModel.init(
+Order.init(
   {
-    ID_order: {
+    id_order: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      allowNull: false,
     },
-    ID_user: {
+    id_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: User,
+        key: 'ID_user',
+      },
     },
     orderDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    totalOrder: {
-      type: DataTypes.FLOAT,
+    totalAmount: {
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    shipping: {
-      type: DataTypes.FLOAT,
+    shippingFee: {
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
     status: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     ID_shippingMethod: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: ShippingMethod,
+        key: 'ID_shippingMethod',
+      },
     },
     discount: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    ID_product: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
     },
   },
   {
     sequelize,
-    modelName: "Order",
-    tableName: "Order",
+    modelName: 'Order',
+    tableName: 'Order',
     timestamps: false,
   }
 );
 
-// 📌 Definição de relacionamentos
-OrderModel.belongsTo(UserModel, { foreignKey: "ID_user", as: "user" });
-OrderModel.belongsTo(ShippingMethodModel, { foreignKey: "ID_shippingMethod", as: "shippingMethod" });
-OrderModel.belongsTo(ProductModel, { foreignKey: "ID_product", as: "product" });
 
-export default OrderModel;
+
+export default Order;

@@ -3,53 +3,47 @@ import sequelize from "../config/database";
 import CategoryModel from "./CategoryModel"; 
 //import SubCategoryModel from "./SubCategoryModel"; 
 
-class ProductModel extends Model {
-  public ID_product!: number;
-  public name!: string;
-  public description!: string;
-  public price!: number;
-  public ID_category!: number;
-  public stock!: number;
-}
 
-ProductModel.init(
+class Product extends Model {}
+
+Product.init(
   {
-    ID_product: {
+    id_product: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
-      allowNull: false,
+      primaryKey: true
     },
     name: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: true
     },
     price: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     ID_category: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    stock: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+      references: {
+        model: CategoryModel,
+        key: 'ID_category'
+      }
+    }
   },
   {
     sequelize,
-    modelName: "Product",
-    tableName: "Product",
-    timestamps: false,
+    modelName: 'Product',
+    tableName: 'Product',
+    timestamps: false
   }
 );
 
-ProductModel.belongsTo(CategoryModel, { foreignKey: "ID_category", as: "category" });
-//ProductModel.belongsTo(SubCategoryModel, { foreignKey: "ID_category", as: "subcategory" });
-
-export default ProductModel;
+export default Product;

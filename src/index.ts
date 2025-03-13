@@ -11,6 +11,57 @@ import CategoryRoutes from "./routes/CategoryRoutes";
 import AddressRoutes from "./routes/AddressRoutes"
 
 
+import UserModel from './models/UserModel';
+import ProductModel from './models/ProductModel';
+import CategoryModel from './models/CategoryModel';
+import OrderModel from './models/OrderModel';
+import OrderProductModel from './models/OrderProduct';
+import ShippingMethodModel from './models/ShippingMethodModel';
+import PaymentMethodModel from './models/PaymentMethodModel';
+import PaymentModel from './models/PaymentModel';
+import AddressModel from './models/AddressModel';
+//import SubCategoryModel from './models/subCategoryMode ';
+import CommentModel from './models/CommentModel';
+
+// Relacionamentos
+UserModel.hasMany(AddressModel, { foreignKey: 'id_user' });
+AddressModel.belongsTo(UserModel, { foreignKey: 'id_user' });
+
+UserModel.hasMany(OrderModel, { foreignKey: 'id_user' });
+OrderModel.belongsTo(UserModel, { foreignKey: 'id_user' });
+
+UserModel.hasMany(CommentModel, { foreignKey: 'id_user' });
+CommentModel.belongsTo(UserModel, { foreignKey: 'id_user' });
+
+OrderModel.hasMany(OrderProductModel, { foreignKey: 'id_order' });
+OrderProductModel.belongsTo(OrderModel, { foreignKey: 'id_order' });
+
+ProductModel.hasMany(OrderProductModel, { foreignKey: 'id_product' });
+OrderProductModel.belongsTo(ProductModel, { foreignKey: 'id_product' });
+
+CategoryModel.hasMany(ProductModel, { foreignKey: 'ID_category' });
+ProductModel.belongsTo(CategoryModel, { foreignKey: 'ID_category' });
+
+OrderModel.belongsTo(ShippingMethodModel, { foreignKey: 'ID_shippingMethod' });
+ShippingMethodModel.hasMany(OrderModel, { foreignKey: 'ID_shippingMethod' });
+
+//CategoryModel.hasMany(SubCategoryModel, { foreignKey: 'id_category' });
+//SubCategoryModel.belongsTo(CategoryModel, { foreignKey: 'id_category' });
+
+export {
+  UserModel,
+  ProductModel,
+  CategoryModel,
+  OrderModel,
+  OrderProductModel,
+  ShippingMethodModel,
+  PaymentMethodModel,
+  PaymentModel,
+  AddressModel,
+  //SubCategoryModel,
+  CommentModel
+};
+
 const app = express();
 const port = 3000;
 

@@ -1,13 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-class ShippingMethodModel extends Model {
-  public ID_shippingMethod!: number;
-  public name!: string;
-  public shippingCost!: number;
-}
+class ShippingMethod extends Model {}
 
-ShippingMethodModel.init(
+ShippingMethod.init(
   {
     ID_shippingMethod: {
       type: DataTypes.INTEGER,
@@ -32,4 +28,4 @@ ShippingMethodModel.init(
   }
 );
 
-export default ShippingMethodModel;
+export default ShippingMethod;

@@ -1,12 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-class CategoryModel extends Model {
-  public ID_category!: number;
-  public name!: string;
-}
+class Category extends Model {}
 
-CategoryModel.init(
+Category.init(
   {
     ID_category: {
       type: DataTypes.INTEGER,
@@ -27,4 +24,4 @@ CategoryModel.init(
   }
 );
 
-export default CategoryModel;
+export default Category;

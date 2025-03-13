@@ -56,7 +56,7 @@ export const updateCategory = async (req: Request<{ id: string }>, res: Response
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    category.name = name;
+    //category.name = name;
     await category.save();
 
     return res.status(200).json(category);

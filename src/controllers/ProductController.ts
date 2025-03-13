@@ -58,12 +58,12 @@ export const updateProdutcs = async (req: Request<{ id: string }>, res: Response
 
 // adicionar todos os campos que deseja editar//
 
-    if (name) Produtcs.name = name;
+    /*if (name) Produtcs.name = name;
     if (Descricao) Produtcs.description = Descricao;
     if (Preco) Produtcs.price = Preco;
-    if (ID_categoria) Produtcs.categoryId = ID_categoria;
+    if (ID_categoria) Produtcs.ID_category = ID_categoria;
     if (Estoque) Produtcs.stock = Estoque;
-
+*/
     await Produtcs.save();
 
     return res.status(200).json(Produtcs);

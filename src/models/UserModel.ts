@@ -4,75 +4,43 @@ import OrderModel from "./OrderModel"; // Relacionamento com Order
 import AddressModel from "./AddressModel"; // Relacionamento com Address
 import CommentModel from "./CommentModel"; // Relacionamento com Comment
 
-class UserModel extends Model {
-  public ID_user!: number;
-  public name!: string;
-  public email!: string;
-  public password!: string;
-  public address!: string;
-  public cartCreationDate!: Date;
-}
+class User extends Model {}
 
-UserModel.init(
+User.init(
   {
-    ID_user: {
+    id_user: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
-      allowNull: false,
+      primaryKey: true
     },
     name: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        len: [2, 255],
-      },
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true,
-        notEmpty: true,
-      },
+      unique: true
     },
     password: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        len: [6, 255], // Exemplo: senha mínima de 6 caracteres
-      },
+      allowNull: false
     },
     address: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        len: [5, 255],
-      },
+      allowNull: false
     },
-    cartCreationDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      validate: {
-        isDate: true,
-      },
-    },
+    cart_creation_date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
   },
   {
     sequelize,
-    modelName: "User",
-    tableName: "User",
-    timestamps: false,
+    modelName: 'User',
+    tableName: 'User',
+    timestamps: false
   }
 );
 
-
-UserModel.hasMany(OrderModel, { foreignKey: "ID_user", as: "orders" });
-UserModel.hasMany(AddressModel, { foreignKey: "ID_user", as: "addresses" });
-UserModel.hasMany(CommentModel, { foreignKey: "ID_user", as: "comments" });
-
-export default UserModel;
+export default User;

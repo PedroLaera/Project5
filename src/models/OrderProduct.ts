@@ -2,44 +2,44 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 import OrderModel from "./OrderModel";
 import ProductModel from "./ProductModel";
+import { ShippingMethodModel, UserModel } from "..";
 
-class OrderProductModel extends Model {
-  public ID_orderProduct!: number;
-  public ID_order!: number;
-  public ID_product!: number;
-  public quantity!: number;
-}
+class OrderProduct extends Model {}
 
-OrderProductModel.init(
+OrderProduct.init(
   {
-    ID_orderProduct: {
+    id_order_product: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
-      allowNull: false,
+      primaryKey: true
     },
-    ID_order: {
+    id_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: OrderModel,
+        key: 'id_order'
+      }
     },
-    ID_product: {
+    id_product: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: ProductModel,
+        key: 'id_product'
+      }
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
   {
     sequelize,
-    modelName: "OrderProduct",
-    tableName: "OrderProduct",
-    timestamps: false,
+    modelName: 'OrderProduct',
+    tableName: 'OrderProduct',
+    timestamps: false
   }
 );
 
-OrderProductModel.belongsTo(OrderModel, { foreignKey: "ID_order", as: "order" });
-OrderProductModel.belongsTo(ProductModel, { foreignKey: "ID_product", as: "product" });
-
-export default OrderProductModel;
+export default OrderProduct;
