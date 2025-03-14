@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import Header from "../components/header/Header";
 
-const Register = () => {
+const Shop = () => {
   return (
     <div>
       <Header />
@@ -13,4 +13,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Shop;

@@ -5,10 +5,12 @@ const Register = () => {
   return (
     <div>
       <Header />
-      <h1>Crie sua conta</h1>
-      <button>
-        <Link to="/">Comece sua compra</Link>
-      </button>
+      <div className="container">
+        <h1>Crie sua conta</h1>
+        <button>
+          <Link to="/Login">Login completo</Link>
+        </button>
+      </div>
     </div>
   );
 };

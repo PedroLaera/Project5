@@ -1,12 +1,15 @@
+import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 import "./NewAccount.css";
 
 const NewAccount = () => {
+  const navigation = useNavigate();
+  const { id } = useParams();
+
   return (
     <div>
-      <div className="new">
-        <Link to="/Register">Criar conta</Link>
-        <button className="top-painel"></button>
-      </div>
+      <button onClick={() => navigation("/Register")}>Criar conta</button>
+      {id}
     </div>
   );
 };
