@@ -1,17 +1,15 @@
 import { Link } from "react-router";
 import Button from "../button/Button" /*"@/components/ui/button"*/;
 import "./Header.css";
-
+import logo from "../assets/logoteste.png";
 const Header = () => {
   return (
     <header className="header">
       {/* Logo */}
 
-      <button>
-        <Link to="/">
-          <img src="/project/public/vite.svg" alt="home" />
-        </Link>
-      </button>
+      <Link to="/" className="logo">
+        <img src={logo} alt="home" />
+      </Link>
 
       {/* Navigation Buttons */}
       <nav className="nav">
@@ -25,7 +23,10 @@ const Header = () => {
           <Link to="/Shop">Shop</Link>
         </Button>
         <Button variant="outline">
-          <Link to="/About">Sobre</Link>
+          <Link to="/About">Blog</Link>
+        </Button>
+        <Button variant="outline">
+          <Link to="/Account">Sua conta</Link>
         </Button>
       </nav>
     </header>
