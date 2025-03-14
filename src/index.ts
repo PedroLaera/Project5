@@ -80,7 +80,9 @@ app.use(CommentRoutes);
 app.use(AddressRoutes);
 
 sequelize
-  .sync({ alter: true })
+  .sync({
+    alter: true,
+  }) /* Recria as tabelas, possivelmente cria novas constraints */
   .then(() => {
     console.log("Database Foi Sincronizado Com Sucesso!!!");
   })
