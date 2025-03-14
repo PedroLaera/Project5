@@ -3,60 +3,50 @@ import sequelize from "./config/database";
 import userRoutes from "./routes/UserRoutes";
 import ShippingMethodRoutes from "./routes/ShippingMethodRoutes";
 import ProductRoutes from "./routes/ProdutoctRoutes";
-import PaymentRoutes from "./routes/PaymentRoutes"
-import PaymentMethodRoutes from "./routes/PaymentMethodRoutes"
-import OrderRoutes from "./routes/OrderRoutes"
-import CommentRoutes from "./routes/CommentRoutes"
+import PaymentRoutes from "./routes/PaymentRoutes";
+import PaymentMethodRoutes from "./routes/PaymentMethodRoutes";
+import OrderRoutes from "./routes/OrderRoutes";
+import CommentRoutes from "./routes/CommentRoutes";
 import CategoryRoutes from "./routes/CategoryRoutes";
-import AddressRoutes from "./routes/AddressRoutes"
+import AddressRoutes from "./routes/AddressRoutes";
 
+import UserModel from "./models/UserModel";
+import ProductModel from "./models/ProductModel";
+import CategoryModel from "./models/CategoryModel";
+import OrderModel from "./models/OrderModel";
+import OrderProductModel from "./models/OrderProduct";
+import ShippingMethodModel from "./models/ShippingMethodModel";
+import PaymentMethodModel from "./models/PaymentMethodModel";
+import PaymentModel from "./models/PaymentModel";
+import AddressModel from "./models/AddressModel";
+import CommentModel from "./models/CommentModel";
 
-import UserModel from './models/UserModel';
-import ProductModel from './models/ProductModel';
-import CategoryModel from './models/CategoryModel';
-import OrderModel from './models/OrderModel';
-import OrderProductModel from './models/OrderProduct';
-import ShippingMethodModel from './models/ShippingMethodModel';
-import PaymentMethodModel from './models/PaymentMethodModel';
-import PaymentModel from './models/PaymentModel';
-import AddressModel from './models/AddressModel';
-//import SubCategoryModel from './models/subCategoryMode ';
-import CommentModel from './models/CommentModel';
-
-// Relacionamentos
-UserModel.hasMany(AddressModel, { foreignKey: 'id_user' });
-AddressModel.belongsTo(UserModel, { foreignKey: 'id_user' });
+UserModel.hasMany(AddressModel, { foreignKey: "id_user" });
+AddressModel.belongsTo(UserModel, { foreignKey: "id_user" });
 
 //UserModel.hasMany(OrderModel, { foreignKey: 'id_user' });
 //OrderModel.belongsTo(UserModel, { foreignKey: 'id_user' });
 
-UserModel.hasMany(CommentModel, { foreignKey: 'id_user' });
-CommentModel.belongsTo(UserModel, { foreignKey: 'id_user' });
+UserModel.hasMany(CommentModel, { foreignKey: "id_user" });
+CommentModel.belongsTo(UserModel, { foreignKey: "id_user" });
 
-OrderModel.hasMany(OrderProductModel, { foreignKey: 'id_order' });
-OrderProductModel.belongsTo(OrderModel, { foreignKey: 'id_order' });
+OrderModel.hasMany(OrderProductModel, { foreignKey: "id_order" });
+OrderProductModel.belongsTo(OrderModel, { foreignKey: "id_order" });
 
-ProductModel.hasMany(OrderProductModel, { foreignKey: 'id_product' });
-OrderProductModel.belongsTo(ProductModel, { foreignKey: 'id_product' });
+ProductModel.hasMany(OrderProductModel, { foreignKey: "id_product" });
+OrderProductModel.belongsTo(ProductModel, { foreignKey: "id_product" });
 
-CategoryModel.hasMany(ProductModel, { foreignKey: 'ID_category' });
-ProductModel.belongsTo(CategoryModel, { foreignKey: 'ID_category' });
+CategoryModel.hasMany(ProductModel, { foreignKey: "ID_category" });
+ProductModel.belongsTo(CategoryModel, { foreignKey: "ID_category" });
 
-OrderModel.belongsTo(ShippingMethodModel, { foreignKey: 'ID_shippingMethod' });
-ShippingMethodModel.hasMany(OrderModel, { foreignKey: 'ID_shippingMethod' });
+OrderModel.belongsTo(ShippingMethodModel, { foreignKey: "ID_shippingMethod" });
+ShippingMethodModel.hasMany(OrderModel, { foreignKey: "ID_shippingMethod" });
 
-//CategoryModel.hasMany(SubCategoryModel, { foreignKey: 'id_category' });
-//SubCategoryModel.belongsTo(CategoryModel, { foreignKey: 'id_category' });
+OrderModel.belongsTo(PaymentModel, { foreignKey: "id_order" });
+PaymentModel.hasMany(OrderModel, { foreignKey: "id_order" });
 
-OrderModel.belongsTo(PaymentModel, {foreignKey: 'id_order'});
-PaymentModel.hasMany(OrderModel, { foreignKey: 'id_order' });
-
-//PaymentModel.belongsTo(PaymentMethodModel, {foreignKey: 'id_payment'});
-//PaymentMethodModel.hasMany(PaymentModel,{ foreignKey: 'id_payment' })
-
-
-
-
+PaymentModel.belongsTo(PaymentMethodModel, { foreignKey: "id_paymentMethod" });
+PaymentMethodModel.hasMany(PaymentModel, { foreignKey: "id_paymentMethod" });
 
 export {
   UserModel,
@@ -68,8 +58,7 @@ export {
   PaymentMethodModel,
   PaymentModel,
   AddressModel,
-  //SubCategoryModel,
-  CommentModel
+  CommentModel,
 };
 
 const app = express();
@@ -89,8 +78,6 @@ app.use(PaymentMethodRoutes);
 app.use(OrderRoutes);
 app.use(CommentRoutes);
 app.use(AddressRoutes);
-
-
 
 sequelize
   .sync({ alter: true })

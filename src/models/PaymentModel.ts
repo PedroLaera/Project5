@@ -1,7 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import OrderModel, { Order } from "./OrderModel";
+import OrderModel from "./OrderModel";
 import PaymentMethodModel from "./PaymentMethodModel";
+import PaymentModel from "./PaymentMethodModel";
 
 class Payment extends Model {}
 
@@ -16,11 +17,11 @@ Payment.init(
     id_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      /*references: {
+      references: {
         model: OrderModel,
-        key: 'id_order'
-    },*/
-  },
+        key: "id_order",
+      },
+    },
     id_paymentMethod: {
       type: DataTypes.INTEGER,
       allowNull: false,

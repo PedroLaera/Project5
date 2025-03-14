@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import { OrderModel, PaymentMethodModel } from "..";
+import PaymentMethodModel from "./PaymentModel";
 
 class PaymentMethod extends Model {}
 
@@ -11,10 +11,6 @@ PaymentMethod.init(
       autoIncrement: true,
       primaryKey: true,
       allowNull: false,
-     /* references: {
-        model: PaymentMethodModel,
-        key: 'id_paymentMethod'
-      },*/
     },
     name: {
       type: DataTypes.STRING(255),
