@@ -4,6 +4,7 @@ import { error } from "console";
 
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
+  console.log(users);
   res.send(users);
 };
 
@@ -12,13 +13,13 @@ export const getUserById = async (
   res: Response
 ) => {
   const user = await UserModel.findByPk(req.params.id);
-
+  console.log(user);
   return res.json(user);
 };
 
 export const CreateUser = async (req: Request, res: Response) => {
   try {
-    console.log("📥 Dados Recebidos:", req.body);
+    //console.log("📥 Dados Recebidos:", req.body);
     const { name, email, password, address, cart_creation_date } = req.body;
 
     /*if (!Nome || Nome === "") {

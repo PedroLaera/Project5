@@ -20,7 +20,7 @@ User.init(
     email: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      unique: true,
+      unique: true /* em testes deve usar um email variado */,
     },
     password: {
       type: DataTypes.STRING(255),
