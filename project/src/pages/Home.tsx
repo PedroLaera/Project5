@@ -4,23 +4,26 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <button>
-        <Link to="/Login">Fazer o login</Link>
-      </button>
-      <button>
-        <Link to="/Shop">Comprar agora</Link>
-      </button>
+      <div className="container">
+        <button>
+          <Link to="/Login">Comprar agora</Link>
+        </button>
 
-      {/*Produtos sendo puxados pela API do Back*/}
-      <button>
-        <h1>Produto de ID = 1</h1>
-      </button>
-      <button>
-        <h1>Produto de ID = 2</h1>
-      </button>
-      <button>
-        <h1>Produto de ID = 3</h1>
-      </button>
+        {/*Produto inicial*/}
+        <button>
+          <Link to="/Shop">Know more</Link>
+        </button>
+
+        {/*Produtos sendo puxados pela API do Back*/}
+        <button onClick={() => fetchData("id: 1")}>Carrossel 1</button>
+        <button onClick={() => fetchData("id: 2")}>Carrossel 2</button>
+        <button onClick={() => fetchData("id: 3")}>Carrossel 3</button>
+
+        {/*Produto final*/}
+        <button>
+          <Link to="/Shop">Know more</Link>
+        </button>
+      </div>
     </div>
   );
 };

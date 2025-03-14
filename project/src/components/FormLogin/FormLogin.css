@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.newAccount {
+  .top-painel {
+    display: flex;
+    align-items: right;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+}
+
+.card {
+  display: flex;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  width: 400px;
+}
+
+.left-panel {
+  flex: 1;
+  padding-right: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.login-button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.google-button {
+  background-color: #db4437;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.google-button:hover {
+  background-color: #b33628;
+}
