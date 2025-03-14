@@ -1,7 +1,7 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/database';
-import User from './UserModel';  
-import ShippingMethod from './ShippingMethodModel';  
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/database";
+import User from "./UserModel";
+import ShippingMethod from "./ShippingMethodModel";
 
 export class Order extends Model {}
 
@@ -15,10 +15,10 @@ Order.init(
     id_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /* references: {
         model: User,
-        key: 'ID_user',
-      },
+        key: "ID_user",
+      },*/
     },
     orderDate: {
       type: DataTypes.DATEONLY,
@@ -33,16 +33,22 @@ Order.init(
       allowNull: false,
     },
     status: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.ENUM(
+        "PENDING",
+        "PAID",
+        "SHIPPED",
+        "DELIVERED",
+        "CANCELED"
+      ),
       allowNull: false,
     },
     ID_shippingMethod: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /* references: {
         model: ShippingMethod,
-        key: 'ID_shippingMethod',
-      },
+        key: "ID_shippingMethod",
+      },*/
     },
     discount: {
       type: DataTypes.DECIMAL(10, 2),
@@ -51,12 +57,10 @@ Order.init(
   },
   {
     sequelize,
-    modelName: 'Order',
-    tableName: 'Order',
+    modelName: "Order",
+    tableName: "Order",
     timestamps: false,
   }
 );
-
-
 
 export default Order;

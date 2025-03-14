@@ -10,8 +10,10 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-
-export const getCommentsById = async (req: Request<{ id: string }>, res: Response) => {
+export const getCommentsById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const Comments = await CommentModel.findByPk(req.params.id);
 
@@ -21,26 +23,34 @@ export const getCommentsById = async (req: Request<{ id: string }>, res: Respons
 
     return res.status(200).json(Comments);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
-
 
 export const createComments = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body; 
+    const { id_user, id_product, content, rating, creation_date } = req.body;
 
-    if (!name || name.trim() === "") {
+    /*if (!name || name.trim() === "") {
       return res.status(400).json({ error: "Digite um nome de Comentário válido" });
-    }
+    }*/
 
-    const Comments = await CommentModel.create({ name });
+    const Comments = await CommentModel.create({
+      id_user,
+      id_product,
+      content,
+      rating,
+      creation_date,
+    });
     return res.status(201).json(Comments);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
-
 
 /*export const updateComments = async (req: Request<{ id: string }>, res: Response) => {
   try {
@@ -65,8 +75,10 @@ export const createComments = async (req: Request, res: Response) => {
   }
 };*/
 
-
-export const destroyCommentsById = async (req: Request<{ id: string }>, res: Response) => {
+export const destroyCommentsById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const Comments = await CommentModel.findByPk(req.params.id);
 
@@ -77,6 +89,8 @@ export const destroyCommentsById = async (req: Request<{ id: string }>, res: Res
     await Comments.destroy();
     return res.status(200).json({ message: "Comentário deletado com sucesso" });
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };

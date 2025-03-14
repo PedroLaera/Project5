@@ -26,10 +26,10 @@ User.init(
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    address: {
+    /*address: {
       type: DataTypes.STRING(255),
       allowNull: true,
-    },
+    },*/
     cart_creation_date: {
       type: DataTypes.DATE,
       allowNull: true,

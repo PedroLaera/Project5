@@ -17,10 +17,10 @@ Payment.init(
     id_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /*references: {
         model: OrderModel,
         key: "id_order",
-      },
+      },*/
     },
     id_paymentMethod: {
       type: DataTypes.INTEGER,

@@ -21,46 +21,6 @@ import PaymentModel from "./models/PaymentModel";
 import AddressModel from "./models/AddressModel";
 import CommentModel from "./models/CommentModel";
 
-UserModel.hasMany(AddressModel, { foreignKey: "id_user" });
-AddressModel.belongsTo(UserModel, { foreignKey: "id_user" });
-
-//UserModel.hasMany(OrderModel, { foreignKey: 'id_user' });
-//OrderModel.belongsTo(UserModel, { foreignKey: 'id_user' });
-
-UserModel.hasMany(CommentModel, { foreignKey: "id_user" });
-CommentModel.belongsTo(UserModel, { foreignKey: "id_user" });
-
-OrderModel.hasMany(OrderProductModel, { foreignKey: "id_order" });
-OrderProductModel.belongsTo(OrderModel, { foreignKey: "id_order" });
-
-ProductModel.hasMany(OrderProductModel, { foreignKey: "id_product" });
-OrderProductModel.belongsTo(ProductModel, { foreignKey: "id_product" });
-
-CategoryModel.hasMany(ProductModel, { foreignKey: "ID_category" });
-ProductModel.belongsTo(CategoryModel, { foreignKey: "ID_category" });
-
-OrderModel.belongsTo(ShippingMethodModel, { foreignKey: "ID_shippingMethod" });
-ShippingMethodModel.hasMany(OrderModel, { foreignKey: "ID_shippingMethod" });
-
-OrderModel.belongsTo(PaymentModel, { foreignKey: "id_order" });
-PaymentModel.hasMany(OrderModel, { foreignKey: "id_order" });
-
-PaymentModel.belongsTo(PaymentMethodModel, { foreignKey: "id_paymentMethod" });
-PaymentMethodModel.hasMany(PaymentModel, { foreignKey: "id_paymentMethod" });
-
-export {
-  UserModel,
-  ProductModel,
-  CategoryModel,
-  OrderModel,
-  OrderProductModel,
-  ShippingMethodModel,
-  PaymentMethodModel,
-  PaymentModel,
-  AddressModel,
-  CommentModel,
-};
-
 const app = express();
 const port = 3000;
 
@@ -81,7 +41,7 @@ app.use(AddressRoutes);
 
 sequelize
   .sync({
-    alter: true,
+    /*alter: true,*/
   }) /* Recria as tabelas, possivelmente cria novas constraints */
   .then(() => {
     console.log("Database Foi Sincronizado Com Sucesso!!!");
@@ -93,3 +53,46 @@ sequelize
 app.listen(port, () => {
   console.log("Servido Rodando Na Porta", port);
 });
+
+UserModel.hasMany(AddressModel, { foreignKey: "id_user" });
+AddressModel.belongsTo(UserModel, { foreignKey: "id_user" });
+
+UserModel.hasMany(OrderModel, { foreignKey: "id_user" });
+OrderModel.belongsTo(UserModel, { foreignKey: "id_user" });
+
+UserModel.hasMany(CommentModel, { foreignKey: "id_user" });
+CommentModel.belongsTo(UserModel, { foreignKey: "id_user" });
+
+OrderModel.hasMany(OrderProductModel, { foreignKey: "id_order" });
+OrderProductModel.belongsTo(OrderModel, { foreignKey: "id_order" });
+
+ProductModel.hasMany(OrderProductModel, { foreignKey: "id_product" });
+OrderProductModel.belongsTo(ProductModel, { foreignKey: "id_product" });
+
+OrderModel.belongsTo(ShippingMethodModel, { foreignKey: "ID_shippingMethod" });
+ShippingMethodModel.hasMany(OrderModel, { foreignKey: "ID_shippingMethod" });
+
+PaymentModel.belongsTo(OrderModel, { foreignKey: "id_order" });
+OrderModel.hasMany(PaymentModel, { foreignKey: "id_order" });
+
+PaymentModel.belongsTo(PaymentMethodModel, { foreignKey: "id_paymentMethod" });
+PaymentMethodModel.hasMany(PaymentModel, { foreignKey: "id_paymentMethod" });
+
+CategoryModel.hasMany(ProductModel, { foreignKey: "ID_category" });
+ProductModel.belongsTo(CategoryModel, { foreignKey: "ID_category" });
+
+ProductModel.hasMany(CommentModel, { foreignKey: "id_product" });
+CommentModel.belongsTo(ProductModel, { foreignKey: "id_product" });
+
+export {
+  UserModel,
+  ProductModel,
+  CategoryModel,
+  OrderModel,
+  OrderProductModel,
+  ShippingMethodModel,
+  PaymentMethodModel,
+  PaymentModel,
+  AddressModel,
+  CommentModel,
+};

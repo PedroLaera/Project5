@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import UserModel from "./UserModel"; 
-import ProductModel from "./ProductModel"; 
+import UserModel from "./UserModel";
+import ProductModel from "./ProductModel";
 
 class Comment extends Model {}
 
@@ -10,46 +10,46 @@ Comment.init(
     id_comment: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     id_user: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      /*  allowNull: false,
       references: {
         model: UserModel,
-        key: 'id_user'
-      }
+        key: "id_user",
+      },*/
     },
     id_product: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /*references: {
         model: ProductModel,
-        key: 'id_product'
-      }
+        key: "id_product",
+      },*/
     },
     content: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
     },
     rating: {
       type: DataTypes.FLOAT,
       allowNull: true,
       validate: {
         min: 0,
-        max: 5
-      }
+        max: 5,
+      },
     },
     creation_date: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    }
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     sequelize,
-    modelName: 'Comment',
-    tableName: 'Comment',
-    timestamps: false
+    modelName: "Comment",
+    tableName: "Comment",
+    timestamps: false,
   }
 );
 

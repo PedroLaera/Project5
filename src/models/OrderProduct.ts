@@ -11,34 +11,34 @@ OrderProduct.init(
     id_order_product: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     id_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /* references: {
         model: OrderModel,
         key: 'id_order'
-      }
+      }*/
     },
     id_product: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /* references: {
         model: ProductModel,
         key: 'id_product'
-      }
+      }*/
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   },
   {
     sequelize,
-    modelName: 'OrderProduct',
-    tableName: 'OrderProduct',
-    timestamps: false
+    modelName: "OrderProduct",
+    tableName: "OrderProduct",
+    timestamps: false,
   }
 );
 

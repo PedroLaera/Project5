@@ -1,8 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import CategoryModel from "./CategoryModel"; 
-//import SubCategoryModel from "./SubCategoryModel"; 
-
+import CategoryModel from "./CategoryModel";
+//import SubCategoryModel from "./SubCategoryModel";
 
 class Product extends Model {}
 
@@ -11,38 +10,38 @@ Product.init(
     id_product: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: true,
     },
     price: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+      allowNull: false,
     },
     stock: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     ID_category: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /* references: {
         model: CategoryModel,
-        key: 'ID_category'
-      }
-    }
+        key: "ID_category",
+      },*/
+    },
   },
   {
     sequelize,
-    modelName: 'Product',
-    tableName: 'Product',
-    timestamps: false
+    modelName: "Product",
+    tableName: "Product",
+    timestamps: false,
   }
 );
 
