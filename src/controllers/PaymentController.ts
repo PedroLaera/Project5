@@ -10,8 +10,10 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-
-export const getPaymentById = async (req: Request<{ id: string }>, res: Response) => {
+export const getPaymentById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const Payment = await PaymentModel.findByPk(req.params.id);
 
@@ -21,26 +23,36 @@ export const getPaymentById = async (req: Request<{ id: string }>, res: Response
 
     return res.status(200).json(Payment);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
-
 
 export const createPayment = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body; 
+    const { id_payment, id_order, id_paymentMethod, amountPaid, paymentDate } =
+      req.body;
 
-    if (!name || name.trim() === "") {
+    /*if (!name || name.trim() === "") {
       return res.status(400).json({ error: "Digite um nome de Pagamento válido" });
-    }
+    }*/
 
-    const Payment = await PaymentModel.create({ name });
+    const Payment = await PaymentModel.create({
+      id_payment,
+      id_order,
+      id_paymentMethod,
+      amountPaid,
+      paymentDate,
+    });
+
     return res.status(201).json(Payment);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
-
 
 /*export const updatePayment = async (req: Request<{ id: string }>, res: Response) => {
   try {
@@ -65,8 +77,10 @@ export const createPayment = async (req: Request, res: Response) => {
   }
 };*/
 
-
-export const destroyPaymentById = async (req: Request<{ id: string }>, res: Response) => {
+export const destroyPaymentById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const Payment = await PaymentModel.findByPk(req.params.id);
 
@@ -77,6 +91,8 @@ export const destroyPaymentById = async (req: Request<{ id: string }>, res: Resp
     await Payment.destroy();
     return res.status(200).json({ message: "Pagamento deletado com sucesso" });
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
