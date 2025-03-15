@@ -60,13 +60,15 @@ export const updatePaymentMethod = async (
     if (!name || name.trim() === "") {
       return res
         .status(400)
-        .json({ error: "Digite um nome de categoria válido" });
+        .json({ error: "Digite um nome de Método De Pagamento válido" });
     }
 
     const PaymentMethod = await PaymentMethodModel.findByPk(req.params.id);
 
     if (!PaymentMethod) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res
+        .status(404)
+        .json({ error: "Método De Pagamento não encontrada" });
     }
 
     PaymentMethod.name = name;

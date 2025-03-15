@@ -86,13 +86,13 @@ export const updateAddres = async (
     if (!ID_address || ID_address.trim() === "") {
       return res
         .status(400)
-        .json({ error: "Digite um nome de categoria válido" });
+        .json({ error: "Digite um nome de Endereço válido" });
     }
 
     const Addres = await AddresModel.findByPk(req.params.id);
 
     if (!Addres) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Endereço não encontrada" });
     }
 
     Addres.ID_address = ID_address;

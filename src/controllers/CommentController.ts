@@ -59,16 +59,16 @@ export const updateComments = async (
   try {
     const { id_user, id_product, content, rating, creation_date } = req.body;
 
-    if (!id_user || id_user.trim() === "") {
+    if (!id_product || id_product.trim() === "") {
       return res
         .status(400)
-        .json({ error: "Digite um nome de categoria válido" });
+        .json({ error: "Digite um nome de Comentário válido" });
     }
 
     const Comments = await CommentModel.findByPk(req.params.id);
 
     if (!Comments) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Comentário não encontrada" });
     }
 
     Comments.id_user = id_user;

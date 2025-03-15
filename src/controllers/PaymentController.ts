@@ -65,13 +65,13 @@ export const updatePayment = async (
     if (!id_payment || id_payment.trim() === "") {
       return res
         .status(400)
-        .json({ error: "Digite um nome de categoria válido" });
+        .json({ error: "Digite um nome de Pagamento válido" });
     }
 
     const Payment = await PaymentModel.findByPk(req.params.id);
 
     if (!Payment) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Pagamento não encontrada" });
     }
 
     Payment.id_payment = id_payment;

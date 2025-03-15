@@ -37,7 +37,7 @@ export const createProdutcs = async (req: Request, res: Response) => {
     if (!name || name.trim() === "") {
       return res
         .status(400)
-        .json({ error: "Digite um nome de categoria válida" });
+        .json({ error: "Digite um nome de Produto válida" });
     }
 
     const Produtcs = await ProductModel.create({
@@ -61,9 +61,10 @@ export const updateProduct = async (
   res: Response
 ) => {
   try {
-    const { name, description, price, stock, ID_category } = req.body;
+    const { id_product, name, description, price, stock, ID_category } =
+      req.body;
 
-    if (!name || name.trim() === "") {
+    if (!id_product || id_product.trim() === "") {
       return res
         .status(400)
         .json({ error: "Digite um nome de Produto válido" });
@@ -72,12 +73,13 @@ export const updateProduct = async (
     const Produtcs = await ProductModel.findByPk(req.params.id);
 
     if (!Produtcs) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Produto não encontrada" });
     }
 
     // adicionar todos os campos que deseja editar//
 
-    Produtcs.name = name;
+    Produtcs.id_product = id_product;
+    Produtcs.name = name ?? Produtcs.name;
     Produtcs.description = description ?? Produtcs.description;
     Produtcs.price = price ?? Produtcs.price;
     Produtcs.stock = stock ?? Produtcs.stock;
@@ -101,11 +103,11 @@ export const destroyProdutcsById = async (
     const Produtcs = await ProductModel.findByPk(req.params.id);
 
     if (!Produtcs) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Produto não encontrada" });
     }
 
     await Produtcs.destroy();
-    return res.status(200).json({ message: "Categoria deletada com sucesso" });
+    return res.status(200).json({ message: "Produto deletada com sucesso" });
   } catch (error) {
     return res
       .status(500)

@@ -103,15 +103,13 @@ export const updateOrder = async (
     } = req.body;
 
     if (!id_order || id_order.trim() === "") {
-      return res
-        .status(400)
-        .json({ error: "Digite um nome de Produto válido" });
+      return res.status(400).json({ error: "Digite um nome de Pedido válido" });
     }
 
     const order = await OrderModel.findByPk(req.params.id);
 
     if (!order) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      return res.status(404).json({ error: "Pedido não encontrada" });
     }
 
     order.id_order = id_order;
