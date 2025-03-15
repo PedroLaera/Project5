@@ -10,44 +10,57 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-
-export const getPaymentMethodById = async (req: Request<{ id: string }>, res: Response) => {
+export const getPaymentMethodById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const PaymentMethod = await PaymentMethodModel.findByPk(req.params.id);
 
     if (!PaymentMethod) {
-      return res.status(404).json({ error: "Método De Pagamento não encontrada" });
+      return res
+        .status(404)
+        .json({ error: "Método De Pagamento não encontrada" });
     }
 
     return res.status(200).json(PaymentMethod);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-
 export const createPaymentMethod = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body; 
+    const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de Método De Pagamento  válido" });
+      return res
+        .status(400)
+        .json({ error: "Digite um nome de Método De Pagamento  válido" });
     }
 
     const PaymentMethod = await PaymentMethodModel.create({ name });
     return res.status(201).json(PaymentMethod);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-
-/*export const updatePayment = async (req: Request<{ id: string }>, res: Response) => {
+export const updatePaymentMethod = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res
+        .status(400)
+        .json({ error: "Digite um nome de categoria válido" });
     }
 
     const Addres = await PaymentMethodModel.findByPk(req.params.id);
@@ -56,27 +69,36 @@ export const createPaymentMethod = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    Addres.name = name;
     await Addres.save();
 
     return res.status(200).json(Addres);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
-};*/
+};
 
-
-export const destroyPaymentMethodById = async (req: Request<{ id: string }>, res: Response) => {
+export const destroyPaymentMethodById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const PaymentMethod = await PaymentMethodModel.findByPk(req.params.id);
 
     if (!PaymentMethod) {
-      return res.status(404).json({ error: "Método De Pagamento não encontrada" });
+      return res
+        .status(404)
+        .json({ error: "Método De Pagamento não encontrada" });
     }
 
     await PaymentMethod.destroy();
-    return res.status(200).json({ message: "Método De Pagamento deletado com sucesso" });
+    return res
+      .status(200)
+      .json({ message: "Método De Pagamento deletado com sucesso" });
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };

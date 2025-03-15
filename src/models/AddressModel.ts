@@ -1,9 +1,19 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import UserModel from "./UserModel"; 
-import OrderModel from "./OrderModel"; 
+import UserModel from "./UserModel";
+import OrderModel from "./OrderModel";
 
-class Address extends Model {}
+class Address extends Model {
+  ID_address!: number;
+  number!: number;
+  complement!: number;
+  neighborhood!: number;
+  city!: number;
+  state!: Date;
+  zipCode!: number;
+  id_user!: number;
+  ID_order!: number;
+}
 
 Address.init(
   {

@@ -4,7 +4,14 @@ import OrderModel from "./OrderModel"; // Relacionamento com Order
 import AddressModel from "./AddressModel"; // Relacionamento com Address
 import CommentModel from "./CommentModel"; // Relacionamento com Comment
 
-class User extends Model {}
+class User extends Model {
+  id_user!: number;
+  name!: string;
+  email!: string;
+  password!: string;
+  address?: string;
+  cart_creation_date!: Date;
+}
 
 User.init(
   {

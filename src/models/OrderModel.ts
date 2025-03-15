@@ -3,7 +3,16 @@ import sequelize from "../config/database";
 import User from "./UserModel";
 import ShippingMethod from "./ShippingMethodModel";
 
-export class Order extends Model {}
+export class Order extends Model {
+  id_order!: number;
+  id_user!: number;
+  orderDate!: Date;
+  totalAmount!: number;
+  shippingFee!: Date;
+  status!: string;
+  ID_shippingMethod!: number;
+  discount!: number;
+}
 
 Order.init(
   {

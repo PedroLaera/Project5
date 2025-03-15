@@ -55,7 +55,7 @@ export const createProdutcs = async (req: Request, res: Response) => {
   }
 };
 
-export const updateProdutcs = async (
+export const updateProduct = async (
   req: Request<{ id: string }>,
   res: Response
 ) => {

@@ -2,7 +2,10 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 import PaymentMethodModel from "./PaymentModel";
 
-class PaymentMethod extends Model {}
+class PaymentMethod extends Model {
+  id_paymentMethod!: number;
+  name!: string;
+}
 
 PaymentMethod.init(
   {

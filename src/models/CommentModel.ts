@@ -3,7 +3,14 @@ import sequelize from "../config/database";
 import UserModel from "./UserModel";
 import ProductModel from "./ProductModel";
 
-class Comment extends Model {}
+class Comment extends Model {
+  id_comment!: number;
+  id_user!: number;
+  id_product!: number;
+  content!: number;
+  rating!: number;
+  creation_date!: Date;
+}
 
 Comment.init(
   {

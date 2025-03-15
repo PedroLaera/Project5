@@ -86,12 +86,17 @@ export const CreateOrder = async (req: Request, res: Response) => {
   }
 };*/
 
-/*export const updateOrder = async (req: Request<{ id: string }>, res: Response) => {
+export const updateOrder = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de Produto válido" });
+      return res
+        .status(400)
+        .json({ error: "Digite um nome de Produto válido" });
     }
 
     const category = await OrderModel.findByPk(req.params.id);
@@ -100,14 +105,15 @@ export const CreateOrder = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    category.name = name;
     await category.save();
 
     return res.status(200).json(category);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
-};*/
+};
 
 export const destroyOrderById = async (
   req: Request<{ id: string }>,

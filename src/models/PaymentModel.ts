@@ -4,7 +4,13 @@ import OrderModel from "./OrderModel";
 import PaymentMethodModel from "./PaymentMethodModel";
 import PaymentModel from "./PaymentMethodModel";
 
-class Payment extends Model {}
+class Payment extends Model {
+  id_payment!: number;
+  id_order!: number;
+  id_paymentMethod!: number;
+  amountPaid!: number;
+  paymentDate!: Date;
+}
 
 Payment.init(
   {

@@ -61,23 +61,36 @@ export const updaterUser = async (
   res: Response
 ) => {
   try {
-    const { name } = req.body;
+    const { name, email, password, address, cart_creation_date } = req.body;
 
-    if (!name || name === "") {
-      return res.status(400).json({ error: "Informe um nome valido" });
+    if (!name || name.trim() === "") {
+      return res.status(400).json({ error: "Informe um nome válido" });
     }
 
     const user = await UserModel.findByPk(req.params.id);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-    /*user. = name;*/
-    await user.save();
+    // Atualizando os campos do usuário
+    user.name = name;
+    user.email = email ?? user.email; // Mantém o email antigo se não for enviado
+    user.address = address ?? user.address;
+    user.cart_creation_date = cart_creation_date ?? user.cart_creation_date;
 
-    res.status(200).json(UserModel);
-  } catch (error) {
-    res.status(500).json("erro no servido" + error);
+    // Atualiza a senha apenas se for enviada
+    /*if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }*/
+
+    await user.save(); // Salva no banco de dados
+
+    return res.status(200).json(user);
+  } catch (error: any) {
+    return res
+      .status(500)
+      .json({ error: "Erro no servidor", details: error.message });
   }
 };
 

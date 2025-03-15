@@ -1,7 +1,11 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-class ShippingMethod extends Model {}
+class ShippingMethod extends Model {
+  ID_shippingMethod!: string;
+  name!: string;
+  shippingCost!: number;
+}
 
 ShippingMethod.init(
   {

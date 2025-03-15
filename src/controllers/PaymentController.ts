@@ -54,28 +54,34 @@ export const createPayment = async (req: Request, res: Response) => {
   }
 };
 
-/*export const updatePayment = async (req: Request<{ id: string }>, res: Response) => {
+export const updatePayment = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res
+        .status(400)
+        .json({ error: "Digite um nome de categoria válido" });
     }
 
-    const Addres = await AddresModel.findByPk(req.params.id);
+    const Addres = await PaymentModel.findByPk(req.params.id);
 
     if (!Addres) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    Addres.name = name;
     await Addres.save();
 
     return res.status(200).json(Addres);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
-};*/
+};
 
 export const destroyPaymentById = async (
   req: Request<{ id: string }>,

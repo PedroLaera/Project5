@@ -1,7 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-class Category extends Model {}
+class Category extends Model {
+  ID_category!: number;
+  name!: string;
+}
 
 Category.init(
   {

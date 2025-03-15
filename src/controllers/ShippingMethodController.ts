@@ -50,28 +50,36 @@ export const createMethod = async (req: Request, res: Response) => {
   }
 };
 
-/*export const updateMethod = async (req: Request<{ id: string }>, res: Response) => {
+export const updateShippingMethod = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de Método De Entrega válido" });
+      return res
+        .status(400)
+        .json({ error: "Digite um nome de Método De Entrega válido" });
     }
 
     const Method = await ShippingMethodModel.findByPk(req.params.id);
 
     if (!Method) {
-      return res.status(404).json({ error: "Método De Entrega não encontrada" });
+      return res
+        .status(404)
+        .json({ error: "Método De Entrega não encontrada" });
     }
 
-    Method.name = name;
     await Method.save();
 
     return res.status(200).json(Method);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
-};*/
+};
 
 export const destroyMethodById = async (
   req: Request<{ id: string }>,

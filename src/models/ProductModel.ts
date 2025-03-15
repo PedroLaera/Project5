@@ -3,7 +3,14 @@ import sequelize from "../config/database";
 import CategoryModel from "./CategoryModel";
 //import SubCategoryModel from "./SubCategoryModel";
 
-class Product extends Model {}
+class Product extends Model {
+  id_product!: number;
+  name!: string;
+  description!: string;
+  price!: number;
+  stock!: number;
+  ID_category!: number;
+}
 
 Product.init(
   {
