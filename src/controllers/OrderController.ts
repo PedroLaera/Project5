@@ -55,7 +55,7 @@ export const CreateOrder = async (req: Request, res: Response) => {
     ];
 
     if (!status || !allowedStatuses.includes(status)) {
-      req.body.status = "PENDING"; // Define status padrão se inválido ou vazio
+      req.body.status = "PENDING";
     }
 
     const order = await OrderModel.create(req.body);
@@ -91,23 +91,41 @@ export const updateOrder = async (
   res: Response
 ) => {
   try {
-    const { name } = req.body;
+    const {
+      id_order,
+      id_user,
+      orderDate,
+      totalAmount,
+      shippingFee,
+      status,
+      ID_shippingMethod,
+      discount,
+    } = req.body;
 
-    if (!name || name.trim() === "") {
+    if (!id_order || id_order.trim() === "") {
       return res
         .status(400)
         .json({ error: "Digite um nome de Produto válido" });
     }
 
-    const category = await OrderModel.findByPk(req.params.id);
+    const order = await OrderModel.findByPk(req.params.id);
 
-    if (!category) {
+    if (!order) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    await category.save();
+    order.id_order = id_order;
+    order.id_user = id_user ?? order.id_user;
+    order.orderDate = orderDate ?? order.orderDate;
+    order.totalAmount = totalAmount ?? order.totalAmount;
+    order.shippingFee = shippingFee ?? order.shippingFee;
+    order.status = status ?? order.status;
+    order.ID_shippingMethod = ID_shippingMethod ?? order.ID_shippingMethod;
+    order.discount = discount ?? order.discount;
 
-    return res.status(200).json(category);
+    await order.save();
+
+    return res.status(200).json(order);
   } catch (error) {
     return res
       .status(500)

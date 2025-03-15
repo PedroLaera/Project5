@@ -63,15 +63,17 @@ export const updatePaymentMethod = async (
         .json({ error: "Digite um nome de categoria válido" });
     }
 
-    const Addres = await PaymentMethodModel.findByPk(req.params.id);
+    const PaymentMethod = await PaymentMethodModel.findByPk(req.params.id);
 
-    if (!Addres) {
+    if (!PaymentMethod) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    await Addres.save();
+    PaymentMethod.name = name;
 
-    return res.status(200).json(Addres);
+    await PaymentMethod.save();
+
+    return res.status(200).json(PaymentMethod);
   } catch (error) {
     return res
       .status(500)

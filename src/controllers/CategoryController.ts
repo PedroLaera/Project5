@@ -10,8 +10,10 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-
-export const getCategoryById = async (req: Request<{ id: string }>, res: Response) => {
+export const getCategoryById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const category = await CategoryModel.findByPk(req.params.id);
 
@@ -21,33 +23,42 @@ export const getCategoryById = async (req: Request<{ id: string }>, res: Respons
 
     return res.status(200).json(category);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body; 
+    const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res
+        .status(400)
+        .json({ error: "Digite um nome de categoria válido" });
     }
 
     const category = await CategoryModel.create({ name });
     return res.status(201).json(category);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-
-export const updateCategory = async (req: Request<{ id: string }>, res: Response) => {
+export const updateCategory = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const { name } = req.body;
 
     if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de categoria válido" });
+      return res
+        .status(400)
+        .json({ error: "Digite um nome de categoria válido" });
     }
 
     const category = await CategoryModel.findByPk(req.params.id);
@@ -56,17 +67,22 @@ export const updateCategory = async (req: Request<{ id: string }>, res: Response
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    //category.name = name;
+    category.name = name;
+
     await category.save();
 
     return res.status(200).json(category);
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-
-export const destroyCategoryById = async (req: Request<{ id: string }>, res: Response) => {
+export const destroyCategoryById = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
   try {
     const category = await CategoryModel.findByPk(req.params.id);
 
@@ -77,6 +93,8 @@ export const destroyCategoryById = async (req: Request<{ id: string }>, res: Res
     await category.destroy();
     return res.status(200).json({ message: "Categoria deletada com sucesso" });
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error });
   }
 };

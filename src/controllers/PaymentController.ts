@@ -59,23 +59,30 @@ export const updatePayment = async (
   res: Response
 ) => {
   try {
-    const { name } = req.body;
+    const { id_payment, id_order, id_paymentMethod, amountPaid, paymentDate } =
+      req.body;
 
-    if (!name || name.trim() === "") {
+    if (!id_payment || id_payment.trim() === "") {
       return res
         .status(400)
         .json({ error: "Digite um nome de categoria válido" });
     }
 
-    const Addres = await PaymentModel.findByPk(req.params.id);
+    const Payment = await PaymentModel.findByPk(req.params.id);
 
-    if (!Addres) {
+    if (!Payment) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
 
-    await Addres.save();
+    Payment.id_payment = id_payment;
+    Payment.id_order = id_order ?? Payment.id_order;
+    Payment.id_paymentMethod = id_paymentMethod ?? Payment.id_paymentMethod;
+    Payment.amountPaid = amountPaid ?? Payment.amountPaid;
+    Payment.paymentDate = paymentDate ?? Payment.paymentDate;
 
-    return res.status(200).json(Addres);
+    await Payment.save();
+
+    return res.status(200).json(Payment);
   } catch (error) {
     return res
       .status(500)

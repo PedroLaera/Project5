@@ -74,7 +74,7 @@ export const updaterUser = async (
 
     // Atualizando os campos do usuário
     user.name = name;
-    user.email = email ?? user.email; // Mantém o email antigo se não for enviado
+    user.email = email ?? user.email;
     user.address = address ?? user.address;
     user.cart_creation_date = cart_creation_date ?? user.cart_creation_date;
 
@@ -84,7 +84,7 @@ export const updaterUser = async (
       user.password = hashedPassword;
     }*/
 
-    await user.save(); // Salva no banco de dados
+    await user.save();
 
     return res.status(200).json(user);
   } catch (error: any) {

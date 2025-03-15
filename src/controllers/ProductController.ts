@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import ProductModel from "../models/ProductModel";
+import Order from "../models/OrderModel";
 
 export const getAll = async (req: Request, res: Response) => {
   try {
@@ -60,7 +61,7 @@ export const updateProduct = async (
   res: Response
 ) => {
   try {
-    const { name, Descricao, Preco, ID_categoria, Estoque } = req.body;
+    const { name, description, price, stock, ID_category } = req.body;
 
     if (!name || name.trim() === "") {
       return res
@@ -76,12 +77,12 @@ export const updateProduct = async (
 
     // adicionar todos os campos que deseja editar//
 
-    /*if (name) Produtcs.name = name;
-    if (Descricao) Produtcs.description = Descricao;
-    if (Preco) Produtcs.price = Preco;
-    if (ID_categoria) Produtcs.ID_category = ID_categoria;
-    if (Estoque) Produtcs.stock = Estoque;
-*/
+    Produtcs.name = name;
+    Produtcs.description = description ?? Produtcs.description;
+    Produtcs.price = price ?? Produtcs.price;
+    Produtcs.stock = stock ?? Produtcs.stock;
+    Produtcs.ID_category = ID_category ?? Produtcs.ID_category;
+
     await Produtcs.save();
 
     return res.status(200).json(Produtcs);

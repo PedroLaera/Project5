@@ -55,7 +55,7 @@ export const updateShippingMethod = async (
   res: Response
 ) => {
   try {
-    const { name } = req.body;
+    const { name, shippingCost } = req.body;
 
     if (!name || name.trim() === "") {
       return res
@@ -70,6 +70,9 @@ export const updateShippingMethod = async (
         .status(404)
         .json({ error: "Método De Entrega não encontrada" });
     }
+
+    Method.name = name;
+    Method.shippingCost = shippingCost ?? Method.shippingCost;
 
     await Method.save();
 

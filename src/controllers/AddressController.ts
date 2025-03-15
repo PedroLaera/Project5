@@ -31,15 +31,33 @@ export const getAddresById = async (
 
 export const createAddres = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
-
-    if (!name || name.trim() === "") {
+    const {
+      ID_address,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      zipCode,
+      id_user,
+      ID_order,
+    } = req.body;
+    if (!ID_address || ID_address.trim() === "") {
       return res
         .status(400)
         .json({ error: "Digite um nome de Endereço válido" });
     }
-
-    const Addres = await AddresModel.create({ name });
+    const Addres = await AddresModel.create({
+      ID_address,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      zipCode,
+      id_user,
+      ID_order,
+    });
     return res.status(201).json(Addres);
   } catch (error) {
     return res
@@ -53,9 +71,19 @@ export const updateAddres = async (
   res: Response
 ) => {
   try {
-    const { name } = req.body;
+    const {
+      ID_address,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      zipCode,
+      id_user,
+      ID_order,
+    } = req.body;
 
-    if (!name || name.trim() === "") {
+    if (!ID_address || ID_address.trim() === "") {
       return res
         .status(400)
         .json({ error: "Digite um nome de categoria válido" });
@@ -66,6 +94,16 @@ export const updateAddres = async (
     if (!Addres) {
       return res.status(404).json({ error: "Categoria não encontrada" });
     }
+
+    Addres.ID_address = ID_address;
+    Addres.number = number ?? Addres.number;
+    Addres.complement = complement ?? Addres.complement;
+    Addres.neighborhood = neighborhood ?? Addres.neighborhood;
+    Addres.city = city ?? Addres.city;
+    Addres.state = state ?? Addres.state;
+    Addres.zipCode = zipCode ?? Addres.zipCode;
+    Addres.id_user = id_user ?? Addres.id_user;
+    Addres.ID_order = ID_order ?? Addres.ID_order;
 
     await Addres.save();
 
