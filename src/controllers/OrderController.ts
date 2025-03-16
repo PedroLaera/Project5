@@ -6,7 +6,7 @@ export const getAll = async (req: Request, res: Response) => {
     const Orders = await OrderModel.findAll();
     res.status(200).json(Orders);
   } catch (error) {
-    res.status(500).json({ error: "Erro interno no servidor", details: error });
+    res.status(500).json({ error: "Erro Do Servidor", details: error });
   }
 };
 

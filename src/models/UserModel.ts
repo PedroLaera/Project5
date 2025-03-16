@@ -1,8 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import OrderModel from "./OrderModel"; // Relacionamento com Order
-import AddressModel from "./AddressModel"; // Relacionamento com Address
-import CommentModel from "./CommentModel"; // Relacionamento com Comment
+import bcrypt from "bcrypt";
+import OrderModel from "./OrderModel";
+import AddressModel from "./AddressModel";
+import CommentModel from "./CommentModel";
 
 class User extends Model {
   id_user!: number;
@@ -11,6 +12,14 @@ class User extends Model {
   password!: string;
   address?: string;
   cart_creation_date!: Date;
+
+  public async hashPassword() {
+    this.password = await bcrypt.hash(this.password!, 10);
+  }
+
+  public async validatePassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password!);
+  }
 }
 
 User.init(
@@ -49,5 +58,15 @@ User.init(
     timestamps: false,
   }
 );
+
+User.beforeCreate(async (user: User) => {
+  await user.hashPassword();
+});
+
+User.beforeUpdate(async (user: User) => {
+  if (user.changed("password")) {
+    await user.hashPassword();
+  }
+});
 
 export default User;

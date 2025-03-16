@@ -9,6 +9,7 @@ import OrderRoutes from "./routes/OrderRoutes";
 import CommentRoutes from "./routes/CommentRoutes";
 import CategoryRoutes from "./routes/CategoryRoutes";
 import AddressRoutes from "./routes/AddressRoutes";
+import LoginRoutes from "./routes/LoginRoutes";
 
 import UserModel from "./models/UserModel";
 import ProductModel from "./models/ProductModel";
@@ -38,6 +39,7 @@ app.use(PaymentMethodRoutes);
 app.use(OrderRoutes);
 app.use(CommentRoutes);
 app.use(AddressRoutes);
+app.use(LoginRoutes);
 
 sequelize
   .sync({
