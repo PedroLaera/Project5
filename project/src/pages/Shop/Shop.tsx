@@ -1,10 +1,10 @@
 import { Link } from "react-router";
-import Header from "../components/header/Header";
+import Navbar from "../../components/NavBar/Navbar";
 
 const Shop = () => {
   return (
     <div>
-      <Header />
+      <Navbar />
       <h1>Comece a comprar</h1>
       <button>
         <Link to="/">Comece sua compra</Link>

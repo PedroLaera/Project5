@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
-import Header from "../components/header/Header";
-import FormLogin from "../components/FormLogin/FormLogin";
-import NewAccount from "../components/NewAccount/NewAccount";
+import Navbar from "../../components/NavBar/Navbar";
+import FormLogin from "../../components/FormLogin/FormLogin";
+import NewAccount from "../../components/NewAccount/NewAccount";
 //import NewAccount from "../components/NewAccount/NewAccount";
 const Login = () => {
   const navigation = useNavigate();
@@ -10,7 +10,7 @@ const Login = () => {
 
   return (
     <div>
-      <Header />
+      <Navbar />
       <div className="container">
         <FormLogin />
       </div>

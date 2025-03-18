@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 import Button from "../button/Button" /*"@/components/ui/button"*/;
-import "./Header.css";
+import "./Navbar.css";
 import logo from "../assets/logoteste.png";
-const Header = () => {
+const Navbar = () => {
   return (
     <div className="positionHeader">
       <header className="header">
@@ -35,4 +35,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

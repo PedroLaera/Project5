@@ -1,10 +1,10 @@
 import { Link } from "react-router";
-import Header from "../components/header/Header";
+import Navbar from "../../components/NavBar/Navbar";
 
 const Register = () => {
   return (
     <div>
-      <Header />
+      <Navbar />
       <div className="container">
         <h1>Crie sua conta</h1>
         <button>
