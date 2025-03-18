@@ -47,6 +47,7 @@ export const CreateOrder = async (req: Request, res: Response) => {
     }*/
 
     const allowedStatuses = [
+      "CART",
       "PENDING",
       "PAID",
       "SHIPPED",
@@ -55,7 +56,7 @@ export const CreateOrder = async (req: Request, res: Response) => {
     ];
 
     if (!status || !allowedStatuses.includes(status)) {
-      req.body.status = "PENDING";
+      req.body.status = "CART";
     }
 
     const order = await OrderModel.create(req.body);

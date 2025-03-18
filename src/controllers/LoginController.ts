@@ -5,6 +5,7 @@ import { generateToken } from "../utils/jwt";
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
+
   if (!email || !password) {
     return res.status(400).json({ error: "Senha e E-mail Necessarias" });
   }
@@ -19,7 +20,12 @@ export const loginUser = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Senha e E-mail Necessarias" });
   }
 
-  const token = generateToken(user);
+  console.log("Gerando token para:", user.id_user, user.email);
+
+
+  console.log("Usuário encontrado:", user);
+  const token = generateToken(user.id_user, user.email);
+  console.log("Token gerado:", token);
 
   res.status(200).json({ message: "Usuario Logado Com Sucesso", token });
 };

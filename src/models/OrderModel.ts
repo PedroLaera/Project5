@@ -43,6 +43,7 @@ Order.init(
     },
     status: {
       type: DataTypes.ENUM(
+        "CART",
         "PENDING",
         "PAID",
         "SHIPPED",

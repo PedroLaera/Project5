@@ -10,6 +10,7 @@ import CommentRoutes from "./routes/CommentRoutes";
 import CategoryRoutes from "./routes/CategoryRoutes";
 import AddressRoutes from "./routes/AddressRoutes";
 import LoginRoutes from "./routes/LoginRoutes";
+import checkoutRoutes from "./routes/checkoutRoutes"
 
 import UserModel from "./models/UserModel";
 import ProductModel from "./models/ProductModel";
@@ -40,6 +41,7 @@ app.use(OrderRoutes);
 app.use(CommentRoutes);
 app.use(AddressRoutes);
 app.use(LoginRoutes);
+app.use("/checkout",checkoutRoutes)
 
 sequelize
   .sync({

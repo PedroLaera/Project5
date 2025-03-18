@@ -4,7 +4,12 @@ import OrderModel from "./OrderModel";
 import ProductModel from "./ProductModel";
 import { ShippingMethodModel, UserModel } from "..";
 
-class OrderProduct extends Model {}
+class OrderProduct extends Model {
+  id_order_product!: number;
+  id_order!: number;
+  id_product!: number;
+  quantity!: number;
+}
 
 OrderProduct.init(
   {
