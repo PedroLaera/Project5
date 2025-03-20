@@ -119,7 +119,7 @@ export const updateOrder = async (
     order.totalAmount = totalAmount ?? order.totalAmount;
     order.shippingFee = shippingFee ?? order.shippingFee;
     order.status = status ?? order.status;
-    order.ID_shippingMethod = ID_shippingMethod ?? order.ID_shippingMethod;
+    order.id_shippingMethod = ID_shippingMethod ?? order.id_shippingMethod;
     order.discount = discount ?? order.discount;
 
     await order.save();

@@ -10,7 +10,7 @@ export class Order extends Model {
   totalAmount!: number;
   shippingFee!: Date;
   status!: string;
-  ID_shippingMethod!: number;
+  id_shippingMethod!: number;
   discount!: number;
 }
 
@@ -52,9 +52,9 @@ Order.init(
       ),
       allowNull: false,
     },
-    ID_shippingMethod: {
+    id_shippingMethod: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       /* references: {
         model: ShippingMethod,
         key: "ID_shippingMethod",

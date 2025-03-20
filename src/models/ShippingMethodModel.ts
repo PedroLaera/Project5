@@ -2,14 +2,14 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
 class ShippingMethod extends Model {
-  ID_shippingMethod!: string;
+  id_shippingMethod!: string;
   name!: string;
   shippingCost!: number;
 }
 
 ShippingMethod.init(
   {
-    ID_shippingMethod: {
+    id_shippingMethod: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,

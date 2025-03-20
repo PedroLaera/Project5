@@ -73,8 +73,8 @@ OrderProductModel.belongsTo(OrderModel, { foreignKey: "id_order" });
 ProductModel.hasMany(OrderProductModel, { foreignKey: "id_product" });
 OrderProductModel.belongsTo(ProductModel, { foreignKey: "id_product" });
 
-OrderModel.belongsTo(ShippingMethodModel, { foreignKey: "ID_shippingMethod" });
-ShippingMethodModel.hasMany(OrderModel, { foreignKey: "ID_shippingMethod" });
+OrderModel.belongsTo(ShippingMethodModel, { foreignKey: "id_shippingMethod" });
+ShippingMethodModel.hasMany(OrderModel, { foreignKey: "id_shippingMethod" });
 
 PaymentModel.belongsTo(OrderModel, { foreignKey: "id_order" });
 OrderModel.hasMany(PaymentModel, { foreignKey: "id_order" });

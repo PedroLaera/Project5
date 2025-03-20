@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import  Order  from "../models/OrderModel";
 import  OrderProduct  from "../models/OrderProduct";
 import  Product  from "../models/ProductModel";
+import ShippingMethod from "../models/ShippingMethodModel";
 import sequelize from "../config/database";
 import { AuthRequest } from "../middleware/authMiddleware";
 
@@ -24,12 +25,28 @@ const addToCart = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ error: "Produto não encontrado" });
     }
 
+        // Verifica se o usuário já tem um pedido ativo (status "aberto")
+        let order = await Order.findOne({
+          where: { id_user: user, status: "CART"},
+        });
+    
+        // Se não houver pedido, cria um novo
+        if (!order) {
+          order = await Order.create({
+            id_user: user.id_user,
+            status: "CART", // Status inicial do pedido
+            orderDate: new Date(),
+            totalAmount: 0, 
+            shippingFee: 0,
+          });
+        }
+
     // Verifica se o item já está no carrinho do usuário
     const existingItem = await OrderProduct.findOne({
       where: {
-        id_order: null, // Ainda sem pedido
+        id_order: order.id_order, // Ainda sem pedido
         id_product: productId,
-        userId: user?.id_user, // Relacionado ao usuário
+        id_user: user, // Relacionado ao usuário
       },
     });
 
@@ -44,9 +61,9 @@ const addToCart = async (req: AuthRequest, res: Response) => {
     } else {
       // Adiciona novo item ao carrinho
       const newItem = await OrderProduct.create({
-        id_order: null, // Ainda sem pedido
+        id_order: order.id_order, // Ainda sem pedido
         id_product: productId,
-        userId: user?.id_user,
+        id_user: user,
         quantity: quantity,
       });
       return res.status(201).json({ message: "Produto adicionado ao carrinho", item: newItem });
@@ -83,6 +100,12 @@ const finalizeCheckout = async (req: Request, res: Response) => {
   const transaction = await sequelize.transaction(); // Inicia transação
 
   try {
+
+    const shippingMethod = await ShippingMethod.findByPk(shippingMethodId);
+    if (!shippingMethod) {
+      return res.status(400).json({ error: "Método de envio inválido" });
+    }
+
     // Obtém os itens do carrinho do usuário
     const cartItems = await OrderProduct.findAll({
       where: { id_order: null, userId },
@@ -109,7 +132,7 @@ const finalizeCheckout = async (req: Request, res: Response) => {
         totalAmount: totalAmount - discount,
         shippingFee: 10.0, // Valor fixo ou calculado
         status: "PENDING",
-        ID_shippingMethod: shippingMethodId,
+        id_shippingMethod: shippingMethodId,
         discount: discount,
       },
       { transaction }
