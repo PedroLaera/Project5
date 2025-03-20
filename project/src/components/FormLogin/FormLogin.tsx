@@ -1,4 +1,5 @@
 import "./formLogin.css";
+import { Link } from "react-router";
 
 const FormLogin = () => {
   return (
@@ -7,11 +8,16 @@ const FormLogin = () => {
         <div className="left-panel">
           <input type="email" placeholder="Email" className="input-field" />
           <input type="password" placeholder="Senha" className="input-field" />
-          <button className="login-button">Fazer Login</button>
+          <button className="login-button">
+            <Link to="/">Fazer Login</Link>
+          </button>
         </div>
         <div className="right-panel">
           <button className="google-button">Google</button>
         </div>
+        <button>
+          <Link to="/Register">Não tenho conta</Link>
+        </button>
       </div>
     </div>
   );

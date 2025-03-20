@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import Navbar from "../../components/NavBar/Navbar";
+import "./Home.css";
 
 const Home = () => {
   return (
@@ -7,12 +8,12 @@ const Home = () => {
       <Navbar />
       <div className="container">
         <button>
-          <Link to="/Login">Comprar agora</Link>
+          <Link to="/Product">Comprar agora</Link>
         </button>
 
         {/*Produto inicial*/}
         <button>
-          <Link to="/Shop">Know more</Link>
+          <Link to="/Product">Know more</Link>
         </button>
         {/*Carrossel*/}
 
@@ -25,7 +26,7 @@ const Home = () => {
 
         {/*Produto final*/}
         <button>
-          <Link to="/Shop">Know more</Link>
+          <Link to="/Product">Know more</Link>
         </button>
       </div>
       *
