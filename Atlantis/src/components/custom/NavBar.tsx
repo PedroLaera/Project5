@@ -14,7 +14,9 @@ export default function Navbar() {
             className="w-6 h-6 cursor-pointer md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           />
-          <h1 className="text-xl font-bold">Logo</h1>
+          <h1 className="text-xl font-bold color-blue-600">
+            <Link to="/">Atlantis</Link>
+          </h1>
         </div>
 
         <ul className="hidden md:flex gap-4">

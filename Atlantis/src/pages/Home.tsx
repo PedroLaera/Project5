@@ -1,24 +1,12 @@
-import { Link } from "react-router-dom";
+import ProductCard from "../components/custom/CardProduct";
+import img2 from "../assets/img2.jpg";
+import img1 from "../assets/img3.webp";
+import img3 from "../assets/img1.jpg";
 
 const products = [
-  {
-    id: "1",
-    name: "Notebook Gamer",
-    price: "R$ 5.000",
-    image: "https://via.placeholder.com/300",
-  },
-  {
-    id: "2",
-    name: "Smartphone",
-    price: "R$ 2.500",
-    image: "https://via.placeholder.com/300",
-  },
-  {
-    id: "3",
-    name: "Headset Bluetooth",
-    price: "R$ 300",
-    image: "https://via.placeholder.com/300",
-  },
+  { id: "1", name: "Notebook Gamer", price: "R$ 5.000", image: img2 },
+  { id: "2", name: "Smartphone", price: "R$ 2.500", image: img1 },
+  { id: "3", name: "Headset Bluetooth", price: "R$ 300", image: img3 },
 ];
 
 export default function HomePage() {
@@ -27,25 +15,10 @@ export default function HomePage() {
       <h1 className="text-4xl font-bold text-gray-800">Bem-vindo à Home</h1>
       <p className="text-gray-600 mt-2">Explore nossos produtos incríveis!</p>
 
+      {/* Card dos produtos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
         {products.map((product) => (
-          <div key={product.id} className="bg-white p-6 rounded-lg shadow-lg">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-40 object-cover rounded-lg mb-4"
-            />
-            <h3 className="text-xl font-semibold text-gray-800">
-              {product.name}
-            </h3>
-            <p className="text-xl text-green-600 mt-2">{product.price}</p>
-            <Link
-              to={`/product/${product.id}`}
-              className="mt-4 inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-              Ver Detalhes
-            </Link>
-          </div>
+          <ProductCard key={product.id} {...product} />
         ))}
       </div>
     </div>
