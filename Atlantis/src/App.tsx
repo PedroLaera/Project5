@@ -1,5 +1,18 @@
-import CustomCard from "./components/custom/Card";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/custom/NavBar"; // Ajuste o caminho conforme necessário
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 export function App() {
-  return <CustomCard />;
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
 }
