@@ -1,5 +1,5 @@
 import { Button } from "../ui/button";
-import { Menu, Home, User } from "lucide-react";
+import { Menu, Home, User, Key } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -38,10 +38,18 @@ export default function Navbar() {
           </li>
           <li>
             <Link
+              to="/addproduct"
+              className="flex items-center gap-1 text-gray-700 hover:text-black"
+            >
+              <Key className="w-5 h-5" /> + Product
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/teste"
               className="flex items-center gap-1 text-gray-700 hover:text-black"
             >
-              <User className="w-5 h-5" /> Developer
+              <Key className="w-5 h-5" /> Developer
             </Link>
           </li>
         </ul>
