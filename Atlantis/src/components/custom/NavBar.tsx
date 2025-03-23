@@ -36,6 +36,14 @@ export default function Navbar() {
               <User className="w-5 h-5" /> Login
             </Link>
           </li>
+          <li>
+            <Link
+              to="/teste"
+              className="flex items-center gap-1 text-gray-700 hover:text-black"
+            >
+              <User className="w-5 h-5" /> Developer
+            </Link>
+          </li>
         </ul>
 
         <Link to="/login">
