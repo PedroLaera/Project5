@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
-import products from "../data/products"; // Importando os produtos
-import {
-  ProductCard,
-  ValuesProductCard,
-} from "../components/custom/CardProduct"; // Importando os cards
+import products from "../components/data/products"; // Importando os produtos
+import { ProductCard } from "../components/custom/CardProduct"; // Importando os cards
+import ValuesProductCard from "../components/custom/CardProduct"; // Importando o card de valores
 
 export default function ProductPage() {
   const { id } = useParams<{ id: string }>();
