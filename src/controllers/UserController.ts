@@ -1,12 +1,39 @@
 import { Request, Response } from "express";
 import UserModel from "../models/UserModel";
 import { error } from "console";
+import bcrypt from "bcrypt";
+
 
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
   console.log(users);
   res.send(users);
 };
+
+// Exemplo de rota paginada
+export const listUsers = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1; // Página atual
+    const limit = parseInt(req.query.limit as string) || 10; // Itens por página
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await UserModel.findAndCountAll({
+      limit,
+      offset,
+      order: [['name', 'ASC']] // Ordena por nome (opcional)
+    });
+
+    return res.status(200).json({
+      totalItems: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+      data: rows,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ error: "Erro ao listar usuários", details: error.message });
+  }
+};
+
 
 export const getUserById = async (
   req: Request<{ id: string }>,
@@ -19,33 +46,47 @@ export const getUserById = async (
 
 export const CreateUser = async (req: Request, res: Response) => {
   try {
-    //console.log("📥 Dados Recebidos:", req.body);
-    const { name, email, password, address, cart_creation_date } = req.body;
+    console.log("📥 Dados Recebidos:", req.body);
+    const { name, email, password, address, CPF} = req.body;
 
-    /*if (!Nome || Nome === "") {
+    if (!name || name === "") {
       return res.status(400).json({ error: "Escreva um nome válido" });
-    }*/
+    }
+
+    if (!email || email === "") {
+      return res.status(400).json({ error: "Escreva um EMAIL válido" });
+    }
 
     // Validação do e-mail
-    /*const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!Email || !emailRegex.test(Email)) {
-          return res.status(400).json({ error: "Digite um e-mail válido" });
+    // Validação do e-mail
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!email || !emailRegex.test(email)) {
+      return res.status(400).json({ error: "Digite um e-mail válido (ex: nome@email.com)" });
+      }
+
+      const existingUser = await UserModel.findOne({ where: { email } });
+      if (existingUser) {
+        return res.status(409).json({ error: "Este e-mail já está cadastrado." });
+      }
+
+      const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+      if (!CPF || !cpfRegex.test(String(CPF))) {
+        return res.status(400).json({ error: "CPF inválido. Informe 11 dígitos numéricos." });
       }
 
       // Validação da senha 
       const senhaRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-      if (!Senha || !senhaRegex.test(Senha)) {
+      if (!password || !senhaRegex.test(password)) {
           return res.status(400).json({ error: "A senha deve ter no mínimo 8 caracteres e pelo menos 1 caractere especial" });
-      }*/
+      }
 
-    //const enderecoRegex =
+      const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await UserModel.create({
       name,
       email,
-      password,
-      address,
-      cart_creation_date,
+      password: hashedPassword,
+      address
     });
 
     return res.status(201).json(user);
@@ -79,10 +120,10 @@ export const updaterUser = async (
     user.cart_creation_date = cart_creation_date ?? user.cart_creation_date;
 
     // Atualiza a senha apenas se for enviada
-    /*if (password) {
+    if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
       user.password = hashedPassword;
-    }*/
+    }
 
     await user.save();
 

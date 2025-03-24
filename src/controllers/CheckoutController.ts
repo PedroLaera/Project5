@@ -1,19 +1,15 @@
 import { Request, Response } from "express";
-import  Order  from "../models/OrderModel";
-import  OrderProduct  from "../models/OrderProduct";
-import  Product  from "../models/ProductModel";
+import Order from "../models/OrderModel";
+import OrderProduct from "../models/OrderProduct";
+import Product from "../models/ProductModel";
 import ShippingMethod from "../models/ShippingMethodModel";
 import sequelize from "../config/database";
 import { AuthRequest } from "../middleware/authMiddleware";
 
 // Adicionar produto ao carrinho (sem criar pedido ainda)
-
 const addToCart = async (req: AuthRequest, res: Response) => {
   try {
     const { productId, quantity, user } = req.body;
-
-    // console.log('usuario que chegou do token pelo middleware', req.body.user)
-    // const userId = req.body.user?.id_user
 
     if (!user) {
       return res.status(401).json({ error: "Usuário não autenticado." });
@@ -25,71 +21,51 @@ const addToCart = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ error: "Produto não encontrado" });
     }
 
-        // Verifica se o usuário já tem um pedido ativo (status "aberto")
-        let order = await Order.findOne({
-          where: { id_user: user, status: "CART"},
-        });
-    
-        // Se não houver pedido, cria um novo
-        if (!order) {
-          order = await Order.create({
-            id_user: user.id_user,
-            status: "CART", // Status inicial do pedido
-            orderDate: new Date(),
-            totalAmount: 0, 
-            shippingFee: 0,
-          });
-        }
+    // Verifica se o usuário já tem um pedido ativo (status "CART")
+    let order = await Order.findOne({
+      where: { id_user: user.id_user, status: "CART" },
+    });
+
+    // Se não houver pedido, cria um novo
+    if (!order) {
+      order = await Order.create({
+        id_user: user.id_user,
+        status: "CART", // Status inicial do pedido
+        orderDate: new Date(),
+        totalAmount: 0, 
+        shippingFee: 0,
+      });
+    }
 
     // Verifica se o item já está no carrinho do usuário
     const existingItem = await OrderProduct.findOne({
       where: {
-        id_order: order.id_order, // Ainda sem pedido
+        id_order: order.id_order, 
         id_product: productId,
-        id_user: user, // Relacionado ao usuário
       },
     });
 
     if (existingItem) {
-      // Atualiza a quantidade
-      existingItem.setDataValue(
-        "quantity",
-        existingItem.getDataValue("quantity") + quantity
-      );
+      // Atualiza a quantidade corretamente
+      existingItem.quantity = Number(existingItem.quantity) + Number(quantity);
       await existingItem.save();
-      return res.status(200).json({ message: "Quantidade atualizada no carrinho", item: existingItem });
     } else {
       // Adiciona novo item ao carrinho
-      const newItem = await OrderProduct.create({
-        id_order: order.id_order, // Ainda sem pedido
+      await OrderProduct.create({
+        id_order: order.id_order,
         id_product: productId,
-        id_user: user,
         quantity: quantity,
       });
-      return res.status(201).json({ message: "Produto adicionado ao carrinho", item: newItem });
     }
+
+    // Atualiza o total do pedido
+    order.totalAmount = Number(order.totalAmount) + Number(product.price) * Number(quantity);
+    await order.save();
+
+    return res.status(200).json({ message: "Produto adicionado/atualizado no carrinho", order });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Erro ao adicionar ao carrinho" });
-  }
-};
-
-
-// Obter os itens do carrinho do usuário
-const getCartItems = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.params;
-
-    // Busca os itens no carrinho do usuário (sem pedido associado)
-    const cartItems = await OrderProduct.findAll({
-      where: { id_order: null, userId },
-      include: [{ model: Product, attributes: ["id_product", "name", "price"] }],
-    });
-
-    return res.status(200).json({ cartItems });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Erro ao obter itens do carrinho" });
   }
 };
 
@@ -100,53 +76,31 @@ const finalizeCheckout = async (req: Request, res: Response) => {
   const transaction = await sequelize.transaction(); // Inicia transação
 
   try {
-
     const shippingMethod = await ShippingMethod.findByPk(shippingMethodId);
     if (!shippingMethod) {
       return res.status(400).json({ error: "Método de envio inválido" });
     }
 
-    // Obtém os itens do carrinho do usuário
-    const cartItems = await OrderProduct.findAll({
-      where: { id_order: null, userId },
+    // Obtém o pedido ativo do usuário
+    const order = await Order.findOne({
+      where: { id_user: userId, status: "CART" },
+      transaction,
     });
 
-    if (cartItems.length === 0) {
+    if (!order) {
       return res.status(400).json({ error: "O carrinho está vazio" });
     }
 
-    // Calcula o total do pedido
-    let totalAmount = 0;
-    for (const item of cartItems) {
-      const product = await Product.findByPk(item.id_product);
-      if (product) {
-        totalAmount += product.price * item.quantity;
-      }
-    }
-
-    // Cria o pedido
-    const newOrder = await Order.create(
-      {
-        id_user: userId,
-        orderDate: new Date(),
-        totalAmount: totalAmount - discount,
-        shippingFee: 10.0, // Valor fixo ou calculado
-        status: "PENDING",
-        id_shippingMethod: shippingMethodId,
-        discount: discount,
-      },
-      { transaction }
-    );
-
-    // Atualiza os itens do carrinho, associando ao pedido criado
-    await OrderProduct.update(
-      { id_order: newOrder.id_order },
-      { where: { id_order: null, userId }, transaction }
-    );
+    // Atualiza os dados do pedido
+    order.status = "PENDING";
+    order.id_shippingMethod = shippingMethodId;
+    order.totalAmount = Number(order.totalAmount) - Number(discount);
+    //order.shippingFee = shippingMethod.fee; // Define taxa de envio
+    order.discount = discount;
+    await order.save({ transaction });
 
     await transaction.commit(); // Confirma a transação
-
-    return res.status(201).json({ message: "Pedido criado com sucesso", order: newOrder });
+    return res.status(201).json({ message: "Pedido criado com sucesso", order });
   } catch (error) {
     await transaction.rollback(); // Desfaz alterações se houver erro
     console.error(error);
@@ -154,4 +108,4 @@ const finalizeCheckout = async (req: Request, res: Response) => {
   }
 };
 
-export { addToCart, getCartItems, finalizeCheckout };
+export { addToCart, finalizeCheckout };

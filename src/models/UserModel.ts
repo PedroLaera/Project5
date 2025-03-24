@@ -9,6 +9,7 @@ class User extends Model {
   id_user!: number;
   name!: string;
   email!: string;
+  CPF!: number;
   password!: string;
   address?: string;
   cart_creation_date!: Date;
