@@ -12,7 +12,7 @@
 
 7 - npm i bcrypt
 
-8- npm i @types/bcrytp
+8- npm i @types/bcrypt
 
 9- npm install --save-dev jest ts-jest @types/jest
 
