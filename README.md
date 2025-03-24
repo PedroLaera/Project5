@@ -14,6 +14,9 @@
 
 8- npm i @types/bcrytp
 
+9- npm install --save-dev jest ts-jest @types/jest
+
+10- npm install --save-dev sequelize-mock
 
 -- no package.json "scripts": { "build": "tsc", "start": "node dist/index.js", "dev": "ts-node src/index.ts" }
 
