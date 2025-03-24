@@ -17,8 +17,8 @@ export default function HomePage() {
 
       {/* Card dos produtos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
-        {products.map((product) => (
-          <ProductCard key={product.id} {...product} />
+        {products.map((products) => (
+          <ProductCard key={products.id} {...products} />
         ))}
       </div>
     </div>

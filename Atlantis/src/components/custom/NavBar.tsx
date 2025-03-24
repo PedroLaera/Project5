@@ -1,4 +1,3 @@
-import { Button } from "../ui/button";
 import { Menu, Home, User, Key } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -54,9 +53,14 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <Link to="/login">
-          <Button className="hidden md:block">Entrar</Button>
-        </Link>
+        <div className="hidden md:block">
+          <Link
+            to="/profile"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Acessar Perfil
+          </Link>
+        </div>
       </div>
 
       {isOpen && (
@@ -76,6 +80,14 @@ export default function Navbar() {
                 className="flex items-center gap-1 text-gray-700 hover:text-black"
               >
                 <User className="w-5 h-5" /> Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/profile"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              >
+                Acessar Perfil
               </Link>
             </li>
           </ul>
