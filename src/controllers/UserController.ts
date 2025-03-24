@@ -47,7 +47,7 @@ export const getUserById = async (
 export const CreateUser = async (req: Request, res: Response) => {
   try {
     console.log("📥 Dados Recebidos:", req.body);
-    const { name, email, password, address, CPF} = req.body;
+    const { name, email, password, CPF} = req.body;
 
     if (!name || name === "") {
       return res.status(400).json({ error: "Escreva um nome válido" });
@@ -57,7 +57,6 @@ export const CreateUser = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Escreva um EMAIL válido" });
     }
 
-    // Validação do e-mail
     // Validação do e-mail
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       if (!email || !emailRegex.test(email)) {
@@ -70,9 +69,10 @@ export const CreateUser = async (req: Request, res: Response) => {
       }
 
       const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-      if (!CPF || !cpfRegex.test(String(CPF))) {
-        return res.status(400).json({ error: "CPF inválido. Informe 11 dígitos numéricos." });
+      if (!CPF || typeof CPF !== "string" || !/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/.test(CPF)) {
+        return res.status(400).json({ error: "CPF inválido" });
       }
+      
 
       // Validação da senha 
       const senhaRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
@@ -82,11 +82,13 @@ export const CreateUser = async (req: Request, res: Response) => {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
+      console.log(hashedPassword);
+
     const user = await UserModel.create({
       name,
       email,
       password: hashedPassword,
-      address
+      CPF
     });
 
     return res.status(201).json(user);

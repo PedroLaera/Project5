@@ -9,16 +9,26 @@ class User extends Model {
   id_user!: number;
   name!: string;
   email!: string;
-  CPF!: number;
+  CPF!: string;
   password!: string;
   address?: string;
   cart_creation_date!: Date;
 
-  public async hashPassword() {
+  /*public async hashPassword() {
     this.password = await bcrypt.hash(this.password!, 10);
-  }
+  }*/
 
   public async validatePassword(password: string): Promise<boolean> {
+    console.log("Senha recebida:", password);
+    console.log("Senha criptografada no banco:", this.password);
+
+    const incript = await bcrypt.compare(password, this.password)
+
+    console.log(incript)
+    console.log(await bcrypt.hash(this.password!, 10))
+
+    return incript;
+
     return await bcrypt.compare(password, this.password!);
   }
 }
@@ -38,6 +48,11 @@ User.init(
       type: DataTypes.STRING(255),
       allowNull: true,
       unique: true /* em testes deve usar um email variado */,
+    },
+    CPF: {
+      type: DataTypes.STRING(14),
+      allowNull: true,
+      unique: true
     },
     password: {
       type: DataTypes.STRING(255),
@@ -60,7 +75,7 @@ User.init(
   }
 );
 
-User.beforeCreate(async (user: User) => {
+/*User.beforeCreate(async (user: User) => {
   await user.hashPassword();
 });
 
@@ -68,6 +83,6 @@ User.beforeUpdate(async (user: User) => {
   if (user.changed("password")) {
     await user.hashPassword();
   }
-});
+});*/
 
 export default User;
