@@ -3,7 +3,6 @@ import UserModel from "../models/UserModel";
 import { error } from "console";
 import bcrypt from "bcrypt";
 
-
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
   console.log(users);
@@ -20,7 +19,7 @@ export const listUsers = async (req: Request, res: Response) => {
     const { count, rows } = await UserModel.findAndCountAll({
       limit,
       offset,
-      order: [['name', 'ASC']] // Ordena por nome (opcional)
+      order: [["name", "ASC"]], // Ordena por nome (opcional)
     });
 
     return res.status(200).json({
@@ -30,10 +29,11 @@ export const listUsers = async (req: Request, res: Response) => {
       data: rows,
     });
   } catch (error: any) {
-    return res.status(500).json({ error: "Erro ao listar usuários", details: error.message });
+    return res
+      .status(500)
+      .json({ error: "Erro ao listar usuários", details: error.message });
   }
 };
-
 
 export const getUserById = async (
   req: Request<{ id: string }>,
@@ -47,7 +47,7 @@ export const getUserById = async (
 export const CreateUser = async (req: Request, res: Response) => {
   try {
     console.log("📥 Dados Recebidos:", req.body);
-    const { name, email, password, CPF} = req.body;
+    const { name, email, password, CPF } = req.body;
 
     if (!name || name === "") {
       return res.status(400).json({ error: "Escreva um nome válido" });
@@ -57,38 +57,45 @@ export const CreateUser = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Escreva um EMAIL válido" });
     }
 
-    // Validação do e-mail
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-      if (!email || !emailRegex.test(email)) {
-      return res.status(400).json({ error: "Digite um e-mail válido (ex: nome@email.com)" });
-      }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!email || !emailRegex.test(email)) {
+      return res
+        .status(400)
+        .json({ error: "Digite um e-mail válido (ex: nome@email.com)" });
+    }
 
-      const existingUser = await UserModel.findOne({ where: { email } });
-      if (existingUser) {
-        return res.status(409).json({ error: "Este e-mail já está cadastrado." });
-      }
+    const existingUser = await UserModel.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({ error: "Este e-mail já está cadastrado." });
+    }
 
-      const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-      if (!CPF || typeof CPF !== "string" || !/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/.test(CPF)) {
-        return res.status(400).json({ error: "CPF inválido" });
-      }
-      
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+    if (
+      !CPF ||
+      typeof CPF !== "string" ||
+      !/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/.test(CPF)
+    ) {
+      return res.status(400).json({ error: "CPF inválido" });
+    }
 
-      // Validação da senha 
-      const senhaRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-      if (!password || !senhaRegex.test(password)) {
-          return res.status(400).json({ error: "A senha deve ter no mínimo 8 caracteres e pelo menos 1 caractere especial" });
-      }
+    const senhaRegex =
+      /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+    if (!password || !senhaRegex.test(password)) {
+      return res.status(400).json({
+        error:
+          "A senha deve ter no mínimo 8 caracteres e pelo menos 1 caractere especial",
+      });
+    }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-      console.log(hashedPassword);
+    console.log(hashedPassword);
 
     const user = await UserModel.create({
       name,
       email,
       password: hashedPassword,
-      CPF
+      CPF,
     });
 
     return res.status(201).json(user);
