@@ -4,7 +4,7 @@ import img1 from "../assets/img1.jpg";
 const products: any[] = [
   {
     id: "1",
-    name: "Produto Exemplo",
+    name: "Produto",
     manufacturer: "Empresa X",
     createdDate: "2024-03-20",
     category: "claro",
