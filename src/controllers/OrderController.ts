@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+/*import { Request, Response } from "express";
 import OrderModel from "../models/OrderModel";
 
 export const getAll = async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ export const CreateOrder = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Digite um nome de Pedido válido" });
     }*/
 
-    const allowedStatuses = [
+   /* const allowedStatuses = [
       "CART",
       "PENDING",
       "PAID",
@@ -87,7 +87,7 @@ export const CreateOrder = async (req: Request, res: Response) => {
   }
 };*/
 
-export const updateOrder = async (
+/*export const updateOrder = async (
   req: Request<{ id: string }>,
   res: Response
 ) => {
@@ -150,4 +150,4 @@ export const destroyOrderById = async (
       .status(500)
       .json({ error: "Erro interno no servidor", details: error });
   }
-};
+};*/

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+/*import { Request, Response } from "express";
 import ShippingMethodModel from "../models/ShippingMethodModel";
 
 export const getAll = async (req: Request, res: Response) => {
@@ -106,4 +106,4 @@ export const destroyMethodById = async (
       .status(500)
       .json({ error: "Erro interno no servidor", details: error });
   }
-};
+};*/

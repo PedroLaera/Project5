@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+/*import { Request, Response } from "express";
 import PaymentModel from "../models/PaymentModel";
 
 export const getAll = async (req: Request, res: Response) => {
@@ -38,7 +38,7 @@ export const createPayment = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Digite um nome de Pagamento válido" });
     }*/
 
-    const Payment = await PaymentModel.create({
+   /* const Payment = await PaymentModel.create({
       id_payment,
       id_order,
       id_paymentMethod,
@@ -108,4 +108,4 @@ export const destroyPaymentById = async (
       .status(500)
       .json({ error: "Erro interno no servidor", details: error });
   }
-};
+};*/

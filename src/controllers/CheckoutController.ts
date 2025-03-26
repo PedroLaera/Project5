@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+/*import { Request, Response } from "express";
 import Order from "../models/OrderModel";
 import OrderProduct from "../models/OrderProduct";
 import Product from "../models/ProductModel";
@@ -108,4 +108,4 @@ const finalizeCheckout = async (req: Request, res: Response) => {
   }
 };
 
-export { addToCart, finalizeCheckout };
+export { addToCart, finalizeCheckout };*/

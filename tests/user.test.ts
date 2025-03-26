@@ -7,8 +7,8 @@ jest.mock('../src/middleware/authMiddleware', () => {
     return {
         authMiddleware: (req: any, res: any, next: any) => {
             req.body.user = {
-                email: 'beludo@onlyfans.com',
-                password: '12345789&'
+                email: 'usuarioTeste@gmail.com',
+                password: 'ReiDelas123@'
             }
 
             next()
@@ -30,25 +30,39 @@ describe('User Endpoint', () => {
         await sequelize.close()
     })
 
+    // CREATE USER 
     test('POST /users shold create a new user and return success', async () => {
         const response = await request(app)
             .post('/users')
             .send({
-                id_user: '100',
-                name: 'lal',
-                email: 'vivi@onlyfans.com',
+                id_user: '1',
+                name: 'usuario teste',
+                email: 'usuarioTeste@gmail.com',
                 CPF: '959.256.888-80',
-                password: '12344556661@'
+                password: 'ReiDelas123@'
             })
             console.log(response.body);
         expect(response.status).toBe(201)
     })
 
-    test('GET /users should return a list of books', async () => {
+    //GET BY ID
+    test('Get /users shold retunr a user by ID and return success', async () => {
+        const response = await request(app)
+            .get('/users/1')
+            .set({Authorization: 'Auth'})
+
+        expect(response.status).toBe(200)
+    })    
+
+    // GET ALL 
+    test('GET /users should return all users', async () => {
         const response = await request(app)
             .get('/users')
-            .set({Authorization: 'xablau'})
+            .set({Authorization: 'Auth'})
 
         expect(response.status).toBe(200)
     })
+
+
+    
 })

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+/*import { Request, Response } from "express";
 const { OrderProduct, Order, Product } = require("../models"); // Ajuste os caminhos conforme necessário
 
 // Adicionar um produto ao carrinho
@@ -130,4 +130,4 @@ module.exports = {
   addProductToCart,
   getCartItems,
   finalizeOrder,
-};
+};*/

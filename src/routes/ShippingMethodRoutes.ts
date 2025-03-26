@@ -1,4 +1,4 @@
-import express from "express";
+/*import express from "express";
 import {
   getAll,
   getMethodById,
@@ -15,4 +15,4 @@ router.post("/ShippingMethod", createMethod);
 router.put("/ShippingMethod/:id", updateShippingMethod);
 router.delete("/ShippingMethod/:id", destroyMethodById);
 
-export default router;
+export default router;*/

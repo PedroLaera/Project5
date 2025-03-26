@@ -1,4 +1,4 @@
-import express from "express";
+/*import express from "express";
 import {
   getAll,
   getPaymentById,
@@ -15,4 +15,4 @@ router.post("/Payment", createPayment);
 router.put("/Payment/:id", updatePayment);
 router.delete("/Payment/:id", destroyPaymentById);
 
-export default router;
+export default router;*/
