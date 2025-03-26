@@ -12,14 +12,14 @@ export const getAll = async (req: Request, res: Response) => {
 // Exemplo de rota paginada
 export const listUsers = async (req: Request, res: Response) => {
   try {
-    const page = parseInt(req.query.page as string) || 1; // Página atual
-    const limit = parseInt(req.query.limit as string) || 10; // Itens por página
+    const page = parseInt(req.query.page as string) || 1; // pagina atual
+    const limit = parseInt(req.query.limit as string) || 5; // total pag
     const offset = (page - 1) * limit;
 
     const { count, rows } = await UserModel.findAndCountAll({
       limit,
       offset,
-      order: [["name", "ASC"]], // Ordena por nome (opcional)
+      order: [["name", "ASC"]], // ordena
     });
 
     return res.status(200).json({
