@@ -13,19 +13,19 @@ interface ProductCardProps {
 
 export function ProductCard({ id, name, price, image }: ProductCardProps) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg transition transform hover:scale-105">
+    <div className="bg-zinc-900 p-6 rounded-lg transition transform hover:scale-105">
       <img
         src={image}
         alt={name}
         className="w-60 h-70 object-cover rounded-lg mb-4"
       />
-      <h3 className="text-xl font-semibold text-gray-800">{name}</h3>{" "}
+      <h3 className="text-xl font-semibold text-white">{name}</h3>{" "}
       {/* Alterado para text-white */}
-      <p className="text-xl text-green mt-2">{price}</p>{" "}
+      <p className="text-xl text-white mt-2 font-thin">{price}</p>{" "}
       {/* Alterado para text-white */}
       <Link
         to={`/product/${id}`}
-        className="mt-4 text-white inline-block px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-700 transition"
+        className="mt-4 text-white! border-white! inline-block px-6 py-3 bg-zinc-900 rounded-lg hover: transition"
       >
         Ver Detalhes
       </Link>

@@ -147,3 +147,91 @@ export default function RegisterCard() {
     </div>
   );
 }
+
+/*
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { api } from "../../services/api";
+
+export default function RegisterUserCard() {
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    cpf: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await api.post("/users", userData);
+
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error("Erro ao registrar usuário");
+      }
+
+      alert("Usuário registrado com sucesso!");
+      setUserData({ name: "", email: "", cpf: "", password: "" });
+      navigate("/login");
+    } catch (error: any) {
+      console.error("Erro:", error.response?.data || error.message);
+      alert(
+        `Falha ao registrar usuário: ${
+          error.response?.data?.message || error.message
+        }`
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Card className="w-96 mx-auto mt-10 p-4">
+      <CardHeader>
+        <CardTitle>Registro de Usuário</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Input
+          name="name"
+          placeholder="Nome"
+          value={userData.name}
+          onChange={handleChange}
+        />
+        <Input
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={userData.email}
+          onChange={handleChange}
+        />
+        <Input
+          name="cpf"
+          placeholder="CPF"
+          value={userData.cpf}
+          onChange={handleChange}
+        />
+        <Input
+          name="password"
+          type="password"
+          placeholder="Senha"
+          value={userData.password}
+          onChange={handleChange}
+        />
+        <Button onClick={handleSubmit} disabled={loading} className="w-full">
+          {loading ? "Registrando..." : "Registrar"}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
+*/

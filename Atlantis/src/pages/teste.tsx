@@ -1,3 +1,4 @@
+import CardTeste from "../components/custom/CardTeste"; // Ensure the file exists in the components folder or adjust the path
 export default function HomePage() {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -12,6 +13,7 @@ export default function HomePage() {
       <p className="text-black-600 mt-2">
         __________________________________________________________________________________________________________________________________________________________________________________________
       </p>
+      <CardTeste />
     </div>
   );
 }

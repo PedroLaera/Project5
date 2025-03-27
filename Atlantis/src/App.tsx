@@ -8,7 +8,6 @@ import Register from "./pages/Register";
 import AddProduct from "./pages/AddProduct";
 import CreateProduct from "./pages/CreateProduct";
 import ProfilePage from "./pages/Profile";
-
 export function App() {
   return (
     <Router>

@@ -11,18 +11,18 @@ export default function ProductList() {
   };
 
   return (
-    <div className="w-full min-h-screen p-6 bg-gray-100">
+    <div className="w-full min-h-screen p-6 bg-gray-900">
       {/* Container para o título e o botão */}
       <div className="flex justify-between items-center mb-4">
         {/* Título no canto superior esquerdo */}
-        <h1 className="text-lg font-semibold text-gray-800">
+        <h1 className="text-lg font-semibold text-gray-300">
           Produtos Cadastrados
         </h1>
 
         {/* Botão para adicionar um novo produto no canto superior direito */}
         <Link
           to="/createProduct"
-          className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+          className="px-5 py-2 bg-blue-800 text-white-500 rounded-lg hover:bg-blue-700"
         >
           Adicionar Novo Produto
         </Link>

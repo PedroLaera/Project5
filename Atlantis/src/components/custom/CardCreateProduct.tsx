@@ -1,9 +1,101 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addProduct } from "../data/products"; // Importa a função para adicionar produtos
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { api } from "../../services/api";
+import { useEffect, useState } from "react";
 
-export default function CreateProduct() {
-  const navigate = useNavigate();
+interface ProductsProps {
+  name: string;
+  description: string;
+  price: string;
+  stock: string;
+  ID_category: number;
+}
+export default function NewPerfumeCard() {
+  const [product, setProduct] = useState<ProductsProps[]>([]);
+
+  useEffect(() => {
+    loadProduct();
+  }, []);
+
+  async function loadProduct() {
+    const response = await api.get("/product");
+    setProduct(response.data);
+  }
+  return (
+    <Card className="w-full max-w-md mx-auto mt-10 p-4">
+      <CardHeader>
+        <CardTitle>Novo Perfume</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Label>Imagem do Perfume</Label>
+        <Input type="file" accept="image/*" />
+
+        <Label>Nome do Perfume</Label>
+        <Input placeholder="Digite o nome" />
+
+        <Label>Marca</Label>
+        <Input placeholder="Digite a marca" />
+
+        <Label>Descrição</Label>
+        <Textarea placeholder="Digite a descrição" />
+
+        <Label>Valor</Label>
+        <Input type="number" placeholder="Digite o valor" />
+
+        <Label>Família Olfativa</Label>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione a família olfativa" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="amadeirado">Amadeirado</SelectItem>
+            <SelectItem value="citrico">Cítrico</SelectItem>
+            <SelectItem value="floral">Floral</SelectItem>
+            <SelectItem value="oriental">Oriental</SelectItem>
+            <SelectItem value="fougère">Fougère</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Button className="w-full">Criar Perfume</Button>
+      </CardContent>
+
+      {product.map((product) => (
+        <Card key={product.ID_category}>
+          <CardHeader>
+            <CardTitle>{product.name}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              <strong>Descrição:</strong> {product.description}
+            </p>
+            <p>
+              <strong>Preço:</strong> R$ {product.price}
+            </p>
+            <p>
+              <strong>Estoque:</strong> {product.stock}
+            </p>
+            <p>
+              <strong>Família Olfativa:</strong> {product.ID_category}
+            </p>
+          </CardContent>
+        </Card>
+      ))}
+    </Card>
+  );
+}
+
+/*
+const navigate = useNavigate();
 
   // Estado para os campos do formulário
   const [productData, setProductData] = useState({
@@ -48,13 +140,13 @@ export default function CreateProduct() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+    <div className="min-h-screen flex justify-center items-center bg-gray-600">
       <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-6 text-center">
           Criar Novo Produto
         </h1>
         <form onSubmit={handleSubmit}>
-          {/* Nome do produto */}
+          {/* Nome do produto 
           <div className="mb-4">
             <label
               className="block text-sm font-semibold text-gray-700"
@@ -73,7 +165,7 @@ export default function CreateProduct() {
             />
           </div>
 
-          {/* Empresa que industrializa */}
+          {/* Empresa que industrializa *
           <div className="mb-4">
             <label
               className="block text-sm font-semibold text-gray-700"
@@ -92,7 +184,7 @@ export default function CreateProduct() {
             />
           </div>
 
-          {/* Data de criação */}
+          {/* Data de criação *
           <div className="mb-4">
             <label
               className="block text-sm font-semibold text-gray-700"
@@ -111,7 +203,7 @@ export default function CreateProduct() {
             />
           </div>
 
-          {/* Categoria */}
+          {/* Categoria *
           <div className="mb-4">
             <label
               className="block text-sm font-semibold text-gray-700"
@@ -131,11 +223,11 @@ export default function CreateProduct() {
               <option value="claro">Claro</option>
               <option value="escuro">Escuro</option>
               <option value="médio">Médio</option>
-              {/* Adicione outras categorias conforme necessário */}
+              {/* Adicione outras categorias conforme necessário *
             </select>
           </div>
 
-          {/* Preço */}
+          {/* Preço *
           <div className="mb-4">
             <label
               className="block text-sm font-semibold text-gray-700"
@@ -154,7 +246,7 @@ export default function CreateProduct() {
             />
           </div>
 
-          {/* Descrição */}
+          {/* Descrição *
           <div className="mb-4">
             <label
               className="block text-sm font-semibold text-gray-700"
@@ -173,7 +265,7 @@ export default function CreateProduct() {
             />
           </div>
 
-          {/* Imagem */}
+          {/* Imagem *
           <div className="mb-4">
             <label
               className="block text-sm font-semibold text-gray-700"
@@ -192,7 +284,7 @@ export default function CreateProduct() {
             />
           </div>
 
-          {/* Botão Criar Produto */}
+          {/* Botão Criar Produto *
           <button
             type="submit"
             className="mt-6 w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -203,4 +295,4 @@ export default function CreateProduct() {
       </div>
     </div>
   );
-}
+*/
