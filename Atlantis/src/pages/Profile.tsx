@@ -39,8 +39,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-gray-900 p-6">
-      <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg relative">
+    <div className="w-full min-h-screen flex items-center justify-center bg-zinc-900 p-6">
+      <div className="w-full max-w-3xl bg-zinc-200 p-8 rounded-lg shadow-lg relative">
         <h1 className="text-3xl font-bold text-center text-black-600 mb-6">
           Perfil do Usuário
         </h1>

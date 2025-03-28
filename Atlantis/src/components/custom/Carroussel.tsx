@@ -34,7 +34,7 @@ export default function Carousel() {
   };
 
   return (
-    <div className="w-full max-w-8xl mx-auto mt-10 px-6 py-10">
+    <div className="w-full max-w-7xl mx-auto mt-10 px-7 py-6">
       <div className="relative w-full h-96 overflow-hidden">
         <img
           src={images[currentIndex]} // Usando a variável da imagem importada

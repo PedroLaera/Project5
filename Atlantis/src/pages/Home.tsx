@@ -3,6 +3,7 @@ import img2 from "../components/assets/img2.jpg";
 import img1 from "../components/assets/img3.webp";
 import img3 from "../components/assets/img1.jpg";
 import Carroussel from "../components/custom/Carroussel";
+import Footer from "../components/custom/Footer";
 
 const products = [
   { id: "1", name: "Notebook Gamer", price: "R$ 5.000", image: img2 },
@@ -26,6 +27,7 @@ export default function HomePage() {
           <ProductCard key={products.id} {...products} />
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

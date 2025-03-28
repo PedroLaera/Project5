@@ -25,7 +25,7 @@ export function ProductCard({ id, name, price, image }: ProductCardProps) {
       {/* Alterado para text-white */}
       <Link
         to={`/product/${id}`}
-        className="mt-4 text-white! border-white! inline-block px-6 py-3 bg-zinc-900 rounded-lg hover: transition"
+        className="mt-4 text-white! border-1 inline-block px-6 py-3 bg-zinc-900 rounded-lg hover: transition"
       >
         Ver Detalhes
       </Link>
