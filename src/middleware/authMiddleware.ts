@@ -6,7 +6,7 @@ export interface AuthRequest extends Request {
 }
 
 export const authMiddleware = (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -19,7 +19,7 @@ export const authMiddleware = (
 
   try {
     const decoded: any = verifyToken(token);
-    req.body.user = decoded;
+    req.user = decoded;
     next();
   } catch (error) {
     return res

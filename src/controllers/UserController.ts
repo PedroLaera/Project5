@@ -3,7 +3,7 @@ import UserModel from "../models/UserModel";
 import { error } from "console";
 import bcrypt from "bcrypt";
 import { validateUserData, hashPassword } from "../services/userValidationService";
-//import { AuthRequest } from "../middlewares/authMiddleware"; 
+import { AuthRequest } from "../middleware/authMiddleware"; 
 
 
 export const getAll = async (req: Request, res: Response) => {
@@ -80,7 +80,7 @@ export const CreateUser = async (req: Request, res: Response) => {
 };
 
 export const updaterUser = async (
-  req: Request<{ id: string }>,
+  req: AuthRequest,
   res: Response
 ) => {
   try {
@@ -94,13 +94,28 @@ export const updaterUser = async (
       return res.status(400).json({ error: "Informe um nome válido" });
     }
 
-    const user = await UserModel.findByPk(req.params.id);
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado" });
+    // Verifica se o usuário está autenticado
+    if (!req.user) {
+  return res.status(401).json({ error: "Usuário não autenticado" });
     }
 
+    // Pega o id do usuário autenticado no token
+    const userIdFromToken = req.user.id_user;
 
+    const userIdFromParams = parseInt(req.params.id);
 
+    // Busca o usuário pelo ID autenticado
+    const user = await UserModel.findByPk(userIdFromToken);
+    if (!user) {
+  return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    // Verifica se o usuário autenticado está tentando modificar outro usuário
+if (userIdFromToken !== userIdFromParams) {
+  return res.status(403).json({ error: "Você não tem permissão para alterar os dados de outro usuário." });
+}
+
+    
     user.name = name;
     user.address = address ?? user.address;
 
