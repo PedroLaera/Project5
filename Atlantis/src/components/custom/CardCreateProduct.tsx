@@ -37,7 +37,7 @@ export default function RegisterCard() {
       const response = await api.post("/products", formData);
 
       console.log("Produto cadastrado com sucesso!", response.data);
-      navigate("/products"); // Redireciona para a página de produtos
+      navigate("/addproduct"); // Redireciona para a página de produtos
     } catch (error) {
       const errorMessage =
         (error instanceof Error &&
