@@ -75,8 +75,6 @@ export const updateProduct = async (
       return res.status(404).json({ error: "Produto não encontrada" });
     }
 
-    // adicionar todos os campos que deseja editar//
-
     Produtcs.id_product = id_product;
     Produtcs.name = name ?? Produtcs.name;
     Produtcs.description = description ?? Produtcs.description;

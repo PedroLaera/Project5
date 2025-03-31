@@ -1,7 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 import CategoryModel from "./CategoryModel";
-//import SubCategoryModel from "./SubCategoryModel";
 
 class Product extends Model {
   id_product!: number;

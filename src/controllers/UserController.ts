@@ -12,7 +12,6 @@ export const getAll = async (req: Request, res: Response) => {
   res.send(users);
 };
 
-// Exemplo de rota paginada
 export const listUsers = async (req: Request, res: Response) => {
   try {
     const page = parseInt(req.query.page as string) || 1; // pagina atual
@@ -94,28 +93,23 @@ export const updaterUser = async (
       return res.status(400).json({ error: "Informe um nome válido" });
     }
 
-    // Verifica se o usuário está autenticado
     if (!req.user) {
   return res.status(401).json({ error: "Usuário não autenticado" });
     }
 
-    // Pega o id do usuário autenticado no token
     const userIdFromToken = req.user.id_user;
 
     const userIdFromParams = parseInt(req.params.id);
 
-    // Busca o usuário pelo ID autenticado
     const user = await UserModel.findByPk(userIdFromToken);
     if (!user) {
   return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-    // Verifica se o usuário autenticado está tentando modificar outro usuário
 if (userIdFromToken !== userIdFromParams) {
   return res.status(403).json({ error: "Você não tem permissão para alterar os dados de outro usuário." });
 }
 
-    
     user.name = name;
     user.address = address ?? user.address;
 

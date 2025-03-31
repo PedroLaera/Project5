@@ -1,7 +1,6 @@
 import UserModel from "../models/UserModel";
 import bcrypt from "bcrypt";
 
-// Validação do nome
 export const validateName = (name: string): string | null => {
   if (!name || name.trim() === "") {
     return "Escreva um nome válido";
@@ -9,7 +8,6 @@ export const validateName = (name: string): string | null => {
   return null;
 };
 
-// Validação do formato do e-mail
 export const validateEmailFormat = (email: string): string | null => {
   if (!email || email.trim() === "") {
     return "Escreva um EMAIL válido";
@@ -21,7 +19,6 @@ export const validateEmailFormat = (email: string): string | null => {
   return null;
 };
 
-// Verifica se o e-mail já existe
 export const checkEmailExists = async (email: string): Promise<string | null> => {
   const existingUser = await UserModel.findOne({ where: { email } });
   if (existingUser) {
@@ -30,7 +27,6 @@ export const checkEmailExists = async (email: string): Promise<string | null> =>
   return null;
 };
 
-// Validação do CPF no formato 000.000.000-00
 export const validateCPF = (CPF: string): string | null => {
   const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
   if (!CPF || typeof CPF !== "string" || !cpfRegex.test(CPF)) {
@@ -39,7 +35,6 @@ export const validateCPF = (CPF: string): string | null => {
   return null;
 };
 
-// Validação da senha (mínimo 8 caracteres e 1 caractere especial)
 export const validatePasswordFormat = (password: string): string | null => {
   const senhaRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
   if (!password || !senhaRegex.test(password)) {
@@ -48,12 +43,10 @@ export const validatePasswordFormat = (password: string): string | null => {
   return null;
 };
 
-// Função para gerar hash da senha
 export const hashPassword = async (password: string): Promise<string> => {
   return await bcrypt.hash(password, 10);
 };
 
-// Função que compõe todas as validações
 export const validateUserData = async (
   name: string,
   email: string,

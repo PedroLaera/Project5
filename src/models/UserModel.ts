@@ -14,10 +14,6 @@ class User extends Model {
   address?: string;
   cart_creation_date!: Date;
 
-  /*public async hashPassword() {
-    this.password = await bcrypt.hash(this.password!, 10);
-  }*/
-
   public async validatePassword(password: string): Promise<boolean> {
     console.log("Senha recebida:", password);
     console.log("Senha criptografada no banco:", this.password);
@@ -28,8 +24,6 @@ class User extends Model {
     console.log(await bcrypt.hash(this.password!, 10))
 
     return incript;
-
-    return await bcrypt.compare(password, this.password!);
   }
 }
 
