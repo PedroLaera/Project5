@@ -16,7 +16,6 @@ jest.mock('../src/middleware/authMiddleware', () => {
     }
 })
 
-
 describe('User Endpoint', () => {
     beforeAll(async () => {
   console.log("🔁 Sincronizando banco de testes...");
@@ -39,14 +38,14 @@ describe('User Endpoint', () => {
                 name: 'usuario teste',
                 email: 'usuarioTeste@gmail.com',
                 CPF: '959.256.888-80',
-                password: 'ReiDelas123@'
+                password: '1234568@'
             })
             console.log(response.body);
         expect(response.status).toBe(201)
     })
 
     //GET BY ID
-    test('Get /users shold retunr a user by ID and return success', async () => {
+    test('Get /users shold return a user by ID and return success', async () => {
         const response = await request(app)
             .get('/users/1')
             .set({Authorization: 'Auth'})
@@ -60,7 +59,6 @@ describe('User Endpoint', () => {
             .put('/users/1')
             .send({               
                 name: 'usuario teste EDITADO',
-                email: 'usuarioTeste@gmail.com',
                 CPF: '959.256.888-80',
                 password: 'ReiDelas123EDIT@'
             })
@@ -78,7 +76,5 @@ describe('User Endpoint', () => {
 
         expect(response.status).toBe(200)
     })
-
-
 
 })

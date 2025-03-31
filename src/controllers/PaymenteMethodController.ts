@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+/*import { Request, Response } from "express";
 import PaymentMethodModel from "../models/PaymentMethodModel";
 
 export const getAll = async (req: Request, res: Response) => {
@@ -105,4 +105,4 @@ export const destroyPaymentMethodById = async (
       .status(500)
       .json({ error: "Erro interno no servidor", details: error });
   }
-};
+};*/

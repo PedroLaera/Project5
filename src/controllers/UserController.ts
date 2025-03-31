@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import UserModel from "../models/UserModel";
 import { error } from "console";
 import bcrypt from "bcrypt";
+import { validateUserData, hashPassword } from "../services/userValidationService";
+//import { AuthRequest } from "../middlewares/authMiddleware"; 
+
 
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
@@ -44,52 +47,18 @@ export const getUserById = async (
   return res.json(user);
 };
 
+
 export const CreateUser = async (req: Request, res: Response) => {
   try {
-    console.log("📥 Dados Recebidos:", req.body);
     const { name, email, password, CPF } = req.body;
 
-    if (!name || name === "") {
-      return res.status(400).json({ error: "Escreva um nome válido" });
+    const validationError = await validateUserData(name, email, password, CPF);
+    if (validationError) {
+      return res.status(400).json({ error: validationError });
     }
 
-    if (!email || email === "") {
-      return res.status(400).json({ error: "Escreva um EMAIL válido" });
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    if (!email || !emailRegex.test(email)) {
-      return res
-        .status(400)
-        .json({ error: "Digite um e-mail válido (ex: nome@email.com)" });
-    }
-
-    const existingUser = await UserModel.findOne({ where: { email } });
-    if (existingUser) {
-      return res.status(409).json({ error: "Este e-mail já está cadastrado." });
-    }
-
-    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-    if (
-      !CPF ||
-      typeof CPF !== "string" ||
-      !/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/.test(CPF)
-    ) {
-      return res.status(400).json({ error: "CPF inválido" });
-    }
-
-    const senhaRegex =
-      /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-    if (!password || !senhaRegex.test(password)) {
-      return res.status(400).json({
-        error:
-          "A senha deve ter no mínimo 8 caracteres e pelo menos 1 caractere especial",
-      });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    console.log(hashedPassword);
+    const hashedPassword = await hashPassword(password);
+    console.log("Senha Criptografada:", hashedPassword);
 
     const user = await UserModel.create({
       name,
@@ -98,11 +67,15 @@ export const CreateUser = async (req: Request, res: Response) => {
       CPF,
     });
 
-    return res.status(201).json(user);
+    return res.status(201).json({
+      id_user: user.id_user,
+      name: user.name,
+      email: user.email,
+      CPF: user.CPF,
+    });
   } catch (error: any) {
-    return res
-      .status(500)
-      .json({ error: "Erro interno no servidor", details: error.message });
+    console.error("Erro ao criar usuário:", error);
+    return res.status(500).json({ error: "Erro interno no servidor", details: error.message });
   }
 };
 
@@ -111,7 +84,11 @@ export const updaterUser = async (
   res: Response
 ) => {
   try {
-    const { name, email, password, address, cart_creation_date } = req.body;
+    const { name, password, address, email  } = req.body;
+
+    if (email) {
+      return res.status(400).json({ error: "A atualização do e-mail não é permitida." });
+    }
 
     if (!name || name.trim() === "") {
       return res.status(400).json({ error: "Informe um nome válido" });
@@ -122,13 +99,11 @@ export const updaterUser = async (
       return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-    // Atualizando os campos do usuário
-    user.name = name;
-    user.email = email ?? user.email;
-    user.address = address ?? user.address;
-    user.cart_creation_date = cart_creation_date ?? user.cart_creation_date;
 
-    // Atualiza a senha apenas se for enviada
+
+    user.name = name;
+    user.address = address ?? user.address;
+
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
       user.password = hashedPassword;

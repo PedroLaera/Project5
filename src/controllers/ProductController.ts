@@ -61,8 +61,7 @@ export const updateProduct = async (
   res: Response
 ) => {
   try {
-    const { id_product, name, description, price, stock, ID_category } =
-      req.body;
+    const { id_product, name, description, price, stock, ID_category } = req.body;
 
     if (!id_product || id_product.trim() === "") {
       return res
