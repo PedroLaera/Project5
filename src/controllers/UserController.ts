@@ -7,6 +7,7 @@ import {
   hashPassword,
 } from "../services/userValidationService";
 import { AuthRequest } from "../middleware/authMiddleware";
+import { cpf } from "cpf-cnpj-validator";
 
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
@@ -54,7 +55,7 @@ export const CreateUser = async (req: Request, res: Response) => {
 
     const validationError = await validateUserData(name, email, password, CPF);
     if (validationError) {
-      return res.status(400).json({ error: "Erro de Validação" });
+      return res.status(400).json({ error: "Alguma coisa ta errada ai" });
     }
 
     const hashedPassword = await hashPassword(password);
@@ -84,7 +85,8 @@ export const CreateUser = async (req: Request, res: Response) => {
 
 export const updaterUser = async (req: AuthRequest, res: Response) => {
   try {
-    const { name, password, address, email } = req.body;
+    const { name, password, address, email, CPF, cart_creation_date } =
+      req.body;
 
     if (email) {
       return res
@@ -118,6 +120,8 @@ export const updaterUser = async (req: AuthRequest, res: Response) => {
     user.name = name;
     user.address = address ?? user.address;
     user.password = password ?? user.password;
+    user.CPF = CPF ?? user.password;
+    user.cart_creation_date = cart_creation_date ?? user.cart_creation_date;
 
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
