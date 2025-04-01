@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import UserModel from "../models/UserModel";
 import { error } from "console";
 import bcrypt from "bcrypt";
-import { validateUserData, hashPassword } from "../services/userValidationService";
-import { AuthRequest } from "../middleware/authMiddleware"; 
-
+import {
+  validateUserData,
+  hashPassword,
+} from "../services/userValidationService";
+import { AuthRequest } from "../middleware/authMiddleware";
 
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
@@ -46,14 +48,13 @@ export const getUserById = async (
   return res.json(user);
 };
 
-
 export const CreateUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password, CPF } = req.body;
 
     const validationError = await validateUserData(name, email, password, CPF);
     if (validationError) {
-      return res.status(400).json({ error: validationError });
+      return res.status(400).json({ error: "Erro de Validação" });
     }
 
     const hashedPassword = await hashPassword(password);
@@ -71,22 +72,24 @@ export const CreateUser = async (req: Request, res: Response) => {
       name: user.name,
       email: user.email,
       CPF: user.CPF,
+      password: hashedPassword,
     });
   } catch (error: any) {
     console.error("Erro ao criar usuário:", error);
-    return res.status(500).json({ error: "Erro interno no servidor", details: error.message });
+    return res
+      .status(500)
+      .json({ error: "Erro interno no servidor", details: error.message });
   }
 };
 
-export const updaterUser = async (
-  req: AuthRequest,
-  res: Response
-) => {
+export const updaterUser = async (req: AuthRequest, res: Response) => {
   try {
-    const { name, password, address, email  } = req.body;
+    const { name, password, address, email } = req.body;
 
     if (email) {
-      return res.status(400).json({ error: "A atualização do e-mail não é permitida." });
+      return res
+        .status(400)
+        .json({ error: "A atualização do e-mail não é permitida." });
     }
 
     if (!name || name.trim() === "") {
@@ -94,7 +97,7 @@ export const updaterUser = async (
     }
 
     if (!req.user) {
-  return res.status(401).json({ error: "Usuário não autenticado" });
+      return res.status(401).json({ error: "Usuário não autenticado" });
     }
 
     const userIdFromToken = req.user.id_user;
@@ -103,15 +106,18 @@ export const updaterUser = async (
 
     const user = await UserModel.findByPk(userIdFromToken);
     if (!user) {
-  return res.status(404).json({ error: "Usuário não encontrado" });
+      return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-if (userIdFromToken !== userIdFromParams) {
-  return res.status(403).json({ error: "Você não tem permissão para alterar os dados de outro usuário." });
-}
+    if (userIdFromToken !== userIdFromParams) {
+      return res.status(403).json({
+        error: "Você não tem permissão para alterar os dados de outro usuário.",
+      });
+    }
 
     user.name = name;
     user.address = address ?? user.address;
+    user.password = password ?? user.password;
 
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
