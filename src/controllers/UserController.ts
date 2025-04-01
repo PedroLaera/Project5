@@ -110,6 +110,9 @@ export const updaterUser = async (req: AuthRequest, res: Response) => {
     if (!user) {
       return res.status(404).json({ error: "Usuário não encontrado" });
     }
+    console.log("userIdFromParams",userIdFromParams)
+    console.log("userIdFromToken",userIdFromToken)
+    console.log("Resultado", (userIdFromToken !== userIdFromParams) )
 
     if (userIdFromToken !== userIdFromParams) {
       return res.status(403).json({
