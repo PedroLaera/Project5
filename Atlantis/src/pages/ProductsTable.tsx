@@ -29,15 +29,29 @@ export default function ProductList() {
     fetchProducts();
   }, []);
 
-  // Função para excluir produto
+  // Função para excluir produtos
   const deleteProduct = async (id: number) => {
     try {
-      await api.delete(`/products/${id}`);
+      const confirmDelete = window.confirm(
+        `Tem certeza que deseja excluir o produto com ID: ${id}?`
+      );
+      if (!confirmDelete) return;
+
+      const response = await api.delete(`/products/${id}`);
+
+      console.log("Produto excluído com sucesso!", response.data);
+
       setProductList((prevProducts) =>
         prevProducts.filter((product) => product.id !== id)
-      ); // Remove da lista sem recarregar a página
+      );
     } catch (error) {
-      console.error("Erro ao excluir produto:", error);
+      const errorMessage =
+        (error instanceof Error &&
+          (error as { response?: { data?: { error?: string } } })?.response
+            ?.data?.error) ||
+        "Erro ao tentar excluir o produto";
+      alert(errorMessage);
+      console.error("Erro ao tentar excluir produto:", errorMessage);
     }
   };
 
@@ -78,7 +92,7 @@ export default function ProductList() {
             <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
               Estoque
             </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
+            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600 ml-10!">
               Ações
             </th>
           </tr>
@@ -99,10 +113,10 @@ export default function ProductList() {
               <td className="py-2 px-4 text-sm text-gray-800">
                 {product.stock}
               </td>
-              <td className="py-2 px-4 text-sm">
+              <td className="py-2 px-4 text-sm text-gray-800">
                 <button
-                  onClick={() => deleteProduct(product.id)}
-                  className="text-red-600 hover:text-red-800"
+                  onClick={() => deleteProduct(product.id)} // Passando o ID do produto a ser excluído
+                  className="bg-red-500! text-white hover:bg-red-700"
                 >
                   Excluir
                 </button>

@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Teste from "./pages/teste";
 import Product from "./pages/Product";
 import Register from "./pages/Register";
-import AddProduct from "./pages/AddProduct";
+import AddProduct from "./pages/ProductsTable";
 import CreateProduct from "./pages/CreateProduct";
 import ProfilePage from "./pages/Profile";
 export function App() {
