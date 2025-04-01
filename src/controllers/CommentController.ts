@@ -42,7 +42,7 @@ export const createComments = async (req: Request, res: Response) => {
       id_product,
       content,
       rating,
-      creation_date,
+      creation_date: new Date(),
     });
     return res.status(201).json(Comments);
   } catch (error) {

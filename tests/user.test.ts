@@ -71,14 +71,12 @@ describe("User Endpoint", () => {
         });
   
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("token"); // Certifique-se de que o token existe
+      expect(response.body).toHaveProperty("token");
   
-      // Armazena o token para os próximos testes
       token = response.body.token;
       console.log(token);
     });
   
-    // Teste de atualização de usuário autenticado
     test("PUT /users/:id should update the user's data", async () => {
       const response = await request(app)
         .put("/users/1") 
