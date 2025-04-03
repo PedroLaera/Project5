@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { api } from "../../services/api";
+import { maskJs } from "mask-js";
 
 export default function RegisterCard() {
   const [formData, setFormData] = useState({
@@ -16,7 +17,13 @@ export default function RegisterCard() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setFormData({ ...formData, [name]: value });
+    if (name === "CPF") {
+      const cleanedValue = value.replace(/\D/g, ""); // Remove não numéricos
+      const formattedValue = maskJs("999.999.999-99", cleanedValue); // Aplica máscara
+      setFormData((prev) => ({ ...prev, CPF: formattedValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const CreateUser = async () => {
