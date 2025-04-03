@@ -5,15 +5,12 @@ import bcrypt from "bcrypt";
 import {
   validateUserData,
   hashPassword,
-  updateUserData
+  updateUserData,
 } from "../services/userValidationService";
 import { AuthRequest } from "../middleware/authMiddleware";
-import { cpf } from "cpf-cnpj-validator";
-import Address from "../models/AddressModel";
 
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
-  console.log(users);
   res.send(users);
 };
 
@@ -47,7 +44,6 @@ export const getUserById = async (
   res: Response
 ) => {
   const user = await UserModel.findByPk(req.params.id);
-  console.log(user);
   return res.json(user);
 };
 
@@ -61,7 +57,6 @@ export const CreateUser = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await hashPassword(password);
-    console.log("Senha Criptografada:", hashedPassword);
 
     const user = await UserModel.create({
       name,
@@ -89,7 +84,6 @@ export const updaterUser = async (req: AuthRequest, res: Response) => {
   try {
     const { name, password, address } = req.body;
 
-
     const validationError = await updateUserData(name, password, address);
     if (validationError) {
       return res.status(400).json({ error: validationError });
@@ -108,15 +102,13 @@ export const updaterUser = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    // Busca o usuário no banco
     const user = await UserModel.findByPk(userIdFromToken);
     if (!user) {
       return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-    // Atualiza os dados
     user.name = name;
-    user.password = password ?? user.password
+    user.password = password ?? user.password;
 
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -127,7 +119,9 @@ export const updaterUser = async (req: AuthRequest, res: Response) => {
 
     return res.status(200).json(user);
   } catch (error: any) {
-    return res.status(500).json({ error: "Erro no servidor", details: error.message });
+    return res
+      .status(500)
+      .json({ error: "Erro no servidor", details: error.message });
   }
 };
 

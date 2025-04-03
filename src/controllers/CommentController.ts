@@ -33,10 +33,6 @@ export const createComments = async (req: Request, res: Response) => {
   try {
     const { id_user, id_product, content, rating, creation_date } = req.body;
 
-    /*if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Digite um nome de Comentário válido" });
-    }*/
-
     const Comments = await CommentModel.create({
       id_user,
       id_product,

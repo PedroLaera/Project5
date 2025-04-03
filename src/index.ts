@@ -6,11 +6,6 @@ import CommentRoutes from "./routes/CommentRoutes";
 import CategoryRoutes from "./routes/CategoryRoutes";
 import AddressRoutes from "./routes/AddressRoutes";
 import LoginRoutes from "./routes/LoginRoutes";
-//import PaymentMethodRoutes from "./routes/PaymentMethodRoutes";
-//import ShippingMethodRoutes from "./routes/ShippingMethodRoutes";
-//import PaymentRoutes from "./routes/PaymentRoutes";
-//import OrderRoutes from "./routes/OrderRoutes";
-//import checkoutRoutes from "./routes/checkoutRoutes"
 
 import UserModel from "./models/UserModel";
 import ProductModel from "./models/ProductModel";
@@ -37,11 +32,6 @@ app.use(ProductRoutes);
 app.use(CommentRoutes);
 app.use(AddressRoutes);
 app.use(LoginRoutes);
-//app.use(PaymentMethodRoutes);
-//app.use(PaymentRoutes);
-//app.use(OrderRoutes);
-//app.use(ShippingMethodRoutes);
-//app.use("/checkout",checkoutRoutes)
 
 sequelize
   .sync({

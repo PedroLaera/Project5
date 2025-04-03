@@ -15,13 +15,7 @@ class User extends Model {
   cart_creation_date!: Date;
 
   public async validatePassword(password: string): Promise<boolean> {
-    console.log("Senha recebida:", password);
-    console.log("Senha criptografada no banco:", this.password);
-
-    const incript = await bcrypt.compare(password, this.password)
-
-    console.log(incript)
-    console.log(await bcrypt.hash(this.password!, 10))
+    const incript = await bcrypt.compare(password, this.password);
 
     return incript;
   }
@@ -46,7 +40,7 @@ User.init(
     CPF: {
       type: DataTypes.STRING(14),
       allowNull: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: DataTypes.STRING(255),

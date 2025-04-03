@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import ProductModel from "../models/ProductModel";
-import Order from "../models/OrderModel";
 
 export const getAll = async (req: Request, res: Response) => {
   try {
@@ -61,7 +60,8 @@ export const updateProduct = async (
   res: Response
 ) => {
   try {
-    const { id_product, name, description, price, stock, ID_category } = req.body;
+    const { id_product, name, description, price, stock, ID_category } =
+      req.body;
 
     if (!id_product || id_product.trim() === "") {
       return res

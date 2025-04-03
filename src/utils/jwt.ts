@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import UserModel from "../models/UserModel";
 
 const JWT_SECRET = process.env.JWT_SECRET || "Senha_secreta";
 const JWT_EXPIRES_IN = "7d";
