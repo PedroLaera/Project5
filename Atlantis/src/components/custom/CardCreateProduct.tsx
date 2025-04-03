@@ -105,7 +105,7 @@ export default function RegisterCard() {
           />
           <Button
             onClick={CreateProducts}
-            className="w-full bg-white text-zinc-900 hover:bg-gray-200"
+            className="w-full bg-white text-white hover:bg-gray-200 "
           >
             Cadastrar
           </Button>

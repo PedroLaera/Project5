@@ -4,7 +4,7 @@ import { api } from "../services/api";
 
 // Definição da estrutura do produto
 interface Product {
-  id: number;
+  id_product: number;
   name: string;
   price: number;
   description: string;
@@ -12,13 +12,13 @@ interface Product {
 }
 
 export default function ProductList() {
-  const [productList, setProductList] = useState<Product[]>([]); // Agora tipado corretamente
+  const [productList, setProductList] = useState<Product[]>([]);
 
   // Função para carregar os produtos da API
   const fetchProducts = async () => {
     try {
       const response = await api.get("/products");
-      setProductList(response.data); // Atualiza o estado com os produtos do backend
+      setProductList(response.data);
     } catch (error) {
       console.error("Erro ao carregar produtos:", error);
     }
@@ -30,10 +30,10 @@ export default function ProductList() {
   }, []);
 
   // Função para excluir produtos
-  const deleteProduct = async (id: number) => {
+  const deleteProduct = async (id: number, name: string) => {
     try {
       const confirmDelete = window.confirm(
-        `Tem certeza que deseja excluir o produto com ID: ${id}?`
+        `Tem certeza que deseja excluir o produto ${name}?`
       );
       if (!confirmDelete) return;
 
@@ -41,8 +41,9 @@ export default function ProductList() {
 
       console.log("Produto excluído com sucesso!", response.data);
 
-      setProductList((prevProducts) =>
-        prevProducts.filter((product) => product.id !== id)
+      setProductList(
+        (prevProducts) =>
+          prevProducts.filter((product) => product.id_product !== id) // Alterado de product.id para product.id_product
       );
     } catch (error) {
       const errorMessage =
@@ -99,8 +100,10 @@ export default function ProductList() {
         </thead>
         <tbody>
           {productList.map((product) => (
-            <tr key={product.id} className="border-b">
-              <td className="py-2 px-4 text-sm text-gray-800">{product.id}</td>
+            <tr key={product.id_product} className="border-b">
+              <td className="py-2 px-4 text-sm text-gray-800">
+                {product.id_product}
+              </td>
               <td className="py-2 px-4 text-sm text-gray-800">
                 {product.name}
               </td>
@@ -115,8 +118,15 @@ export default function ProductList() {
               </td>
               <td className="py-2 px-4 text-sm text-gray-800">
                 <button
-                  onClick={() => deleteProduct(product.id)} // Passando o ID do produto a ser excluído
-                  className="bg-red-500! text-white hover:bg-red-700"
+                  onClick={() => {
+                    console.log("Tentando excluir o", product.name); // Confirme se o id está correto
+                    if (product.id_product) {
+                      deleteProduct(product.id_product, product.name);
+                    } else {
+                      console.error("Produto com ID inválido:", product); // Log de erro caso o id seja inválido
+                    }
+                  }}
+                  className="bg-red-500 text-white hover:bg-red-700"
                 >
                   Excluir
                 </button>
