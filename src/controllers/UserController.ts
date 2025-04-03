@@ -5,9 +5,11 @@ import bcrypt from "bcrypt";
 import {
   validateUserData,
   hashPassword,
+  updateUserData
 } from "../services/userValidationService";
 import { AuthRequest } from "../middleware/authMiddleware";
 import { cpf } from "cpf-cnpj-validator";
+import Address from "../models/AddressModel";
 
 export const getAll = async (req: Request, res: Response) => {
   const users = await UserModel.findAll();
@@ -85,17 +87,12 @@ export const CreateUser = async (req: Request, res: Response) => {
 
 export const updaterUser = async (req: AuthRequest, res: Response) => {
   try {
-    const { name, password, address, email, CPF, cart_creation_date } =
-      req.body;
+    const { name, password, address } = req.body;
 
-    if (email) {
-      return res
-        .status(400)
-        .json({ error: "A atualização do e-mail não é permitida." });
-    }
 
-    if (!name || name.trim() === "") {
-      return res.status(400).json({ error: "Informe um nome válido" });
+    const validationError = await updateUserData(name, password, address);
+    if (validationError) {
+      return res.status(400).json({ error: validationError });
     }
 
     if (!req.user) {
@@ -103,25 +100,23 @@ export const updaterUser = async (req: AuthRequest, res: Response) => {
     }
 
     const userIdFromToken = req.user.id_user;
-
     const userIdFromParams = parseInt(req.params.id);
 
-    const user = await UserModel.findByPk(userIdFromToken);
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado" });
-    }
-    
     if (userIdFromToken !== userIdFromParams) {
       return res.status(403).json({
         error: "Você não tem permissão para alterar os dados de outro usuário.",
       });
     }
 
+    // Busca o usuário no banco
+    const user = await UserModel.findByPk(userIdFromToken);
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    // Atualiza os dados
     user.name = name;
-    user.address = address ?? user.address;
-    user.password = password ?? user.password;
-    user.CPF = CPF ?? user.password;
-    user.cart_creation_date = cart_creation_date ?? user.cart_creation_date;
+    user.password = password ?? user.password
 
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -132,9 +127,7 @@ export const updaterUser = async (req: AuthRequest, res: Response) => {
 
     return res.status(200).json(user);
   } catch (error: any) {
-    return res
-      .status(500)
-      .json({ error: "Erro no servidor", details: error.message });
+    return res.status(500).json({ error: "Erro no servidor", details: error.message });
   }
 };
 

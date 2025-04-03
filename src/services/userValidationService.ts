@@ -12,7 +12,7 @@ export const validateName = (name: string): string | null => {
 export const checkNameExists = async (name: string): Promise<string | null> => {
   const existingUser = await UserModel.findOne({ where: { name } });
   if (existingUser) {
-    return "NOMEEEE.";
+    return "???.";
   }
   return null;
 };
@@ -74,6 +74,20 @@ export const validateUserData = async (
   if (error) return error;
 
   error = validateCPF(CPF);
+  if (error) return error;
+
+  error = validatePasswordFormat(password);
+  if (error) return error;
+
+  return null;
+};
+
+export const updateUserData = async (
+  name: string,
+  password: string,
+  address: string
+): Promise<string | null> => {
+  let error = validateName(name);
   if (error) return error;
 
   error = validatePasswordFormat(password);
