@@ -90,9 +90,6 @@ export default function ProductList() {
             <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
               Descrição
             </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Estoque
-            </th>
             <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600 ml-10!">
               Ações
             </th>
@@ -113,23 +110,21 @@ export default function ProductList() {
               <td className="py-2 px-4 text-sm text-gray-800">
                 {product.description}
               </td>
-              <td className="py-2 px-4 text-sm text-gray-800">
-                {product.stock}
-              </td>
-              <td className="py-2 px-4 text-sm text-gray-800">
+              <td className="py-2 px-4 text-sm text-gray-800 flex gap-2">
                 <button
-                  onClick={() => {
-                    console.log("Tentando excluir o", product.name); // Confirme se o id está correto
-                    if (product.id_product) {
-                      deleteProduct(product.id_product, product.name);
-                    } else {
-                      console.error("Produto com ID inválido:", product); // Log de erro caso o id seja inválido
-                    }
-                  }}
-                  className="bg-red-500 text-white hover:bg-red-700"
+                  onClick={() =>
+                    deleteProduct(product.id_product, product.name)
+                  }
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
                 >
                   Excluir
                 </button>
+                <Link
+                  to={`/editProduct/${product.id_product}`}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                >
+                  Editar
+                </Link>
               </td>
             </tr>
           ))}
