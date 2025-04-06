@@ -22,22 +22,34 @@ export default function RegisterCard() {
   };
 
   const CreateProducts = async () => {
-    try {
-      if (
-        !formData.name ||
-        !formData.price ||
-        !formData.description ||
-        !formData.stock ||
-        !formData.ID_category
-      ) {
-        alert("Preencha todos os campos obrigatórios!");
-        return;
-      }
+    if (
+      !formData.name ||
+      !formData.price ||
+      !formData.description ||
+      !formData.stock ||
+      !formData.ID_category
+    ) {
+      alert("Preencha todos os campos obrigatórios!");
+      return;
+    }
 
-      const response = await api.post("/products", formData);
+    // 2. Verifica se o usuário está autenticado
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Usuário não autenticado. Faça login para cadastrar produtos.");
+      return;
+    }
+
+    try {
+      // 3. Envia o produto com o token no header
+      const response = await api.post("/products", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       console.log("Produto cadastrado com sucesso!", response.data);
-      navigate("/addproduct"); // Redireciona para a página de produtos
+      navigate("/addproduct"); // Redireciona após sucesso
     } catch (error) {
       const errorMessage =
         (error instanceof Error &&

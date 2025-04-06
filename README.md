@@ -1,12 +1,13 @@
 # Projeto do 5° modulo
 
+//editar produto
 //botão para criar Categoria
 //add para selecionar a categoria um número drop
 //ligação dos ID e criação de Card na Home
 //Listagem
-//Adiocionar variável de estado, para dizer que o usuário está logado no canto da tela a partir do momento em que fizer o Login
+//Adicionar variável de estado, para dizer que o usuário está logado no canto da tela a partir do momento em que fizer o Login
 //ligar comentário por produto
-//Ao ocorrer erro deixar o input vermelho, adicionar limitador de digito em todos também
+//Ao ocorrer erro deixar o input vermelho
 //Fazer para que apenas o ID atual possa editar apenas o ID atual
 //Criar tela do Checkout apos comprar
 //esterilização do footer

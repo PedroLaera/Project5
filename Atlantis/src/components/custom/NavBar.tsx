@@ -1,39 +1,59 @@
-import { Menu, Home, User, Key } from "lucide-react";
+import { Menu, Home, User, Key, Github, LifeBuoy } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [animationTriggered, setAnimationTriggered] = useState(false);
-  const [exitAnimation, setExitAnimation] = useState(false); // Estado para animação de saída
-  const navigate = useNavigate(); // Hook para navegação
+  const navigate = useNavigate();
 
-  // Adiciona a animação de itens ao carregar a página
   useEffect(() => {
     setAnimationTriggered(true);
   }, []);
 
-  // Função para navegação com animação
   const handleNavigation = (path: string) => {
-    setExitAnimation(true); // Ativa a animação de saída
+    setAnimationTriggered(false); // Reinicia animação
     setTimeout(() => {
-      navigate(path); // Navega para a nova rota após a animação
-    }, 500); // Tempo de duração da animação (ajustável)
+      navigate(path);
+      setAnimationTriggered(true); // Reativa animação na nova tela
+    }, 300);
   };
+
+  const navItems = [
+    {
+      to: "/",
+      label: "Home",
+      icon: <Home className="w-5 h-5 " />,
+    },
+    { to: "/login", label: "Login", icon: <User className="w-5 h-5" /> },
+    {
+      to: "/addproduct",
+      label: "+ Product",
+      icon: <Key className="w-5 h-5" />,
+    },
+    { to: "/teste", label: "Developer", icon: <Key className="w-5 h-5" /> },
+  ];
 
   return (
     <nav className="w-full bg-zinc-900 shadow-md p-4 flex items-center justify-between text-white">
       <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
+        {/* Logo + Menu */}
         <div className="flex items-center gap-2">
           <Menu
             className="w-6 h-6 cursor-pointer md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           />
           <h1
-            className={`text-xl font-bold ${
-              animationTriggered ? "animate-fadeInDown" : "opacity-0"
-            } transition-all duration-500`}
+            className={`text-xl font-bold transition-all duration-500 ${
+              animationTriggered ? "animate-slide-left" : "opacity-0"
+            }`}
           >
             <Link to="/">
               <img src={logo} alt="logo" className="w-50 h-8" />
@@ -41,111 +61,94 @@ export default function Navbar() {
           </h1>
         </div>
 
-        <ul className="hidden md:flex gap-4">
-          <li
-            className={`${
-              animationTriggered ? "animate-fadeInDown" : "opacity-0"
-            } transition-all duration-500`}
-          >
-            <Link
-              to="/"
-              className="flex items-center gap-1 text-white! hover:text-gray-300 transition-all duration-300"
+        {/* Links desktop */}
+        <ul className="hidden md:flex gap-4 ">
+          {navItems.map((item, index) => (
+            <li
+              key={index}
+              className={`transition-opacity duration-500 ${
+                animationTriggered ? "animate-slide-left" : "opacity-0"
+              }`}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              <Home className="w-5 h-5" /> Home
-            </Link>
-          </li>
-          <li
-            className={`${
-              animationTriggered ? "animate-fadeInDown" : "opacity-0"
-            } transition-all duration-500 delay-100`}
-          >
-            <Link
-              to="/login"
-              className="flex items-center gap-1 text-white! hover:text-gray-300 transition-all duration-300"
-            >
-              <User className="w-5 h-5" /> Login
-            </Link>
-          </li>
-          <li
-            className={`${
-              animationTriggered ? "animate-fadeInDown" : "opacity-0"
-            } transition-all duration-500 delay-200`}
-          >
-            <Link
-              to="/addproduct"
-              className="flex items-center gap-1 text-white! hover:text-gray-300 transition-all duration-300"
-            >
-              <Key className="w-5 h-5" /> + Product
-            </Link>
-          </li>
-          <li
-            className={`${
-              animationTriggered ? "animate-fadeInDown" : "opacity-0"
-            } transition-all duration-500 delay-300`}
-          >
-            <Link
-              to="/teste"
-              className="flex items-center gap-1 text-white! hover:text-gray-300 transition-all duration-300"
-            >
-              <Key className="w-5 h-5" /> Developer
-            </Link>
-          </li>
+              <button
+                onClick={() => handleNavigation(item.to)}
+                className="bg-transparent! text-white flex items-center gap-1 transition duration-300 hover:text-white! hover: focus:ring-0 focus:outline-none!border-none!"
+              >
+                {item.icon} <span>{item.label}</span>
+              </button>
+            </li>
+          ))}
         </ul>
 
+        {/* Dropdown de Perfil com ShadCN */}
         <div
-          className={`hidden md:block ${
-            animationTriggered ? "animate-fadeInDown" : "opacity-0"
-          } transition-all duration-500 delay-400`}
+          className={`hidden md:block transition-all duration-500 ${
+            animationTriggered ? "animate-slide-left" : "opacity-0"
+          }`}
+          style={{ animationDelay: "400ms" }}
         >
-          <Link
-            to="/profile"
-            className="px-6 py-2 text-white! rounded-lg hover: transition"
-            onClick={() => handleNavigation("/profile")}
-          >
-            <User className="w-6 h-6" />
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                className="bg-transparent! text-white hover: focus:ring-0 focus:outline-none! border-none!"
+                title="User Profile"
+              >
+                <User className="w-6 h-6" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-zinc-800 border-none text-white shadow-lg">
+              <DropdownMenuItem
+                className="hover:bg-zinc-700 cursor-pointer"
+                onClick={() => handleNavigation("/profile")}
+              >
+                Perfil
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="hover:bg-zinc-700 cursor-pointer"
+                onClick={() => handleNavigation("/support")}
+              >
+                <LifeBuoy className="w-4 h-4 mr-2" />
+                Suporte
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="hover:bg-zinc-700 cursor-pointer"
+                onClick={() =>
+                  window.open("https://github.com/seu-repo", "_blank")
+                }
+              >
+                <Github className="w-4 h-4 mr-2" />
+                GitHub
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
+      {/* Menu mobile */}
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-blue-900 shadow-md md:hidden">
+        <div className="absolute top-16 left-0 w-full bg-transparent! shadow-md md:hidden">
           <ul className="flex flex-col gap-4 p-4 w-full">
-            <li
-              className={`${
-                animationTriggered ? "animate-fadeInDown" : "opacity-0"
-              } transition-all duration-500`}
-            >
-              <Link
-                to="/"
-                className="flex items-center gap-1 text-white hover:text-gray-300 transition-all duration-300"
-              >
-                <Home className="w-5 h-5" /> Home
-              </Link>
-            </li>
-
-            <li
-              className={`${
-                animationTriggered ? "animate-fadeInDown" : "opacity-0"
-              } transition-all duration-500 delay-200`}
-            >
-              <Link
-                to="/profile"
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-              >
-                Acessar Perfil
-              </Link>
-              <li
-                className={`${
-                  animationTriggered ? "animate-fadeInDown" : "opacity-0"
-                } transition-all duration-500 delay-100`}
-              >
-                <Link
-                  to="/login"
-                  className="flex items-center gap-1 text-white hover:text-gray-300 transition-all duration-300"
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => {
+                    handleNavigation(item.to);
+                    setIsOpen(false);
+                  }}
+                  className="flex items-center gap-1 text-white hover:text-gray-300 transition"
                 >
-                  <User className="w-5 h-5" /> Login
-                </Link>
+                  {item.icon} {item.label}
+                </button>
               </li>
+            ))}
+            <li>
+              <button
+                onClick={() => handleNavigation("/profile")}
+                className="flex items-center gap-1 text-white hover:text-gray-300 transition"
+              >
+                <User className="w-5 h-5" /> Perfil
+              </button>
             </li>
           </ul>
         </div>

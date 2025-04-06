@@ -55,7 +55,7 @@ export default function EditProductCard() {
 
       console.log("Enviando dados para atualização:", payload);
 
-      await api.put(`/products/${id}`, payload);
+      await api.put(`/products/${id}`, payload);  
 
       alert("Produto atualizado com sucesso!");
       navigate("/products");

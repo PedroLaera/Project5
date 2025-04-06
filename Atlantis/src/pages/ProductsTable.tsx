@@ -16,6 +16,7 @@ export default function ProductList() {
 
   // Função para carregar os produtos da API
   const fetchProducts = async () => {
+    // Atualiza a lista de produtos com a nova lista recebida da API
     try {
       const response = await api.get("/products");
       setProductList(response.data);

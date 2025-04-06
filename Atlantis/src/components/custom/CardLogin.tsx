@@ -2,6 +2,7 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function CardLogin() {
   const [formData, setFormData] = useState({
@@ -26,9 +27,7 @@ export default function CardLogin() {
 
     setErrors(newErrors);
 
-    if (newErrors.email || newErrors.password) {
-      return;
-    }
+    if (newErrors.email || newErrors.password) return;
 
     try {
       const response = await api.post("/login", {
@@ -36,13 +35,14 @@ export default function CardLogin() {
         password: formData.password,
       });
 
-      const { token, user } = response.data;
+      const { token } = response.data;
 
-      // Armazena o token no localStorage
+      const decoded: any = jwtDecode(token);
+      const id_user = decoded.id_user;
+
       localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("id_user", String(id_user));
 
-      // Redireciona para a home
       navigate("/");
     } catch (error: any) {
       alert(
@@ -61,7 +61,6 @@ export default function CardLogin() {
           <label className="block text-gray-600">Email</label>
           <input
             type="email"
-            title="Email"
             placeholder="Digite seu email"
             className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
               errors.email
@@ -78,7 +77,6 @@ export default function CardLogin() {
           <label className="block text-gray-600">Senha</label>
           <input
             type="password"
-            title="Senha"
             placeholder="Digite sua senha"
             className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
               errors.password
