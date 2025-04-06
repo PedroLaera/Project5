@@ -2,21 +2,27 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../services/api";
 
-// Definição da estrutura do produto
+// Definição da estrutura do produto e da categoria
 interface Product {
   id_product: number;
   name: string;
   price: number;
   description: string;
   stock: number;
+  ID_category?: number; // <- importante adicionar
+}
+
+interface Category {
+  id_category: number;
+  name: string;
 }
 
 export default function ProductList() {
   const [productList, setProductList] = useState<Product[]>([]);
+  const [categoryList, setCategoryList] = useState<Category[]>([]);
 
-  // Função para carregar os produtos da API
+  // Carrega os produtos
   const fetchProducts = async () => {
-    // Atualiza a lista de produtos com a nova lista recebida da API
     try {
       const response = await api.get("/products");
       setProductList(response.data);
@@ -25,12 +31,22 @@ export default function ProductList() {
     }
   };
 
-  // Carrega os produtos quando o componente é montado
+  // Carrega as categorias
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get("/category");
+      setCategoryList(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar categorias:", error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
 
-  // Função para excluir produtos
+  // Função para excluir produto
   const deleteProduct = async (id: number, name: string) => {
     try {
       const confirmDelete = window.confirm(
@@ -38,13 +54,9 @@ export default function ProductList() {
       );
       if (!confirmDelete) return;
 
-      const response = await api.delete(`/products/${id}`);
-
-      console.log("Produto excluído com sucesso!", response.data);
-
-      setProductList(
-        (prevProducts) =>
-          prevProducts.filter((product) => product.id_product !== id) // Alterado de product.id para product.id_product
+      await api.delete(`/products/${id}`);
+      setProductList((prevProducts) =>
+        prevProducts.filter((product) => product.id_product !== id)
       );
     } catch (error) {
       const errorMessage =
@@ -57,22 +69,33 @@ export default function ProductList() {
     }
   };
 
+  // Pega o nome da categoria dado o ID
+  const getCategoryName = (categoryId?: number) => {
+    const category = categoryList.find((cat) => cat.id_category === categoryId);
+    return category ? category.name : "Sem categoria";
+  };
+
   return (
-    <div className="w-full min-h-screen p-6 bg-zinc-900">
-      {/* Container para o título e o botão */}
+    <div className="w-full text-white! min-h-screen p-6 bg-zinc-900">
+      {/* Container para o título e os botões */}
       <div className="flex justify-between items-center mb-4">
-        {/* Título no canto superior esquerdo */}
         <h1 className="text-lg font-semibold text-gray-300">
           Produtos Cadastrados
         </h1>
-
-        {/* Botão para adicionar um novo produto */}
-        <Link
-          to="/createProduct"
-          className="px-5 py-2 border-1 border-white bg-zinc-900 text-white! rounded-lg hover:bg-zinc-900 transition"
-        >
-          Adicionar Novo Produto
-        </Link>
+        <div className="flex gap-4">
+          <Link
+            to="/createProduct"
+            className="px-5 py-2 border border-white bg-zinc-900 text-white! rounded-lg hover:bg-zinc-800 transition"
+          >
+            Adicionar Novo Produto
+          </Link>
+          <Link
+            to="/createCategory"
+            className="px-5 py-2 border border-white bg-zinc-900 text-white! rounded-lg hover:bg-zinc-800 transition"
+          >
+            Adicionar Categoria
+          </Link>
+        </div>
       </div>
 
       {/* Tabela de produtos */}
@@ -91,7 +114,10 @@ export default function ProductList() {
             <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
               Descrição
             </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600 ml-10!">
+            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
+              Categoria
+            </th>
+            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
               Ações
             </th>
           </tr>
@@ -110,6 +136,9 @@ export default function ProductList() {
               </td>
               <td className="py-2 px-4 text-sm text-gray-800">
                 {product.description}
+              </td>
+              <td className="py-2 px-4 text-sm text-gray-800">
+                {getCategoryName(product.ID_category)}
               </td>
               <td className="py-2 px-4 text-sm text-gray-800 flex gap-2">
                 <button

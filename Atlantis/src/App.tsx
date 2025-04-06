@@ -9,6 +9,7 @@ import AddProduct from "./pages/ProductsTable";
 import CreateProduct from "./pages/CreateProduct";
 import ProfilePage from "./pages/Profile";
 import EditProduct from "./pages/EditProduct";
+import CreateCategory from "./pages/CreateCategory";
 export function App() {
   return (
     <Router>
@@ -18,6 +19,7 @@ export function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/products  " element={<Product />} />
         <Route path="/createProduct" element={<CreateProduct />} />
+        <Route path="/createCategory" element={<CreateCategory />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/editProduct/:id" element={<EditProduct />} />
         <Route path="/profile" element={<ProfilePage />} />

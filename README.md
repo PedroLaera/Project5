@@ -1,7 +1,5 @@
 # Projeto do 5° modulo
 
-//botão para criar Categoria
-//add para selecionar a categoria um número drop
 //ligação dos ID e criação de Card na Home
 //Listagem
 //Adicionar variável de estado, para dizer que o usuário está logado no canto da tela a partir do momento em que fizer o Login
@@ -20,3 +18,5 @@
 
 --- TENTATIVA ---
 //editar produto
+//botão para criar Categoria
+//add para selecionar a categoria um número drop
