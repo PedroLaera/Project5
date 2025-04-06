@@ -1,6 +1,5 @@
 # Projeto do 5° modulo
 
-//editar produto
 //botão para criar Categoria
 //add para selecionar a categoria um número drop
 //ligação dos ID e criação de Card na Home
@@ -18,3 +17,6 @@
 //add mascara na numeração ao ser digitado o CPF
 //Não trocar de tela no Register, até que se crie o Usuário, no preço add "00,00"
 //Remover os estoque da tabela de produtos
+
+--- TENTATIVA ---
+//editar produto
