@@ -63,7 +63,7 @@ export default function ProductList() {
 
   const deleteCategory = async (id: number, name: string) => {
     const confirmDelete = window.confirm(
-      `Tem certeza que deseja excluir a categoria ${name}?`
+      `Tem certeza que deseja excluir a categoria ${name}? Todos os produtos associados a esta categoria também serão excluídos.`
     );
     if (!confirmDelete) return;
 
@@ -80,12 +80,13 @@ export default function ProductList() {
   const getCategoryName = (categoryId?: number) => {
     const category = categoryList.find((cat) => cat.ID_category === categoryId);
     return category
-      ? `${category.name} (ID: ${category.ID_category})`
+      ? `${category.ID_category} - ${category.name} `
       : "Sem categoria";
   };
 
   return (
     <div className="w-full min-h-screen p-4 bg-zinc-900 text-white">
+      {/* Produtos */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-xl font-semibold text-gray-300">
           Produtos Cadastrados
@@ -93,15 +94,9 @@ export default function ProductList() {
         <div className="flex gap-3 flex-wrap">
           <Link
             to="/createProduct"
-            className="px-4 py-2 border border-white text-white rounded hover:bg-zinc-800 transition"
+            className="px-4 py-1 border border-none text-white! rounded hover:shadow-white transition"
           >
             Adicionar Novo Produto
-          </Link>
-          <Link
-            to="/createCategory"
-            className="px-4 py-2 border border-white text-white rounded hover:bg-zinc-800 transition"
-          >
-            Adicionar Categoria
           </Link>
         </div>
       </div>
@@ -111,39 +106,41 @@ export default function ProductList() {
         <table className="min-w-full bg-white rounded shadow text-black text-sm">
           <thead className="bg-gray-100">
             <tr>
-              <th className="py-2 px-3">ID</th>
-              <th className="py-2 px-3">Nome</th>
-              <th className="py-2 px-3">Preço</th>
-              <th className="py-2 px-3">Descrição</th>
-              <th className="py-2 px-3">Categoria</th>
-              <th className="py-2 px-3">Ações</th>
+              <th className="py-2 px-4 text-left">ID</th>
+              <th className="py-2 px-4 text-left">Nome</th>
+              <th className="py-2 px-4 text-left">Preço</th>
+              <th className="py-2 px-4 text-left">Descrição</th>
+              <th className="py-2 px-4 text-left">Categoria</th>
+              <th className="py-2 px-4 text-left">Ações</th>
             </tr>
           </thead>
           <tbody>
             {productList.map((product) => (
               <tr key={product.id_product} className="border-b">
-                <td className="py-2 px-3">{product.id_product}</td>
-                <td className="py-2 px-3">{product.name}</td>
-                <td className="py-2 px-3">R$ {product.price}</td>
-                <td className="py-2 px-3">{product.description}</td>
-                <td className="py-2 px-3">
+                <td className="py-2 px-4">{product.id_product}</td>
+                <td className="py-2 px-4">{product.name}</td>
+                <td className="py-2 px-4">R$ {product.price}</td>
+                <td className="py-2 px-4">{product.description}</td>
+                <td className="py-2 px-4">
                   {getCategoryName(product.ID_category)}
                 </td>
-                <td className="py-2 px-3 flex flex-col sm:flex-row gap-2">
-                  <button
-                    onClick={() =>
-                      deleteProduct(product.id_product, product.name)
-                    }
-                    className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
-                  >
-                    Excluir
-                  </button>
-                  <Link
-                    to={`/editProduct/${product.id_product}`}
-                    className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
-                  >
-                    Editar
-                  </Link>
+                <td className="py-2 px-4">
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <button
+                      onClick={() =>
+                        deleteProduct(product.id_product, product.name)
+                      }
+                      className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
+                    >
+                      Excluir
+                    </button>
+                    <Link
+                      to={`/editProduct/${product.id_product}`}
+                      className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
+                    >
+                      Editar
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -151,40 +148,52 @@ export default function ProductList() {
         </table>
       </div>
 
-      {/* Tabela de Categorias */}
+      {/* Categorias */}
       <div className="mb-4">
-        <h2 className="text-lg font-semibold text-gray-300 mb-4">
-          Categorias Cadastradas
-        </h2>
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
+          <h2 className="text-xl font-semibold text-gray-300">
+            Categorias Cadastradas
+          </h2>
+          <Link
+            to="/createCategory"
+            className="px-4 py-1 border border-none text-white! rounded hover:shadow-white transition"
+          >
+            Adicionar Categoria
+          </Link>
+        </div>
+
+        {/* Tabela de Categorias */}
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded shadow text-black text-sm">
             <thead className="bg-gray-100">
               <tr>
-                <th className="py-2 px-3">ID</th>
-                <th className="py-2 px-3">Nome</th>
-                <th className="py-2 px-3">Ações</th>
+                <th className="py-2 px-4 text-left">ID</th>
+                <th className="py-2 px-4 text-left">Nome</th>
+                <th className="py-2 px-4 text-left">Ações</th>
               </tr>
             </thead>
             <tbody>
               {categoryList.map((category) => (
                 <tr key={category.ID_category} className="border-b">
-                  <td className="py-2 px-3">{category.ID_category}</td>
-                  <td className="py-2 px-3">{category.name}</td>
-                  <td className="py-2 px-3 flex flex-col sm:flex-row gap-2">
-                    <button
-                      onClick={() =>
-                        deleteCategory(category.ID_category, category.name)
-                      }
-                      className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
-                    >
-                      Excluir
-                    </button>
-                    <Link
-                      to={`/editCategory/${category.ID_category}`}
-                      className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
-                    >
-                      Editar
-                    </Link>
+                  <td className="py-2 px-4">{category.ID_category}</td>
+                  <td className="py-2 px-4">{category.name}</td>
+                  <td className="py-2 px-4">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button
+                        onClick={() =>
+                          deleteCategory(category.ID_category, category.name)
+                        }
+                        className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
+                      >
+                        Excluir
+                      </button>
+                      <Link
+                        to={`/editCategory/${category.ID_category}`}
+                        className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
+                      >
+                        Editar
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}
