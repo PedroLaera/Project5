@@ -5,26 +5,26 @@ import products from "../data/products";
 import users from "../data/users"; // Supondo que os usuários estejam armazenados aqui
 
 interface ProductCardProps {
-  id: string;
+  id_product: number;
   name: string;
-  price: string;
-  image: string;
+  price: number;
 }
 
-export function ProductCard({ id, name, price, image }: ProductCardProps) {
+export function ProductCard({ id_product, name, price }: ProductCardProps) {
+  const image = `../assets/${id_product}.jpg`; // caminho baseado no id
+
   return (
     <div className="bg-zinc-900 p-6 rounded-lg transition transform hover:scale-105">
       <img
         src={image}
         alt={name}
         className="w-60 h-70 object-cover rounded-lg mb-4"
+        onError={(e) => (e.currentTarget.src = "/images/products/default.jpg")} // imagem padrão caso não exista
       />
-      <h3 className="text-xl font-semibold text-white">{name}</h3>{" "}
-      {/* Alterado para text-white */}
-      <p className="text-xl text-white mt-2 font-thin">{price}</p>{" "}
-      {/* Alterado para text-white */}
+      <h3 className="text-xl font-semibold text-white">{name}</h3>
+      <p className="text-xl text-white mt-2 font-thin">R$ {price}</p>
       <Link
-        to={`/product/${id}`}
+        to={`/product/${id_product}`}
         className="mt-4 text-white! border-1 inline-block px-6 py-3 bg-zinc-900 rounded-lg hover: transition"
       >
         Ver Detalhes
@@ -34,14 +34,13 @@ export function ProductCard({ id, name, price, image }: ProductCardProps) {
 }
 
 export default function ProductCardPage({
-  id,
+  id_product,
   name,
   price,
-  image,
 }: ProductCardProps) {
   const { id: paramId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === paramId || p.id === id);
+  const product = products.find((p) => p.id === paramId || p.id === id_product);
   const user = users.find((u) => u.id === "1"); // Simulando o usuário logado
 
   const [quantity, setQuantity] = useState(1);
@@ -67,7 +66,7 @@ export default function ProductCardPage({
     <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row">
       {/* Imagem do produto */}
       <img
-        src={image} // A imagem vem do campo `image` do produto
+        src={product.image}
         alt={name}
         className="w-60 h-80 object-cover rounded-lg mb-4 md:mb-0 md:mr-8"
       />

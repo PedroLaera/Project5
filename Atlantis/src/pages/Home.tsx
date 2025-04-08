@@ -1,32 +1,58 @@
+import { useEffect, useState } from "react";
 import { ProductCard } from "../components/custom/CardProduct";
-import img2 from "../components/assets/img2.jpg";
-import img1 from "../components/assets/img3.webp";
-import img3 from "../components/assets/img1.jpg";
-import Carroussel from "../components/custom/Carroussel";
 import Footer from "../components/custom/Footer";
+import { api } from "../services/api";
 
-const products = [
-  { id: "1", name: "Notebook Gamer", price: "R$ 5.000", image: img2 },
-  { id: "2", name: "Smartphone", price: "R$ 2.500", image: img1 },
-  { id: "3", name: "Headset Bluetooth", price: "R$ 300", image: img3 },
-];
+interface Product {
+  id_product: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  ID_category?: number;
+  category_name?: string; // Se estiver usando nome de categoria
+}
 
 export default function HomePage() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get("/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center bg-zinc-900 p-4">
       <h1 className="text-4xl font-thin text-gray-100">Welcome to Atlantis</h1>
       <p className="text-gray-500 mt-2">Explore our product diversity!</p>
-      {/* Carroussel*/}
-      <Carroussel />
 
-      <p className="text-4xl font-thin text-gray-100">Our best offers!</p>
+      {/* Carroussel */}
+
+      <p className="text-4xl font-thin text-gray-100 mt-8">Our best offers!</p>
 
       {/* Card dos produtos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
-        {products.map((products) => (
-          <ProductCard key={products.id} {...products} />
+        {products.map((product) => (
+          <ProductCard
+            key={product.id_product}
+            id_product={product.id_product}
+            name={product.name}
+            description={product.description}
+            price={product.price}
+            stock={product.stock}
+            category_name={product.category_name}
+          />
         ))}
       </div>
+
       <Footer />
     </div>
   );
