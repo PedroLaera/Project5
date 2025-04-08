@@ -1,9 +1,9 @@
 // ProductList.tsx
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../services/api";
 
-// Definição da estrutura do produto e da categoria
 interface Product {
   id_product: number;
   name: string;
@@ -14,7 +14,7 @@ interface Product {
 }
 
 interface Category {
-  id_category: number;
+  ID_category: number;
   name: string;
 }
 
@@ -22,23 +22,21 @@ export default function ProductList() {
   const [productList, setProductList] = useState<Product[]>([]);
   const [categoryList, setCategoryList] = useState<Category[]>([]);
 
-  // Carrega os produtos
   const fetchProducts = async () => {
     try {
       const response = await api.get("/products");
       setProductList(response.data);
-    } catch (error) {
-      console.error("Erro ao carregar produtos:", error);
+    } catch {
+      console.error("Erro ao carregar produtos");
     }
   };
 
-  // Carrega as categorias
   const fetchCategories = async () => {
     try {
       const response = await api.get("/category");
       setCategoryList(response.data);
-    } catch (error) {
-      console.error("Erro ao carregar categorias:", error);
+    } catch {
+      console.error("Erro ao carregar categorias");
     }
   };
 
@@ -47,189 +45,153 @@ export default function ProductList() {
     fetchCategories();
   }, []);
 
-  // Excluir produto
   const deleteProduct = async (id: number, name: string) => {
-    try {
-      const confirmDelete = window.confirm(
-        `Tem certeza que deseja excluir o produto ${name}?`
-      );
-      if (!confirmDelete) return;
+    const confirmDelete = window.confirm(
+      `Tem certeza que deseja excluir o produto ${name}?`
+    );
+    if (!confirmDelete) return;
 
+    try {
       await api.delete(`/products/${id}`);
-      setProductList((prevProducts) =>
-        prevProducts.filter((product) => product.id_product !== id)
+      setProductList((prev) =>
+        prev.filter((product) => product.id_product !== id)
       );
-    } catch (error) {
-      alert("Erro ao tentar excluir o produto.");
-      console.error("Erro ao tentar excluir produto:", error);
+    } catch {
+      alert("Erro ao tentar excluir produto");
     }
   };
 
-  // Excluir categoria
   const deleteCategory = async (id: number, name: string) => {
-    try {
-      const confirmDelete = window.confirm(
-        `Tem certeza que deseja excluir a categoria ${name}?`
-      );
-      if (!confirmDelete) return;
+    const confirmDelete = window.confirm(
+      `Tem certeza que deseja excluir a categoria ${name}?`
+    );
+    if (!confirmDelete) return;
 
+    try {
       await api.delete(`/category/${id}`);
       setCategoryList((prev) =>
-        prev.filter((category) => category.id_category !== id)
+        prev.filter((category) => category.ID_category !== id)
       );
-    } catch (error) {
-      alert("Erro ao tentar excluir a categoria.");
-      console.error("Erro ao tentar excluir categoria:", error);
+    } catch {
+      alert("Erro ao tentar excluir categoria");
     }
   };
 
-  // Pega o nome da categoria dado o ID
   const getCategoryName = (categoryId?: number) => {
-    if (!categoryId) return "";
-    const category = categoryList.find(
-      (cat) => Number(cat.id_category) === Number(categoryId)
-    );
-    return category ? category.name : "";
+    const category = categoryList.find((cat) => cat.ID_category === categoryId);
+    return category
+      ? `${category.name} (ID: ${category.ID_category})`
+      : "Sem categoria";
   };
 
   return (
-    <div className="w-full text-white! min-h-screen p-6 bg-zinc-900">
-      {/* Cabeçalho da Tabela de Produtos */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-lg font-semibold text-gray-300">
+    <div className="w-full min-h-screen p-4 bg-zinc-900 text-white">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <h1 className="text-xl font-semibold text-gray-300">
           Produtos Cadastrados
         </h1>
-        <Link
-          to="/createProduct"
-          className="px-5 py-2 border border-white bg-zinc-900 text-white! rounded-lg hover:bg-zinc-800 transition"
-        >
-          Adicionar Novo Produto
-        </Link>
+        <div className="flex gap-3 flex-wrap">
+          <Link
+            to="/createProduct"
+            className="px-4 py-2 border border-white text-white rounded hover:bg-zinc-800 transition"
+          >
+            Adicionar Novo Produto
+          </Link>
+          <Link
+            to="/createCategory"
+            className="px-4 py-2 border border-white text-white rounded hover:bg-zinc-800 transition"
+          >
+            Adicionar Categoria
+          </Link>
+        </div>
       </div>
 
-      {/* Tabela de produtos */}
-      <table className="min-w-full bg-white rounded-lg shadow-md">
-        <thead>
-          <tr className="border-b">
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              ID
-            </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Nome
-            </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Preço
-            </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Descrição
-            </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Categoria
-            </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Ações
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {productList.map((product) => (
-            <tr key={product.id_product} className="border-b">
-              <td className="py-2 px-4 text-sm text-gray-800">
-                {product.id_product}
-              </td>
-              <td className="py-2 px-4 text-sm text-gray-800">
-                {product.name}
-              </td>
-              <td className="py-2 px-4 text-sm text-gray-800">
-                R$ {product.price}
-              </td>
-              <td className="py-2 px-4 text-sm text-gray-800">
-                {product.description}
-              </td>
-              <td className="py-2 px-4 text-sm text-gray-800">
-                {product.ID_category
-                  ? `${product.ID_category} - ${getCategoryName(
-                      product.ID_category
-                    )}`
-                  : "Sem categoria"}
-              </td>
-
-              <td className="py-2 px-4 text-sm text-gray-800 flex gap-2">
-                <button
-                  onClick={() =>
-                    deleteProduct(product.id_product, product.name)
-                  }
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
-                >
-                  Excluir
-                </button>
-                <Link
-                  to={`/editProduct/${product.id_product}`}
-                  className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-                >
-                  Editar
-                </Link>
-              </td>
+      {/* Tabela de Produtos */}
+      <div className="overflow-x-auto mb-8">
+        <table className="min-w-full bg-white rounded shadow text-black text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="py-2 px-3">ID</th>
+              <th className="py-2 px-3">Nome</th>
+              <th className="py-2 px-3">Preço</th>
+              <th className="py-2 px-3">Descrição</th>
+              <th className="py-2 px-3">Categoria</th>
+              <th className="py-2 px-3">Ações</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Botão de adicionar categoria */}
-      <div className="flex justify-between items-center mt-12 mb-4">
-        <h2 className="text-lg font-semibold text-gray-300">Categorias</h2>
-        <Link
-          to="/createCategory"
-          className="px-5 py-2 border border-white bg-zinc-900 text-white! rounded-lg hover:bg-zinc-800 transition"
-        >
-          Adicionar Categoria
-        </Link>
+          </thead>
+          <tbody>
+            {productList.map((product) => (
+              <tr key={product.id_product} className="border-b">
+                <td className="py-2 px-3">{product.id_product}</td>
+                <td className="py-2 px-3">{product.name}</td>
+                <td className="py-2 px-3">R$ {product.price}</td>
+                <td className="py-2 px-3">{product.description}</td>
+                <td className="py-2 px-3">
+                  {getCategoryName(product.ID_category)}
+                </td>
+                <td className="py-2 px-3 flex flex-col sm:flex-row gap-2">
+                  <button
+                    onClick={() =>
+                      deleteProduct(product.id_product, product.name)
+                    }
+                    className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
+                  >
+                    Excluir
+                  </button>
+                  <Link
+                    to={`/editProduct/${product.id_product}`}
+                    className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
+                  >
+                    Editar
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {/* Tabela de categorias */}
-      <table className="min-w-full bg-white rounded-lg shadow-md mt-4">
-        <thead>
-          <tr className="border-b">
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              ID
-            </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Nome
-            </th>
-            <th className="py-2 px-4 text-left text-sm font-semibold text-gray-600">
-              Ações
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {categoryList.map((category) => (
-            <tr key={category.id_category} className="border-b">
-              <td className="py-2 px-4 text-sm text-gray-800">
-                {category.id_category}
-              </td>
-              <td className="py-2 px-4 text-sm text-gray-800">
-                {category.name}
-              </td>
-              <td className="py-2 px-4 text-sm text-gray-800 flex gap-2">
-                <button
-                  onClick={() =>
-                    deleteCategory(category.id_category, category.name)
-                  }
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
-                >
-                  Excluir
-                </button>
-                <Link
-                  to={`/editCategory/${category.id_category}`}
-                  className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-                >
-                  Editar
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Tabela de Categorias */}
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-300 mb-4">
+          Categorias Cadastradas
+        </h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white rounded shadow text-black text-sm">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="py-2 px-3">ID</th>
+                <th className="py-2 px-3">Nome</th>
+                <th className="py-2 px-3">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categoryList.map((category) => (
+                <tr key={category.ID_category} className="border-b">
+                  <td className="py-2 px-3">{category.ID_category}</td>
+                  <td className="py-2 px-3">{category.name}</td>
+                  <td className="py-2 px-3 flex flex-col sm:flex-row gap-2">
+                    <button
+                      onClick={() =>
+                        deleteCategory(category.ID_category, category.name)
+                      }
+                      className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
+                    >
+                      Excluir
+                    </button>
+                    <Link
+                      to={`/editCategory/${category.ID_category}`}
+                      className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
+                    >
+                      Editar
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
