@@ -2,7 +2,6 @@
 
 //Listagem
 
-//Crud dos comentários por produto
 //Questão de editar usuário
 //Ao ocorrer erro deixar o input vermelho
 //Criar tela do Checkout apos comprar
@@ -11,6 +10,8 @@
 
 --- FEITO ---
 
+//editar produto
+//Crud dos comentários por produto
 //add mascara na numeração ao ser digitado o CPF
 //Não trocar de tela no Register, até que se crie o Usuário, no preço add "00,00"
 //Remover os estoque da tabela de produtos
@@ -21,4 +22,3 @@
 //Fazer para que apenas o ID atual possa editar apenas o ID atual
 
 --- TENTATIVA ---
-//editar produto
