@@ -12,6 +12,7 @@ import ProfilePage from "./pages/Profile";
 import EditProduct from "./pages/EditProduct";
 import CreateCategory from "./pages/CreateCategory";
 import EditCategory from "./pages/EditCategory";
+import AddAndress from "./pages/AddAndress";
 
 export function App() {
   return (
@@ -25,6 +26,7 @@ export function App() {
         <Route path="/presentation/:id" element={<ProductPresentation />} />
         <Route path="/createProduct" element={<CreateProduct />} />
         <Route path="/editProduct/:id" element={<EditProduct />} />
+        <Route path="/addAndress" element={<AddAndress />} />
         <Route path="/createCategory" element={<CreateCategory />} />
         <Route path="/editCategory/:id" element={<EditCategory />} />
         <Route path="/profile" element={<ProfilePage />} />
