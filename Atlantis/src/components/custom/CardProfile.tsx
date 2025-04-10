@@ -170,18 +170,7 @@ export default function ProfileCard() {
               placeholder="CPF"
             />
           </>
-        ) : (
-          <>
-            <p>
-              <strong>Nome:</strong> {userData.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {userData.email}
-            </p>
-            <p>
-              <strong>CPF:</strong> {userData.CPF}
-            </p>
-          </>
+        
         )}
 
         {/* Botões lado a lado */}
@@ -203,9 +192,6 @@ export default function ProfileCard() {
           </Button>
         </div>
 
-        {successMessage && (
-          <p className="text-green-600 text-center mt-4">{successMessage}</p>
-        )}
       </CardContent>
     </Card>
   );
