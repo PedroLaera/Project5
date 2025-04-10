@@ -125,16 +125,6 @@ export default function CommentCard() {
     setRating(comment.rating);
   };
 
-  const renderStars = (count: number) => {
-    return (
-      <div className="text-yellow-500">
-        {Array.from({ length: 5 }, (_, i) => (
-          <span key={i}>{i < count ? "⭐" : "☆"}</span>
-        ))}
-      </div>
-    );
-  };
-
   const getUserName = (id_user: number) => {
     const user = users.find((u) => u.id_user === id_user);
     return user ? user.name : "Nome não disponível";
