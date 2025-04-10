@@ -12,7 +12,7 @@ interface Address {
   city: string;
   state: string;
   zipCode: string;
-  id_user: string; // Adicionado para permitir filtragem
+  id_user: number;
 }
 
 export default function CardAndress() {
@@ -38,8 +38,9 @@ export default function CardAndress() {
           },
         });
 
-        const userAddress = response.data.find(
-          (addr: Address) => addr.id_user === id_user
+        const allAddresses: Address[] = response.data;
+        const userAddress = allAddresses.find(
+          (addr) => Number(addr.id_user) === Number(id_user)
         );
 
         setAddress(userAddress || null);
@@ -60,7 +61,7 @@ export default function CardAndress() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin mt-10">
+    <Card className="mt-20 w-full max-w-md mx-auto p-6 shadow-lg font-thin">
       <CardHeader>
         <CardTitle className="text-2xl text-blue-600 text-center">
           Endereço
@@ -70,7 +71,7 @@ export default function CardAndress() {
         {address ? (
           <>
             <p>
-              <strong>Rua:</strong> {address.ID_address}
+              <strong>Identificador:</strong> {address.ID_address}
             </p>
             <p>
               <strong>Número:</strong> {address.number}
@@ -90,6 +91,14 @@ export default function CardAndress() {
             <p>
               <strong>CEP:</strong> {address.zipCode}
             </p>
+            <div className="text-center mt-4">
+              <Button
+                className="bg-blue-600 text-white hover:bg-blue-700"
+                onClick={() => navigate("/AddAndress")}
+              >
+                Editar Endereço
+              </Button>
+            </div>
           </>
         ) : (
           <div className="text-center">

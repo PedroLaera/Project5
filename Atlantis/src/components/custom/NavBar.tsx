@@ -42,7 +42,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="w-full bg-zinc-900 shadow-md p-4 flex items-center justify-between text-white">
+    <nav className=" w-full bg-zinc-900 shadow-md p-4 flex items-center justify-between text-white">
       <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
         {/* Logo + Menu */}
         <div className="flex items-center gap-2">

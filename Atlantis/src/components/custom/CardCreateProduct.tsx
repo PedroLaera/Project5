@@ -65,7 +65,7 @@ export default function RegisterCard() {
             ?.data?.error) ||
         "Erro ao cadastrar o produto";
       alert(errorMessage);
-      console.error("Erro ao tentar cadastrar produto:", errorMessage);
+      console.error("Preencha com informações válidas:", errorMessage);
     }
   };
 

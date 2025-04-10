@@ -1,8 +1,5 @@
 # Projeto do 5° modulo
 
-//Listagem
-
-//Questão de editar usuário
 //Ao ocorrer erro deixar o input vermelho
 //Criar tela do Checkout apos comprar
 //esterilização do footer
@@ -10,6 +7,8 @@
 
 --- FEITO ---
 
+//Listagem
+//Questão de editar usuário
 //editar produto
 //Crud dos comentários por produto
 //add mascara na numeração ao ser digitado o CPF
