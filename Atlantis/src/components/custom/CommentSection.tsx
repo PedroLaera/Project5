@@ -61,7 +61,7 @@ export default function CommentCard() {
 
   useEffect(() => {
     fetchComments();
-    fetchUsers();
+    fetchUsers();---
   }, [id]);
 
   const handleSubmit = async () => {
