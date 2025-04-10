@@ -31,9 +31,7 @@ describe("User Endpoint", () => {
     console.log("Banco ligou!");
   });
 
-  afterAll(async () => {
-    await sequelize.close();
-  });
+
 
   // CREATE USER
   test("POST /users shold create a new user and return success", async () => {
@@ -82,7 +80,7 @@ describe("User Endpoint", () => {
         })
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(200);
-      //expect(response.body).toHaveProperty("name", "usuario teste EDITADO");
+      expect(response.body).toHaveProperty("name", "usuario teste EDITADO");
     });
   });
 
@@ -94,4 +92,43 @@ describe("User Endpoint", () => {
 
     expect(response.status).toBe(200);
   });
+});
+
+// CATEGORY ENDPOINTS
+describe("Category Endpoint", () => {
+  test("POST /users should create a new category and return success", async () => {
+    const response = await request(app).post("/Category").set({ Authorization: "Auth" }).send({
+      name: "Perfume"
+    }); 
+    expect(response.status).toBe(201);
+  });
+});
+
+
+// PRODUCT ENDPOINTS
+describe("Product Endpoint", () => {
+  test("POST /users should create a new product and return success", async () => {
+    const response = await request(app).post("/products").set({ Authorization: "Auth" }).send({
+      id_product: 1,
+      name: "212 black",
+      description: "Fragrancia incomparavel",
+      price: "50.00",
+      stock: "50",
+      ID_category: "1"
+    });
+    expect(response.status).toBe(201);
+  });
+
+test("GET /should get a item return success", async () => {
+  const response = await request(app)
+  .get("/Products")
+  .set({ authorization: "Auth" });
+
+  expect(response.status).toBe(200);
+  });
+
+  afterAll(async () => {
+    await sequelize.close();
+  });
+  
 });
