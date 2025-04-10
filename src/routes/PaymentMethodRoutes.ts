@@ -1,4 +1,4 @@
-import express from "express";
+/*import express from "express";
 import {
   getAll,
   getPaymentMethodById,
@@ -16,4 +16,4 @@ router.post("/PaymentMethod", authMiddleware, createPaymentMethod);
 router.put("/PaymentMethod/:id", authMiddleware, updatePaymentMethod);
 router.delete("/PaymentMethod/:id", authMiddleware, destroyPaymentMethodById);
 
-export default router;
+export default router;*/
