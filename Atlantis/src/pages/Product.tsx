@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import products from "../components/data/products"; // Importando os produtos
-import ProductCardPage from "../components/custom/CardProduct"; // Importando a página de cards
+import products from "../components/data/products";
+import ProductCardPage from "../components/custom/CardProduct";
 
 export default function ProductPage() {
   const { id } = useParams<{ id: string }>();
-  const product = products.find((p) => p.id === id); // Filtra o produto pelo ID
+  const product = products.find((p) => p.id === id);
 
   if (!product) {
     return (

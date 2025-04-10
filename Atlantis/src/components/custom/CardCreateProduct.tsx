@@ -33,23 +33,31 @@ export default function RegisterCard() {
       return;
     }
 
-    // 2. Verifica se o usuário está autenticado
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Usuário não autenticado. Faça login para cadastrar produtos.");
       return;
     }
 
+    // Converter campos para número se necessário
+    const payload = {
+      ...formData,
+      price: Number(formData.price),
+      stock: Number(formData.stock),
+      ID_category: Number(formData.ID_category),
+    };
+
+    console.log("Enviando payload:", payload);
+
     try {
-      // 3. Envia o produto com o token no header
-      const response = await api.post("/products", formData, {
+      const response = await api.post("/products", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       console.log("Produto cadastrado com sucesso!", response.data);
-      navigate("/addproduct"); // Redireciona após sucesso
+      navigate("/addproduct");
     } catch (error) {
       const errorMessage =
         (error instanceof Error &&

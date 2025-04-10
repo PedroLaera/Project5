@@ -45,10 +45,7 @@ export default function HomePage() {
             key={product.id_product}
             id_product={product.id_product}
             name={product.name}
-            description={product.description}
             price={product.price}
-            stock={product.stock}
-            category_name={product.category_name}
           />
         ))}
       </div>

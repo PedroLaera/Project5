@@ -19,13 +19,13 @@ export function ProductCard({ id_product, name, price }: ProductCardProps) {
         src={image}
         alt={name}
         className="w-60 h-70 object-cover rounded-lg mb-4"
-        onError={(e) => (e.currentTarget.src = "/images/products/default.jpg")} // imagem padrão caso não exista
+        onError={(e) => (e.currentTarget.src = "../assets/img1.jpg")} // imagem padrão caso não exista
       />
       <h3 className="text-xl font-semibold text-white">{name}</h3>
       <p className="text-xl text-white mt-2 font-thin">R$ {price}</p>
       <Link
-        to={`/product/${id_product}`}
-        className="mt-4 text-white! border-1 inline-block px-6 py-3 bg-zinc-900 rounded-lg hover: transition"
+        to={`/presentation/${id_product}`}
+        className="mt-4 inline-block px-6 py-3 bg-zinc-900 text-white! rounded-lg "
       >
         Ver Detalhes
       </Link>
