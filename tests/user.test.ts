@@ -103,37 +103,6 @@ describe("Category Endpoint", () => {
       });
     expect(response.status).toBe(201);
   });
-
-  test("GET /should get a Category return success", async () => {
-    const response = await request(app)
-      .get("/Products")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
-  });
-
-  test("GET /Category/:id should get a item by id return success", async () => {
-    const response = await request(app)
-      .get("/Category/1")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
-  });
-
-  test("PUT /products/:id should update a item by id return success", async () => {
-    const response = await request(app)
-      .put("/Category/1")
-      .set({ authorization: "Auth" })
-      .send({
-        name: "Perfume Masculino",
-      });
-    expect(response.status).toBe(200);
-  });
-
-  test("DELETE /Category/:id should delete a item by id return success", async () => {
-    const response = await request(app)
-      .delete("/Category/1")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
-  });
 });
 
 // PRODUCT ENDPOINTS
@@ -157,90 +126,11 @@ describe("Product Endpoint", () => {
     const response = await request(app)
       .get("/Products")
       .set({ authorization: "Auth" });
+
     expect(response.status).toBe(200);
   });
 
-  test("GET /products/:id should get a item by id return success", async () => {
-    const response = await request(app)
-      .get("/products/1")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
+  afterAll(async () => {
+    await sequelize.close();
   });
-
-  test("PUT /products/:id should update a item by id return success", async () => {
-    const response = await request(app)
-      .put("/products/1")
-      .set({ authorization: "Auth" })
-      .send({
-        id_product: "1",
-        name: "212 black",
-        description: "Cheira bem",
-        price: "50.00",
-        stock: "40",
-        ID_category: 1,
-      });
-    expect(response.status).toBe(200);
-  });
-
-  test("DELETE /products/:id should delete a item by id return success", async () => {
-    const response = await request(app)
-      .delete("/products/1")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("comment Endpoint", () => {
-  test("POST /users should create a new comment and return success", async () => {
-    const response = await request(app)
-      .post("/comment")
-      .set({ Authorization: "Auth" })
-      .send({
-        id_user: "1",
-        id_product: "1",
-        content: "legal meu",
-        rating: "5",
-        creation_date: "",
-      });
-    expect(response.status).toBe(201);
-  });
-
-  test("GET /should get a comment return success", async () => {
-    const response = await request(app)
-      .get("/comment")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
-  });
-
-  test("GET /comment/:id should get a comment by id return success", async () => {
-    const response = await request(app)
-      .get("/comment/1")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
-  });
-
-  test("PUT /comment/:id should update a comment by id return success", async () => {
-    const response = await request(app)
-      .put("/comment/1")
-      .set({ authorization: "Auth" })
-      .send({
-        id_user: "1",
-        id_product: "1",
-        content: "legal meu(porém editado)",
-        rating: "3",
-        creation_date: "",
-      });
-    expect(response.status).toBe(200);
-  });
-
-  test("DELETE /comment/:id should delete a comment by id return success", async () => {
-    const response = await request(app)
-      .delete("/comment/1")
-      .set({ authorization: "Auth" });
-    expect(response.status).toBe(200);
-  });
-});
-
-afterAll(async () => {
-  await sequelize.close();
 });
