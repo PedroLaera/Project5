@@ -85,7 +85,7 @@ export default function ProductList() {
   };
 
   return (
-    <div className="w-full min-h-screen p-4 bg-zinc-900 text-white">
+    <div className="w-full min-h-screen p-4  bg-gradient-to-b from-zinc-400 via-zinc-600 to-zinc-900 p-4 text-gray-800">
       {/* Produtos */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-xl font-semibold text-gray-300">
@@ -130,13 +130,13 @@ export default function ProductList() {
                       onClick={() =>
                         deleteProduct(product.id_product, product.name)
                       }
-                      className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
+                      className="bg-red-600! px-3 py-1 rounded text-white! hover:bg-red-600"
                     >
                       Excluir
                     </button>
                     <Link
                       to={`/editProduct/${product.id_product}`}
-                      className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
+                      className="bg-blue-600 px-3 py-1 rounded text-white! hover:bg-blue-400"
                     >
                       Editar
                     </Link>
@@ -183,13 +183,13 @@ export default function ProductList() {
                         onClick={() =>
                           deleteCategory(category.ID_category, category.name)
                         }
-                        className="bg-red-500 px-3 py-1 rounded text-white hover:bg-red-600"
+                        className="bg-red-600! px-3 py-1 rounded text-white! hover:bg-red-600"
                       >
                         Excluir
                       </button>
                       <Link
                         to={`/editCategory/${category.ID_category}`}
-                        className="bg-yellow-500 px-3 py-1 rounded text-white hover:bg-yellow-600"
+                        className="bg-blue-600 px-3 py-1 rounded text-white! hover:bg-blue-400"
                       >
                         Editar
                       </Link>

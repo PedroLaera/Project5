@@ -54,11 +54,11 @@ export default function CardLogin() {
   };
 
   return (
-    <div className="bg-zinc-100 p-8 rounded-lg shadow-lg w-full max-w-md">
-      <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
+    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h2 className="text-2xl font-sinc text-center text-blue-600">Login</h2>
       <form className="mt-4" onSubmit={handleLogin}>
         <div className="mb-4">
-          <label className="block text-gray-600">Email</label>
+          <label className="block text-gray-800!">Email</label>
           <input
             type="email"
             placeholder="Digite seu email"
@@ -74,11 +74,11 @@ export default function CardLogin() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-600">Senha</label>
+          <label className="block text-gray-800">Senha</label>
           <input
             type="password"
             placeholder="Digite sua senha"
-            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
+            className={`w-full text-gray-800! p-2 border rounded-lg focus:outline-none focus:ring-2 ${
               errors.password
                 ? "border-red-500 ring-red-300"
                 : "focus:ring-blue-500"
@@ -91,7 +91,7 @@ export default function CardLogin() {
         </div>
         <Button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white!"
         >
           Entrar
         </Button>

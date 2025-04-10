@@ -15,7 +15,7 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-zinc-900 p-4">
+    <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-b from-zinc-400 via-zinc-600 to-zinc-900 p-4">
       {/* Passando as propriedades diretamente */}
       <ProductCardPage
         id={product.id}

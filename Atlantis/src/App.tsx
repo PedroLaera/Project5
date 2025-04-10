@@ -13,6 +13,8 @@ import EditProduct from "./pages/EditProduct";
 import CreateCategory from "./pages/CreateCategory";
 import EditCategory from "./pages/EditCategory";
 import AddAndress from "./pages/AddAndress";
+import Checkout from "./pages/Checkout";
+import SupportPage from "./pages/Suport";
 
 export function App() {
   return (
@@ -25,6 +27,7 @@ export function App() {
         <Route path="/products" element={<Product />} />
         <Route path="/presentation/:id" element={<ProductPresentation />} />
         <Route path="/createProduct" element={<CreateProduct />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/editProduct/:id" element={<EditProduct />} />
         <Route path="/addAndress" element={<AddAndress />} />
         <Route path="/createCategory" element={<CreateCategory />} />
@@ -32,6 +35,7 @@ export function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/support" element={<SupportPage />} />
         <Route path="/teste" element={<Teste />} />
       </Routes>
     </Router>

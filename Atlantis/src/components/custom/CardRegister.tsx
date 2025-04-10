@@ -34,7 +34,6 @@ export default function CardTeste() {
       setFormData({ ...formData, [name]: value });
     }
 
-    // Resetar erro quando o usuário digita
     setErrors({ ...errors, [name]: false });
   };
 
@@ -47,7 +46,6 @@ export default function CardTeste() {
     };
     setErrors(newErrors);
 
-    // Verifica se algum campo está com erro
     return !Object.values(newErrors).some((err) => err);
   };
 
@@ -79,7 +77,7 @@ export default function CardTeste() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin">
+    <Card className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border-none">
       <CardHeader>
         <CardTitle className="text-3xl font-thin text-blue-600 text-center">
           Registre-se
@@ -87,7 +85,7 @@ export default function CardTeste() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <label>Digite seu nome:</label>
+          <label className="text-gray-800">Digite seu nome:</label>
           <Input
             type="text"
             name="name"
@@ -97,7 +95,7 @@ export default function CardTeste() {
             className={errors.name ? "border-red-500" : ""}
             required
           />
-          <label>Digite seu e-mail:</label>
+          <label className="text-gray-800">Digite seu e-mail:</label>
           <Input
             type="email"
             name="email"
@@ -107,7 +105,7 @@ export default function CardTeste() {
             className={errors.email ? "border-red-500" : ""}
             required
           />
-          <label>Digite sua senha:</label>
+          <label className="text-gray-800">Digite sua senha:</label>
           <Input
             type="password"
             name="password"
@@ -117,7 +115,7 @@ export default function CardTeste() {
             className={errors.password ? "border-red-500" : ""}
             required
           />
-          <label>Digite seu CPF:</label>
+          <label className="text-gray-800">Digite seu CPF:</label>
           <Input
             type="text"
             name="CPF"
@@ -129,7 +127,7 @@ export default function CardTeste() {
           />
           <Button
             onClick={CreateUser}
-            className="w-full bg-white! text-zinc-900! hover:bg-gray-200!"
+            className="w-full bg-black! text-white hover:bg-blue-600!"
           >
             Cadastrar
           </Button>

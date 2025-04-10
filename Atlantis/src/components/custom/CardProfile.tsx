@@ -102,7 +102,6 @@ export default function ProfileCard() {
 
   return (
     <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin mt-10 relative">
-      {/* Botão de apagar conta com animação de texto para esquerda */}
       <div
         className="absolute top-4 right-4 flex items-center gap-2 cursor-pointer"
         onMouseEnter={() => setHoveringTrash(true)}

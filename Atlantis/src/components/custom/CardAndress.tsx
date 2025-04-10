@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { Trash2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Address {
   ID_address: string;
@@ -18,6 +20,7 @@ interface Address {
 export default function CardAndress() {
   const [address, setAddress] = useState<Address | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hoveringTrash, setHoveringTrash] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,6 +57,23 @@ export default function CardAndress() {
     fetchAddress();
   }, []);
 
+  const handleDeleteAddress = async () => {
+    if (!address) return;
+
+    const token = localStorage.getItem("token");
+    try {
+      await api.delete(`/address/${address.ID_address}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAddress(null);
+      alert("Endereço excluído com sucesso.");
+    } catch (error) {
+      console.error("Erro ao excluir endereço:", error);
+    }
+  };
+
   if (loading) {
     return (
       <p className="text-center mt-10 text-gray-500">Carregando endereço...</p>
@@ -61,7 +81,30 @@ export default function CardAndress() {
   }
 
   return (
-    <Card className="mt-20 w-full max-w-md mx-auto p-6 shadow-lg font-thin">
+    <Card className="mt-5 mx-auto p-0 shadow-lg font-thin relative">
+      {address && (
+        <div
+          className="absolute top-4 right-4 flex items-center gap-2 cursor-pointer"
+          onMouseEnter={() => setHoveringTrash(true)}
+          onMouseLeave={() => setHoveringTrash(false)}
+          onClick={handleDeleteAddress}
+        >
+          <AnimatePresence>
+            {hoveringTrash && (
+              <motion.span
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: -5 }}
+                exit={{ opacity: 0, x: 10 }}
+                className="text-red-600 text-sm"
+              >
+                Apagar endereço
+              </motion.span>
+            )}
+          </AnimatePresence>
+          <Trash2 className="text-red-600 hover:text-red-800 transition duration-200" />
+        </div>
+      )}
+
       <CardHeader>
         <CardTitle className="text-2xl text-blue-600 text-center">
           Endereço

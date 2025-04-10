@@ -1,69 +1,87 @@
-import { Separator } from "../ui/separator"; // Importando o Separator
-import { Button } from "../ui/button"; // Importando o Button do seu projeto
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
+import { Instagram, Facebook, Github, PhoneCall } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-12 w-full">
-      <div className="container mx-auto flex items-center justify-between w-full px-4">
-        {/* Parte esquerda: Ícones das redes sociais */}
-        <div className="flex items-center space-x-6">
+    <footer className="bg-transparent0 text-white pt-12 w-full">
+      <div className="max-w-[1440px] mx-auto w-full flex flex-col md:flex-row items-center justify-between px-6 gap-10">
+        <div className="flex items-center gap-6">
           <a
             href="https://wa.me/123456789"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {/* Ícone do WhatsApp */}
+            <PhoneCall className="w-6 h-6 text-white hover:text-green-400 transition-colors duration-300" />
           </a>
           <a
             href="https://www.instagram.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {/* Ícone do Instagram */}
+            <Instagram className="w-6 h-6 text-white hover:text-pink-400 transition-colors duration-300" />
           </a>
           <a
             href="https://www.facebook.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {/* Ícone do Facebook */}
+            <Facebook className="w-6 h-6 text-white hover:text-blue-400 transition-colors duration-300" />
           </a>
           <a
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {/* Ícone do GitHub */}
+            <Github className="w-6 h-6 text-white hover:text-gray-400 transition-colors duration-300" />
           </a>
         </div>
 
-        {/* Linha separadora */}
-        <Separator orientation="vertical" className="h-16 mx-6" />
+        {/* Separador vertical */}
+        <Separator
+          orientation="vertical"
+          className="hidden md:block h-20 bg-gray-600"
+        />
 
-        {/* Parte central: Logo */}
+        {/* Logo */}
         <div className="flex justify-center items-center">
           <img src="/assets/logo.png" alt="Logo" className="h-16" />
         </div>
 
-        {/* Parte direita: Links de navegação */}
-        <div className="space-y-4">
-          <Button variant="link" className="text-white hover:text-gray-300">
-            Home
-          </Button>
-          <Button variant="link" className="text-white hover:text-gray-300">
-            Login
-          </Button>
-          <Button variant="link" className="text-white hover:text-gray-300">
-            Suporte
-          </Button>
+        {/* Navegação */}
+        <div className="flex flex-col md:items-end gap-2">
+          <Link to="/">
+            <Button
+              variant="link"
+              className="text-white hover:text-blue-400 transition-colors"
+            >
+              Home
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button
+              variant="link"
+              className="text-white hover:text-blue-400 transition-colors"
+            >
+              Login
+            </Button>
+          </Link>
+          <Link to="/suporte">
+            <Button
+              variant="link"
+              className="text-white hover:text-blue-400 transition-colors"
+            >
+              Suporte
+            </Button>
+          </Link>
         </div>
       </div>
 
-      {/* Espaço adicional para o footer ocupar toda a largura */}
-      <div className="w-full bg-gray-700 py-4">
-        {/* Pode adicionar algum texto de copyright ou qualquer outro conteúdo adicional */}
-        <p className="text-center text-sm text-gray-300">
-          © 2025 Sua Empresa. Todos os direitos reservados.
+      {/* Rodapé inferior */}
+      <div className="w-full bg-zinc-800 py-4 mt-10">
+        <p className="text-center text-sm text-gray-400">
+          © 2025 Atlantis. Todos os direitos reservados.
         </p>
       </div>
     </footer>

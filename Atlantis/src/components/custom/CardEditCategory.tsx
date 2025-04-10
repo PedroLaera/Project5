@@ -78,7 +78,7 @@ export default function CardEditCategory() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin">
+    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin bg-gradient-to-b from-zinc-400 via-zinc-600 to-zinc-900 p-4">
       <CardHeader>
         <CardTitle className="text-3xl font-thin text-blue-600 text-center">
           Editar Categoria

@@ -19,10 +19,10 @@ export default function Navbar() {
   }, []);
 
   const handleNavigation = (path: string) => {
-    setAnimationTriggered(false); // Reinicia animação
+    setAnimationTriggered(false);
     setTimeout(() => {
       navigate(path);
-      setAnimationTriggered(true); // Reativa animação na nova tela
+      setAnimationTriggered(true);
     }, 300);
   };
 
@@ -44,7 +44,6 @@ export default function Navbar() {
   return (
     <nav className=" w-full bg-zinc-900 shadow-md p-4 flex items-center justify-between text-white">
       <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
-        {/* Logo + Menu */}
         <div className="flex items-center gap-2">
           <Menu
             className="w-6 h-6 cursor-pointer md:hidden"
@@ -61,7 +60,6 @@ export default function Navbar() {
           </h1>
         </div>
 
-        {/* Links desktop */}
         <ul className="hidden md:flex gap-4 ">
           {navItems.map((item, index) => (
             <li
@@ -81,7 +79,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Dropdown de Perfil com ShadCN */}
         <div
           className={`hidden md:block transition-all duration-500 ${
             animationTriggered ? "animate-slide-left" : "opacity-0"
@@ -118,14 +115,16 @@ export default function Navbar() {
                 }
               >
                 <Github className="w-4 h-4 mr-2" />
+                <link
+                  rel="stylesheet"
+                  href="https://github.com/PedroLaera/Project5/tree/Pedro"
+                />
                 GitHub
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
-
-      {/* Menu mobile */}
       {isOpen && (
         <div className="absolute top-16 left-0 w-full bg-transparent! shadow-md md:hidden">
           <ul className="flex flex-col gap-4 p-4 w-full">

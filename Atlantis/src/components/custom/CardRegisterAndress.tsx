@@ -78,7 +78,6 @@ export default function CardRegisterAndress() {
 
     try {
       if (isEditing && addressId !== null) {
-        // Atualizar endereço
         await api.put(
           `/address/${addressId}`,
           { ...formData, id_user },
@@ -90,7 +89,6 @@ export default function CardRegisterAndress() {
         );
         toast.success("Endereço atualizado com sucesso!");
       } else {
-        // Criar novo endereço
         await api.post(
           "/address",
           { ...formData, id_user },
