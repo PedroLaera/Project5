@@ -22,7 +22,7 @@ export function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/products" element={<Product />} />
-
+        <Route path="/presentation/:id" element={<ProductPresentation />} />
         <Route path="/createProduct" element={<CreateProduct />} />
         <Route path="/editProduct/:id" element={<EditProduct />} />
         <Route path="/createCategory" element={<CreateCategory />} />
