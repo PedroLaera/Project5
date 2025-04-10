@@ -25,12 +25,6 @@ export default function ProfileCard() {
       const id_user = localStorage.getItem("id_user");
       const token = localStorage.getItem("token");
 
-      if (!id_user || !token) {
-        console.error("Usuário não autenticado.");
-        setLoading(false);
-        return;
-      }
-
       try {
         const response = await api.get(`/users/${id_user}`, {
           headers: {
