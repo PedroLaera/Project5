@@ -12,6 +12,7 @@ interface Address {
   city: string;
   state: string;
   zipCode: string;
+  id_user: string; // Adicionado para permitir filtragem
 }
 
 export default function CardAndress() {
@@ -31,7 +32,6 @@ export default function CardAndress() {
       }
 
       try {
-        // Pega todos os endereços e filtra pelo ID do usuário
         const response = await api.get("/address", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ export default function CardAndress() {
         });
 
         const userAddress = response.data.find(
-          (addr: Address) => addr.id_user == id_user
+          (addr: Address) => addr.id_user === id_user
         );
 
         setAddress(userAddress || null);
@@ -60,9 +60,9 @@ export default function CardAndress() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin! mt-10">
+    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin mt-10">
       <CardHeader>
-        <CardTitle className="text-2xl text-blue-600 text-center ">
+        <CardTitle className="text-2xl text-blue-600 text-center">
           Endereço
         </CardTitle>
       </CardHeader>

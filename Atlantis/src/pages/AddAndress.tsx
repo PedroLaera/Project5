@@ -1,3 +1,8 @@
+import AddAddressCard from "../components/custom/CardRegisterAndress";
 export default function AddAndress() {
-  return <div>cadastro de endereço</div>;
+  return (
+    <div>
+      <AddAddressCard />
+    </div>
+  );
 }
