@@ -228,7 +228,7 @@ describe("comment Endpoint", () => {
         id_product: "1",
         content: "legal meu(porém editado)",
         rating: "3",
-        creation_date: "",
+        creation_date: "01-01-2023",
       });
     expect(response.status).toBe(200);
   });
