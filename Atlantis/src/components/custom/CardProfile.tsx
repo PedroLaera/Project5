@@ -183,7 +183,6 @@ export default function ProfileCard() {
           </>
         )}
 
-        {/* Botões lado a lado */}
         <div className="mt-6 flex justify-between gap-4">
           <Button
             onClick={handleLogout}

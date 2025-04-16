@@ -1,5 +1,3 @@
-// components/custom/CardEditProduct.tsx
-
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -55,10 +53,9 @@ export default function CardEditProduct() {
       return;
     }
 
-    // Garante que o campo id_product está no body para validação do backend
     const updatedFormData = {
       ...formData,
-      id_product: id, // garante o id correto no corpo
+      id_product: id,
     };
 
     try {
@@ -77,7 +74,7 @@ export default function CardEditProduct() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin  bg-gradient-to-b from-zinc-400 via-zinc-600 to-zinc-900 p-4">
+    <Card className="w-full max-w-md mx-auto p-6 shadow-lg font-thin bg-white">
       <CardHeader>
         <CardTitle className="text-3xl font-thin text-blue-600 text-center">
           Editar Produto
@@ -122,7 +119,7 @@ export default function CardEditProduct() {
           />
           <Button
             onClick={updateProduct}
-            className="w-full bg-white text-black"
+            className="w-full bg-white text-white"
           >
             Salvar Alterações
           </Button>

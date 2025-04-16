@@ -39,7 +39,6 @@ export default function RegisterCard() {
       return;
     }
 
-    // Converter campos para número se necessário
     const payload = {
       ...formData,
       price: Number(formData.price),
@@ -134,17 +133,3 @@ export default function RegisterCard() {
     </Card>
   );
 }
-
-/*
-  const CreateUser = async () => {
-    try {
-      await api.post("/user", {
-        name: formData.name,
-        email: formData.email,
-        cpf: formData.cpf,
-        password: formData.password,
-      });
-    } catch (error) {
-      console.error("Erro ao tentar fazer a requisição:", error);
-    }
-  }; */

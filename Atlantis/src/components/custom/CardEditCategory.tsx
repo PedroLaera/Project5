@@ -16,7 +16,6 @@ export default function CardEditCategory() {
     description: "",
   });
 
-  // Buscar os dados da categoria ao montar o componente
   useEffect(() => {
     const fetchCategory = async () => {
       try {
@@ -65,7 +64,7 @@ export default function CardEditCategory() {
       });
 
       console.log("Categoria atualizada com sucesso!", response.data);
-      navigate("/addproduct"); // ou outro caminho que desejar
+      navigate("/addproduct");
     } catch (error) {
       const errorMessage =
         (error instanceof Error &&

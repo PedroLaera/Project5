@@ -43,7 +43,6 @@ export function ProductCard({ id_product, name, price }: ProductCardProps) {
   );
 }
 
-// Segundo componente sem imagem:
 export default function ProductCardPage({ id_product }: ProductCardProps) {
   const { id: paramId } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -84,7 +83,6 @@ export default function ProductCardPage({ id_product }: ProductCardProps) {
           Valor Unitário: R$ {product.price}
         </p>
 
-        {/* Seção de quantidade */}
         <div className="flex items-center mt-4">
           <button
             onClick={handleDecrease}
@@ -105,7 +103,6 @@ export default function ProductCardPage({ id_product }: ProductCardProps) {
           Total: R$ {totalPrice}
         </p>
 
-        {/* Botão de compra */}
         <button
           onClick={() => navigate("/checkout")}
           className="mt-6 w-full px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition"

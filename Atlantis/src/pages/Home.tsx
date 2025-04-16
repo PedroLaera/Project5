@@ -48,14 +48,12 @@ export default function HomePage() {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-zinc-600 via-zinc-700 to-zinc-900 p-4">
       <div>
-        <h1 className="text-4xl font-thin text-gray-100">
-          Welcome to Atlantis
-        </h1>
-        <p className="text-gray-500 mt-2">Explore our product diversity!</p>
-
-        <p className="text-4xl font-thin text-gray-100 mt-8">
-          Our best offers!
-        </p>
+        <div className="text-center">
+          <h1 className="text-4xl font-thin text-gray-100">
+            Welcome to Atlantis
+          </h1>
+          <p className="text-gray-200 mt-2">Explore our product diversity!</p>
+        </div>
 
         <div className="grid text-white! grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6 justify-center place-items-center">
           {currentProducts.map((product) => (
